@@ -1002,4 +1002,4 @@ URI     : Uniform Resource Identifier (chemin vers la ressource)
 ---
 
 *Schemas crees pour la revision CCNA*
-*Auteur : Tudy Gbaguidi*
+*Auteur : Roadmvn*

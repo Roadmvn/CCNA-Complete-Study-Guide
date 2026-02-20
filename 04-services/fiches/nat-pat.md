@@ -348,4 +348,4 @@ Router# clear ip nat translation inside 10.1.1.10 203.0.113.1
 ---
 
 *Fiche creee pour la revision CCNA*
-*Auteur : Tudy Gbaguidi*
+*Auteur : Roadmvn*

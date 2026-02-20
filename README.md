@@ -158,4 +158,4 @@ Pour chaque module, suivez cette séquence :
 ---
 
 *Repository créé pour une révision CCNA complète et méthodique*
-*Auteur : Tudy Gbaguidi | Dernière mise à jour : $(date)*
+*Auteur : Roadmvn | Dernière mise à jour : 2026-02-20*

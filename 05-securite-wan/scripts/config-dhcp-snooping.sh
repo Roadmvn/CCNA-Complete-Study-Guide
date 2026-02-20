@@ -2,7 +2,7 @@
 ! Script Cisco IOS : Configuration DHCP Snooping + DAI
 ! Objectif : Proteger contre les serveurs DHCP malveillants
 !            et les attaques ARP spoofing
-! Auteur : Tudy Gbaguidi
+! Auteur : Roadmvn
 ! ============================================================
 
 ! Prerequis :

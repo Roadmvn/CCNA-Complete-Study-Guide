@@ -668,4 +668,4 @@ Solution : Ajuster les couts ou la reference bandwidth
 ---
 
 *Fiche creee pour la revision CCNA*
-*Auteur : Tudy Gbaguidi*
+*Auteur : Roadmvn*

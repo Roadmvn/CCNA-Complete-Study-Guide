@@ -2,7 +2,7 @@
 
 # =============================================================================
 # Script : Configuration NAT/PAT - Cisco CCNA
-# Auteur : Tudy Gbaguidi
+# Auteur : Roadmvn
 # Date   : 2024
 # Objectif : Generer des configurations NAT/PAT pour routeurs Cisco
 # =============================================================================

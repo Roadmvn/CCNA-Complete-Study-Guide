@@ -2,7 +2,7 @@
 ! Script Cisco IOS : Configuration Tunnel GRE
 ! Objectif : Creer un tunnel GRE entre deux sites distants
 !            a travers Internet
-! Auteur : Tudy Gbaguidi
+! Auteur : Roadmvn
 ! ============================================================
 
 ! Topologie :

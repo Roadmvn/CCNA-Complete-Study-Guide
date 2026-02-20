@@ -539,4 +539,4 @@ STP Convergence dans cette topologie :
 ---
 
 *Schemas crees pour la revision CCNA*
-*Auteur : Tudy Gbaguidi*
+*Auteur : Roadmvn*

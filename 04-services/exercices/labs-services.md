@@ -726,4 +726,4 @@ R1# show ntp status
 ---
 
 *Exercices crees pour la revision CCNA*
-*Auteur : Tudy Gbaguidi*
+*Auteur : Roadmvn*

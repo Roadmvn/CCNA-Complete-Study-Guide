@@ -2,7 +2,7 @@
 
 # =============================================================================
 # Script : Configuration Routes Statiques - Cisco IOS
-# Auteur : Tudy Gbaguidi
+# Auteur : Roadmvn
 # Date   : 2024
 # Objectif : Generer des configurations de routes statiques pour routeurs Cisco
 # =============================================================================

@@ -2,7 +2,7 @@
 
 # =============================================================================
 # Script : Configuration EtherChannel - Cisco CCNA
-# Auteur : Tudy Gbaguidi
+# Auteur : Roadmvn
 # Date   : 2024
 # Objectif : Generer des configurations EtherChannel pour equipements Cisco
 # =============================================================================

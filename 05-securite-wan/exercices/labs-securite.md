@@ -748,4 +748,4 @@ Q35 : B) Traduire des intentions business en configurations techniques
 ---
 
 *Exercices crees pour la revision CCNA*
-*Auteur : Tudy Gbaguidi*
+*Auteur : Roadmvn*

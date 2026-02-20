@@ -2,7 +2,7 @@
 
 # =============================================================================
 # Script : Configuration Port-Security - Cisco CCNA
-# Auteur : Tudy Gbaguidi
+# Auteur : Roadmvn
 # Date   : 2024
 # Objectif : Generer des configurations port-security pour equipements Cisco
 # =============================================================================

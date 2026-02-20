@@ -2,7 +2,7 @@
 ! Script Cisco IOS : Configuration Port-Security
 ! Objectif : Securiser les ports d'acces contre le MAC flooding
 !            et les connexions non autorisees
-! Auteur : Tudy Gbaguidi
+! Auteur : Roadmvn
 ! ============================================================
 
 ! Prerequis : les ports doivent etre en mode access

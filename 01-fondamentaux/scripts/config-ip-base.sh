@@ -2,7 +2,7 @@
 
 # =============================================================================
 # Script : Configuration IP de Base - Cisco CCNA
-# Auteur : Tudy Gbaguidi
+# Auteur : Roadmvn
 # Date   : 2024
 # Objectif : Automatiser les configurations IP de base sur équipements Cisco
 # =============================================================================

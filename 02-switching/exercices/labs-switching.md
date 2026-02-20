@@ -661,4 +661,4 @@ SW-CORE# show ip interface brief | include Vlan
 ---
 
 *Exercices crees pour la revision CCNA*
-*Auteur : Tudy Gbaguidi*
+*Auteur : Roadmvn*

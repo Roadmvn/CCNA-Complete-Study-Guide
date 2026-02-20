@@ -2,7 +2,7 @@
 
 # =============================================================================
 # Script : Configuration EIGRP - Cisco IOS
-# Auteur : Tudy Gbaguidi
+# Auteur : Roadmvn
 # Date   : 2024
 # Objectif : Generer des configurations EIGRP pour routeurs Cisco
 # =============================================================================

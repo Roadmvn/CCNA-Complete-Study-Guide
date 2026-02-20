@@ -2,7 +2,7 @@
 
 # =============================================================================
 # Script : Configuration OSPF - Cisco IOS
-# Auteur : Tudy Gbaguidi
+# Auteur : Roadmvn
 # Date   : 2024
 # Objectif : Generer des configurations OSPF pour routeurs Cisco
 # =============================================================================

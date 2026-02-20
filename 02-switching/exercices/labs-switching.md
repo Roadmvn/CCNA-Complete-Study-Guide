@@ -638,11 +638,11 @@ SW-CORE# show ip interface brief | include Vlan
 
 ### Reponses
 
-1. **d)** Priority + VLAN ID (Extended System ID) + MAC Address
-2. **c)** Le port est suspendu du bundle (mismatch configuration)
+1. **d)**Priority + VLAN ID (Extended System ID) + MAC Address
+2. **c)**Le port est suspendu du bundle (mismatch configuration)
 3. **d)** restrict ET shutdown generent des logs syslog
 4. **c)** 30 a 50 secondes (Listening 15s + Learning 15s, plus Max Age si applicable)
-5. **b)** Le channel ne se forme pas. Au moins un cote doit etre "active".
+5. **b)**Le channel ne se forme pas. Au moins un cote doit etre "active".
 
 ### Questions Ouvertes
 

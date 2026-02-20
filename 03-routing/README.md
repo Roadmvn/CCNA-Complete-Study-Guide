@@ -9,8 +9,8 @@ Ce module couvre le routage IP, pierre angulaire de toute infrastructure reseau.
 A la fin de ce module, vous serez capable de :
 
 - **Configurer** des routes statiques, default routes et floating static routes
-- **Deployer** OSPF single-area et multi-area
-- **Comprendre** EIGRP, son algorithme DUAL et ses metriques
+- **Deployer**OSPF single-area et multi-area
+- **Comprendre**EIGRP, son algorithme DUAL et ses metriques
 - **Expliquer** les bases de BGP et les concepts d'Autonomous Systems
 - **Diagnostiquer** des problemes de routage avec les commandes show/debug
 

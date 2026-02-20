@@ -23,7 +23,7 @@ Cette section presente les topologies de commutation L2 avec des schemas ASCII d
                          │  Bridge ID: 32768     │
                          │  MAC: AAAA.AAAA.AAAA  │
                          │                       │
-                         │  ** ROOT BRIDGE **     │
+                         │  **ROOT BRIDGE **     │
                          │                       │
                          │  Fa0/1          Fa0/2 │
                          │  [DP]           [DP]  │
@@ -100,7 +100,7 @@ Emission et Propagation des BPDUs :
 Transition des Etats d'un Port STP :
 
 ┌──────────┐   Lien    ┌──────────┐  Forward   ┌──────────┐
-│ DISABLED │──actif───▶│ BLOCKING │──Delay────▶│LISTENING │
+│ DISABLED │──actif───│ BLOCKING │──Delay────│LISTENING │
 │          │           │          │  (20s)     │          │
 │ Port off │           │ Recoit   │            │ Envoie   │
 │ Pas de   │           │ BPDUs    │            │ et recoit│
@@ -112,7 +112,7 @@ Transition des Etats d'un Port STP :
                                                      │
                                                      ▼
 ┌──────────┐                                   ┌──────────┐
-│FORWARDING│◀────────── Forward Delay ─────────│ LEARNING │
+│FORWARDING│────────── Forward Delay ─────────│ LEARNING │
 │          │               (15s)               │          │
 │ Envoie/  │                                   │ Apprend  │
 │ recoit   │                                   │ adresses │
@@ -175,10 +175,10 @@ Methodes de Load Balancing :
 
 src-mac :
 ┌─────────┐                              ┌─────────┐
-│  PC-A   │──(MAC A)──▶ Gi0/1 ══════════▶│         │
-│  PC-B   │──(MAC B)──▶ Gi0/2 ══════════▶│ Switch-B│
-│  PC-C   │──(MAC C)──▶ Gi0/3 ══════════▶│         │
-│  PC-D   │──(MAC D)──▶ Gi0/4 ══════════▶│         │
+│  PC-A   │──(MAC A)── Gi0/1 ══════════│         │
+│  PC-B   │──(MAC B)── Gi0/2 ══════════│ Switch-B│
+│  PC-C   │──(MAC C)── Gi0/3 ══════════│         │
+│  PC-D   │──(MAC D)── Gi0/4 ══════════│         │
 └─────────┘                              └─────────┘
   Chaque source MAC utilise un lien different (hash)
 
@@ -370,22 +370,22 @@ PC-S1                SW-ACCESS-1          SW-CORE              SW-ACCESS-1      
      │                    │                │                        │              │
      │  1. Trame non      │                │                        │              │
      │  taguee             │                │                        │              │
-     ├───────────────────▶│                │                        │              │
+     ├───────────────────│                │                        │              │
      │  Dst: GW MAC       │                │                        │              │
      │  Src: PC-S1 MAC    │                │                        │              │
      │                    │  2. Tag VLAN 10│                        │              │
      │                    │  sur trunk     │                        │              │
-     │                    ├───────────────▶│                        │              │
+     │                    ├───────────────│                        │              │
      │                    │                │  3. Route inter-VLAN   │              │
      │                    │                │  SVI 10 → SVI 30       │              │
      │                    │                │  Reecrit MAC src/dst   │              │
      │                    │                │                        │              │
      │                    │                │  4. Tag VLAN 30        │              │
      │                    │                │  sur trunk             │              │
-     │                    │                ├───────────────────────▶│              │
+     │                    │                ├───────────────────────│              │
      │                    │                │                        │  5. Retire   │
      │                    │                │                        │  tag, forward│
-     │                    │                │                        ├─────────────▶│
+     │                    │                │                        ├─────────────│
      │                    │                │                        │              │
 ```
 
@@ -429,10 +429,10 @@ Schema de Negociation :
 
 SW-A (desirable)                          SW-B (auto)
 ┌──────────────┐                         ┌──────────────┐
-│ Envoie DTP   │────── DTP Request ─────▶│ Recoit DTP   │
+│ Envoie DTP   │────── DTP Request ─────│ Recoit DTP   │
 │ "Je veux     │                         │ "OK, je      │
 │  trunk"      │                         │  passe en    │
-│              │◀──── DTP Response ──────│  trunk"      │
+│              │──── DTP Response ──────│  trunk"      │
 │ TRUNK actif  │                         │ TRUNK actif  │
 └──────────────┘                         └──────────────┘
 

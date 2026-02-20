@@ -1,6 +1,6 @@
-# 🧮 Apprendre les Sous-Réseaux : Guide du Débutant
+# Apprendre les Sous-Réseaux : Guide du Débutant
 
-## 🏢 **Le Problème Concret**
+## **Le Problème Concret**
 
 Imagine que tu gères les ordinateurs d'une entreprise de 300 employés dans un grand immeuble :
 
@@ -9,16 +9,16 @@ Imagine que tu gères les ordinateurs d'une entreprise de 300 employés dans un 
 - **Étage 3** : 20 informaticiens  
 - **Sous-sol** : 10 serveurs  
 
-**Question :** Comment organiser le réseau pour que :
+**Question :**Comment organiser le réseau pour que :
 - Les commerciaux ne puissent pas voir les données comptables ?
 - Les serveurs soient protégés des utilisateurs normaux ?
 - Chaque service ait sa propre "zone réseau" ?
 
-**Réponse :** Les **sous-réseaux** ! C'est comme diviser l'immeuble en appartements séparés.
+**Réponse :**Les **sous-réseaux** ! C'est comme diviser l'immeuble en appartements séparés.
 
 ---
 
-## 🎯 **Qu'est-ce qu'une Adresse IP ?**
+## **Qu'est-ce qu'une Adresse IP ?**
 
 ### **Analogie Simple : L'Adresse Postale**
 
@@ -52,17 +52,17 @@ Un Octet = 8 Bits
          Total : 128 + 32 + 16 = 176
 ```
 
-**💡 Explication du calcul :**
+**Explication du calcul :**
 - Chaque position a une **valeur fixe** : 128, 64, 32, 16, 8, 4, 2, 1
 - Si le bit = **1**, on **ajoute** cette valeur
 - Si le bit = **0**, on **ignore** cette valeur (= 0)
 - **Résultat :** 128 + 0 + 32 + 16 + 0 + 0 + 0 + 0 = **176**
 
-**🎯 Pourquoi c'est important ?** Les ordinateurs ne comprennent que les 0 et 1. Pour nous faciliter la vie, on convertit en nombres décimaux (0 à 255 par octet).
+**Pourquoi c'est important ?**Les ordinateurs ne comprennent que les 0 et 1. Pour nous faciliter la vie, on convertit en nombres décimaux (0 à 255 par octet).
 
 ---
 
-## 📢 **Qu'est-ce qu'un Broadcast ?**
+## **Qu'est-ce qu'un Broadcast ?**
 
 ### **Définition Simple**
 **Broadcast** = Envoyer un message à **TOUS** les ordinateurs d'un réseau en même temps.
@@ -71,12 +71,12 @@ Un Octet = 8 Bits
 ```
 Immeuble d'entreprise :
 ┌─────────────────────────────────┐
-│ 📢 HAUT-PARLEUR : "Réunion !"   │  ← BROADCAST
+│  HAUT-PARLEUR : "Réunion !"   │  ← BROADCAST
 ├─────────────────────────────────┤
-│ 👂 Bureau 1 : "J'ai entendu"    │
-│ 👂 Bureau 2 : "J'ai entendu"    │  
-│ 👂 Bureau 3 : "J'ai entendu"    │
-│ 👂 Bureau 4 : "J'ai entendu"    │
+│  Bureau 1 : "J'ai entendu"    │
+│  Bureau 2 : "J'ai entendu"    │  
+│  Bureau 3 : "J'ai entendu"    │
+│  Bureau 4 : "J'ai entendu"    │
 └─────────────────────────────────┘
 ```
 
@@ -85,11 +85,11 @@ Immeuble d'entreprise :
 Ordinateur A envoie un broadcast :
 "Qui connaît l'adresse MAC de 192.168.1.10 ?"
 
-📡 Message envoyé à l'adresse de broadcast (.255)
+ Message envoyé à l'adresse de broadcast (.255)
     ↓
-👥 TOUS les ordinateurs du réseau le reçoivent
+ TOUS les ordinateurs du réseau le reçoivent
     ↓
-💬 Seul l'ordinateur .10 répond : "C'est moi !"
+ Seul l'ordinateur .10 répond : "C'est moi !"
 ```
 
 ### **Exemples Concrets de Broadcast**
@@ -102,16 +102,16 @@ Ordinateur A envoie un broadcast :
 - **Exemple /24** : 192.168.1.255 → message reçu par TOUTES les machines 192.168.1.x
 - **Exemple /25** : 192.168.1.127 → message reçu par les machines .0 à .126 seulement
 
-### **🎯 Problème Sans Sous-Réseaux**
+### **Problème Sans Sous-Réseaux**
 Si 1000 ordinateurs sont dans le même réseau :
 - 1 broadcast → **1000 ordinateurs** interrompus !
 - Solution : Diviser en sous-réseaux → broadcast limité à chaque zone
 
-**💡 C'est pourquoi on évite les adresses .0 et .255 pour les équipements !**
+**C'est pourquoi on évite les adresses .0 et .255 pour les équipements !**
 
 ---
 
-## 🏠 **Qu'est-ce qu'une Adresse Réseau ?**
+## **Qu'est-ce qu'une Adresse Réseau ?**
 
 ### **Définition Simple**
 **Adresse réseau** = "Nom" ou "Panneau" qui identifie tout un groupe d'ordinateurs.
@@ -146,16 +146,16 @@ C'est comme dire : "Ce PC appartient au quartier 192.168.1.0"
 - **10.0.0.0/8** = Très grand quartier qui contient 16 millions d'adresses !
 - **172.16.50.0/26** = Petit quartier qui contient seulement 62 machines
 
-### **🎯 À Quoi Ça Sert ?**
+### **À Quoi Ça Sert ?**
 - **Routage** : "Pour aller vers 192.168.1.0/24, passe par ce chemin"
 - **Configuration** : "Ce switch gère le réseau 192.168.10.0/24"
 - **Dépannage** : "Le problème vient du réseau 172.16.0.0/16"
 
-**💡 L'adresse réseau, c'est l'identité du groupe, pas d'un équipement individuel !**
+**L'adresse réseau, c'est l'identité du groupe, pas d'un équipement individuel !**
 
 ---
 
-## 🎭 **Qu'est-ce qu'un Masque de Sous-Réseau ?**
+## **Qu'est-ce qu'un Masque de Sous-Réseau ?**
 
 ### **Définition Simple**
 Un **masque de sous-réseau** est comme un **filtre** qui sépare une adresse IP en deux parties :
@@ -204,7 +204,7 @@ Octet 4 : 0 = 00000000
 └───┴───┴───┴───┴───┴───┴───┴───┘
 ```
 
-**💡 Règle d'Or du Masque :**
+**Règle d'Or du Masque :**
 - Bits à **1** = Partie **RÉSEAU** (ne change pas)
 - Bits à **0** = Partie **HÔTE** (peut varier)
 
@@ -257,7 +257,7 @@ Masque :      11111111 . 11111111 . 11111111 . 00000000
 Réseau :      11000000 . 10101000 . 00000001 . 00000000
               = 192    . 168      . 1        . 0
 
-💡 Le masque a "effacé" la partie hôte (100→0) 
+ Le masque a "effacé" la partie hôte (100→0) 
    pour ne garder que l'adresse réseau !
 ```
 
@@ -280,24 +280,24 @@ Réseau :      11000000 . 10101000 . 00000001 . 00000000
 
 ### **Pourquoi le Masque est CRUCIAL ?**
 
-1. **🚦 Routage** : Les routeurs utilisent le masque pour savoir où envoyer les paquets
+1. **Routage** : Les routeurs utilisent le masque pour savoir où envoyer les paquets
    ```
    "Destination 192.168.1.0/24 ? → Envoie par l'interface eth0"
    ```
 
-2. **🔒 Sécurité** : Sépare les réseaux sensibles
+2. **Sécurité** : Sépare les réseaux sensibles
    ```
    Comptabilité : 192.168.10.0/24 (masque isole ce réseau)
    Production  : 192.168.20.0/24 (masque isole ce réseau)
    ```
 
-3. **📊 Performance** : Limite la taille des domaines de broadcast
+3. **Performance** : Limite la taille des domaines de broadcast
    ```
    Sans masque : 1000 machines qui se parlent = chaos !
    Avec masque : 4 × 250 machines séparées = organisé !
    ```
 
-### **🎮 Mini-Exercice : Applique le Masque**
+### **Mini-Exercice : Applique le Masque**
 
 ```
 Question : IP = 10.5.3.75, Masque = 255.255.255.0
@@ -318,13 +318,13 @@ Résolution étape par étape :
 Réponse : Adresse réseau = 10.5.3.0
 ```
 
-**💡 Astuce Rapide :** Avec un masque 255.255.255.0, remplace simplement le dernier octet par 0 !
+**Astuce Rapide :**Avec un masque 255.255.255.0, remplace simplement le dernier octet par 0 !
 
 ---
 
 **Une adresse IP = 4 octets = 32 bits au total**
 
-## 🔬 **VISUALISATION COMPLÈTE : Les 32 Bits d'une Adresse IP**
+## **VISUALISATION COMPLÈTE : Les 32 Bits d'une Adresse IP**
 
 ### **Exemple : 192.168.1.100/24**
 
@@ -433,32 +433,32 @@ Possibilités avec 8 bits hôtes :
 11111111 = 255 → Broadcast (interdit)
 ```
 
-**💡 Pourquoi c'est important ?**
+**Pourquoi c'est important ?**
 - Comprendre les 32 bits aide à visualiser comment le masque "découpe" l'adresse
 - On voit clairement pourquoi .0 et .255 sont spéciaux (tous bits à 0 ou 1)
 - Les calculs de sous-réseaux deviennent logiques quand on voit les bits
 
-### **🎮 Mini-Exercice 1**
-**Question :** Combien de bits y a-t-il dans l'adresse 10.0.0.1 ?  
+### **Mini-Exercice 1**
+**Question :**Combien de bits y a-t-il dans l'adresse 10.0.0.1 ?  
 **Réponse :** 32 bits (4 octets × 8 bits chacun)
 
-**As-tu compris ?** Si oui, continue. Sinon, relis cette section ! 😊
+**As-tu compris ?**Si oui, continue. Sinon, relis cette section ! 
 
 ---
 
-## 🏘️ **Pourquoi Diviser un Réseau ?**
+## **Pourquoi Diviser un Réseau ?**
 
 ### **Problème Sans Sous-Réseaux**
 
 Imagine un immeuble où **tout le monde** partage le même hall d'entrée :
 
 ```
-🏢 Immeuble = 1 Grand Réseau
+ Immeuble = 1 Grand Réseau
 ┌─────────────────────────────────┐
-│  👥 Commerciaux                 │
-│  💰 Comptables                  │  
-│  💻 Informaticiens              │
-│  🖥️  Serveurs                   │
+│   Commerciaux                 │
+│   Comptables                  │  
+│   Informaticiens              │
+│    Serveurs                   │
 │                                 │
 │ Tout le monde se "voit"         │
 │ Tout le monde s'entend          │
@@ -466,13 +466,13 @@ Imagine un immeuble où **tout le monde** partage le même hall d'entrée :
 └─────────────────────────────────┘
 ```
 
-**💡 Traduction réseau :**
+**Traduction réseau :**
 - **"Se voir"** = Les ordinateurs peuvent accéder aux fichiers des autres services
 - **"S'entendre"** = Tous les messages réseau (broadcast) arrivent chez tout le monde
-- **Exemple concret :** Si l'imprimante du service comptable envoie un message "Je suis prête !", TOUS les ordinateurs de l'entreprise le reçoivent → encombrement !
+- **Exemple concret :**Si l'imprimante du service comptable envoie un message "Je suis prête !", TOUS les ordinateurs de l'entreprise le reçoivent → encombrement !
 
 **Problèmes :**
-- Les commerciaux peuvent voir les salaires des comptables 😱
+- Les commerciaux peuvent voir les salaires des comptables 
 - Si quelqu'un crie (broadcast), **tout l'immeuble** l'entend
 - Impossible de mettre des règles par service
 - Performance dégradée (trop de "bruit")
@@ -480,40 +480,40 @@ Imagine un immeuble où **tout le monde** partage le même hall d'entrée :
 ### **Solution : Créer des Sous-Réseaux**
 
 ```
-🏢 Immeuble = 4 Sous-Réseaux Séparés
+ Immeuble = 4 Sous-Réseaux Séparés
 ┌─────────────┬─────────────┐
-│📊 Étage 1   │💰 Étage 2   │
+│ Étage 1   │ Étage 2   │
 │Commerciaux  │Comptables   │
 │VLAN 10      │VLAN 20      │
 ├─────────────┼─────────────┤
-│💻 Étage 3   │🖥️ Sous-sol  │
+│ Étage 3   │ Sous-sol  │
 │IT           │Serveurs     │
 │VLAN 30      │VLAN 40      │
 └─────────────┴─────────────┘
 ```
 
-**💡 Explication technique :**
+**Explication technique :**
 - **Chaque étage = un sous-réseau** avec ses propres adresses IP
 - **VLAN 10** = 192.168.10.0/24 (Commerciaux : .1 à .254)
 - **VLAN 20** = 192.168.20.0/24 (Comptables : .1 à .254)  
 - **VLAN 30** = 192.168.30.0/24 (IT : .1 à .254)
 - **VLAN 40** = 192.168.40.0/24 (Serveurs : .1 à .254)
 
-**🔒 Résultat :** Les commerciaux (192.168.10.x) ne peuvent plus accéder directement aux comptables (192.168.20.x) sans autorisation spéciale !
+**Résultat :**Les commerciaux (192.168.10.x) ne peuvent plus accéder directement aux comptables (192.168.20.x) sans autorisation spéciale !
 
 **Avantages :**
-- ✅ Chaque service dans sa "bulle"
-- ✅ Sécurité renforcée
-- ✅ Moins de "bruit" réseau
-- ✅ Règles spécifiques par zone
+-  Chaque service dans sa "bulle"
+-  Sécurité renforcée
+-  Moins de "bruit" réseau
+-  Règles spécifiques par zone
 
-### **🎮 Mini-Exercice 2**
-**Question :** Dans l'exemple ci-dessus, les comptables peuvent-ils voir directement les données des commerciaux ?  
-**Réponse :** Non, ils sont dans des sous-réseaux séparés !
+### **Mini-Exercice 2**
+**Question :**Dans l'exemple ci-dessus, les comptables peuvent-ils voir directement les données des commerciaux ?  
+**Réponse :**Non, ils sont dans des sous-réseaux séparés !
 
 ---
 
-## 🔍 **Qu'est-ce que CIDR ?**
+## **Qu'est-ce que CIDR ?**
 
 ### **Définition Simple**
 **CIDR** = façon moderne d'écrire "combien d'ordinateurs peuvent tenir dans ce réseau"
@@ -535,16 +535,16 @@ Le `/24` signifie : "les **24 premiers bits** (sur 32) décrivent le **quartier*
 8 bits pour les maisons → 2×2×2×2×2×2×2×2 = 256 maisons possibles
 ```
 
-**💡 Explication concrète :**
+**Explication concrète :**
 - **192.168.1** = Adresse du quartier (fixe pour tous les habitants)
 - **0 à 255** = Numéros de maison possibles (variable)
-- **Pourquoi 256 ?** Avec 8 bits : 00000000 (=0) à 11111111 (=255) = 256 possibilités
+- **Pourquoi 256 ?**Avec 8 bits : 00000000 (=0) à 11111111 (=255) = 256 possibilités
 - **En pratique :** .0 = panneau du quartier, .255 = haut-parleur → reste **254 maisons habitables**
 
 ### **Analogie Visuelle : L'Immeuble /24**
 
 ```
-🏢 Immeuble 192.168.1.0/24
+ Immeuble 192.168.1.0/24
 ┌─────────────────────────────────┐
 │ Appartement 192.168.1.1         │
 │ Appartement 192.168.1.2         │
@@ -552,27 +552,27 @@ Le `/24` signifie : "les **24 premiers bits** (sur 32) décrivent le **quartier*
 │ ...                             │
 │ Appartement 192.168.1.254       │
 ├─────────────────────────────────┤
-│ 🚫 .0 = Plaque de l'immeuble    │
-│ 🚫 .255 = Haut-parleur commun   │
+│  .0 = Plaque de l'immeuble    │
+│  .255 = Haut-parleur commun   │
 └─────────────────────────────────┘
 
 Total : 256 - 2 = 254 appartements habitables
 ```
 
-**💡 Pourquoi ces 2 adresses sont interdites ?**
+**Pourquoi ces 2 adresses sont interdites ?**
 - **192.168.1.0** = Adresse du réseau lui-même (comme la plaque "Immeuble Résidentiel")
 - **192.168.1.255** = Adresse de broadcast (message à tous : "Réunion dans 10 min !")
-- **Exemple concret :** Si tu configures un PC avec l'IP .0 ou .255, ça ne marchera pas !
+- **Exemple concret :**Si tu configures un PC avec l'IP .0 ou .255, ça ne marchera pas !
 
-**🎯 Astuce mémorisation :** Dans un /24, tu peux utiliser les IP de **.1 à .254** pour tes équipements.
+**Astuce mémorisation :**Dans un /24, tu peux utiliser les IP de **.1 à .254** pour tes équipements.
 
-### **🎮 Mini-Exercice 3**
-**Question :** Dans un réseau `/25`, combien de bits restent pour les "numéros de maison" ?  
+### **Mini-Exercice 3**
+**Question :**Dans un réseau `/25`, combien de bits restent pour les "numéros de maison" ?  
 **Réponse :** 32 - 25 = 7 bits → 2^7 = 128 maisons → 128 - 2 = 126 habitables
 
 ---
 
-## 🧮 **Les Formules Expliquées Simplement**
+## **Les Formules Expliquées Simplement**
 
 Maintenant que tu comprends les concepts, voici comment calculer :
 
@@ -621,13 +621,13 @@ Les 256 adresses possibles (de .0 à .255) :
 ┌──────────────────────────────────────────────────┐
 │ Adresse │ Binaire (8 bits) │ Utilisation        │
 ├─────────┼──────────────────┼────────────────────┤
-│ .0      │ 00000000         │ ❌ ADRESSE RÉSEAU  │
-│ .1      │ 00000001         │ ✅ Utilisable      │
-│ .2      │ 00000010         │ ✅ Utilisable      │
-│ .3      │ 00000011         │ ✅ Utilisable      │
-│ ...     │ ...              │ ✅ Utilisable      │
-│ .254    │ 11111110         │ ✅ Utilisable      │
-│ .255    │ 11111111         │ ❌ BROADCAST       │
+│ .0      │ 00000000         │  ADRESSE RÉSEAU  │
+│ .1      │ 00000001         │  Utilisable      │
+│ .2      │ 00000010         │  Utilisable      │
+│ .3      │ 00000011         │  Utilisable      │
+│ ...     │ ...              │  Utilisable      │
+│ .254    │ 11111110         │  Utilisable      │
+│ .255    │ 11111111         │  BROADCAST       │
 └──────────────────────────────────────────────────┘
 
 RÈGLE ABSOLUE :
@@ -711,7 +711,7 @@ Exemple /26 : 256 - 192 = 64
 
 ### **3. Table de Référence pour Débutants**
 
-**Comment lire cette table :** Commence par la colonne "Usage" pour trouver ton besoin !
+**Comment lire cette table :**Commence par la colonne "Usage" pour trouver ton besoin !
 
 ```
 ┌──────┬───────────────┬─────────────┬──────────────────────────────┐
@@ -727,13 +727,13 @@ Exemple /26 : 256 - 192 = 64
 └──────┴───────────────┴─────────────┴──────────────────────────────┘
 ```
 
-### **🎮 Mini-Exercice 4**
-**Question :** Tu as besoin de connecter 40 ordinateurs. Quel CIDR choisir ?  
+### **Mini-Exercice 4**
+**Question :**Tu as besoin de connecter 40 ordinateurs. Quel CIDR choisir ?  
 **Réponse :** /26 (62 hôtes) car /27 (30 hôtes) est trop petit !
 
 ---
 
-## 📝 **Comment Découper un Réseau ? MÉTHODE MATHÉMATIQUE PRÉCISE**
+## **Comment Découper un Réseau ? MÉTHODE MATHÉMATIQUE PRÉCISE**
 
 ### **PROBLÈME : Diviser 192.168.1.0/24 en 2 sous-réseaux**
 
@@ -754,7 +754,7 @@ Question : 2^? = 2 sous-réseaux
 
 ┌─────────────────────────────────────┐
 │ 2^0 = 1  (pas assez)                │
-│ 2^1 = 2  ✅ EXACTEMENT CE QU'IL FAUT│
+│ 2^1 = 2   EXACTEMENT CE QU'IL FAUT│
 │ 2^2 = 4  (trop)                     │
 └─────────────────────────────────────┘
 
@@ -796,7 +796,7 @@ Sous-réseau 0 : 192.168.1.0 + (0 × 128) = 192.168.1.0
 Sous-réseau 1 : 192.168.1.0 + (1 × 128) = 192.168.1.128
 
 Vérification : Nombre total d'adresses
-2 sous-réseaux × 128 adresses = 256 ✅
+2 sous-réseaux × 128 adresses = 256 
 ```
 
 ### **Étape 4 : Lister les Sous-Réseaux**
@@ -805,7 +805,7 @@ Sous-réseau 1 : 192.168.1.0/25   (de .0 à .127)
 Sous-réseau 2 : 192.168.1.128/25 (de .128 à .255)
 ```
 
-**💡 Explication visuelle du découpage :**
+**Explication visuelle du découpage :**
 ```
 Avant (1 grand immeuble) :     Après (2 immeubles) :
 ┌───────────────────────┐      ┌─────────┬─────────┐
@@ -815,7 +815,7 @@ Avant (1 grand immeuble) :     Après (2 immeubles) :
 └───────────────────────┘      └─────────┴─────────┘
 ```
 
-**🔑 Le secret :** L'incrément (128) nous donne le "pas" entre chaque sous-réseau !
+**Le secret :**L'incrément (128) nous donne le "pas" entre chaque sous-réseau !
 
 #### **ÉTAPE 5 : Calcul DÉTAILLÉ de Chaque Sous-Réseau**
 
@@ -887,9 +887,9 @@ REPRÉSENTATION BINAIRE (dernier octet avec valeurs) :
 Note : Le bit 128 reste à 1 car c'est le 2e sous-réseau /25
 ```
 
-**🎯 Formule magique :** Broadcast = Prochain réseau - 1
+**Formule magique :**Broadcast = Prochain réseau - 1
 
-**📝 Pourquoi le -1 ?**
+**Pourquoi le -1 ?**
 
 Imagine les adresses comme une **file d'attente** :
 ```
@@ -906,11 +906,11 @@ Sous-réseau 1 :          Sous-réseau 2 :
 - Prochain réseau = .128
 - Donc broadcast = .128 - 1 = **.127**
 
-**Analogie :** C'est comme les numéros de maison dans une rue. Si la rue suivante commence au n°128, alors la dernière maison de ta rue est forcément le n°127 !
+**Analogie :**C'est comme les numéros de maison dans une rue. Si la rue suivante commence au n°128, alors la dernière maison de ta rue est forcément le n°127 !
 
-### **🎮 EXERCICE COMPLET : Diviser en 4 Sous-Réseaux**
+### **EXERCICE COMPLET : Diviser en 4 Sous-Réseaux**
 
-**Problème :** Diviser `192.168.10.0/24` en **4 sous-réseaux** égaux.
+**Problème :**Diviser `192.168.10.0/24` en **4 sous-réseaux**égaux.
 
 #### **SOLUTION DÉTAILLÉE ÉTAPE PAR ÉTAPE**
 
@@ -922,7 +922,7 @@ Question : 2^x = 4
 ┌────────────────────────────────────────┐
 │ 2^0 = 1 sous-réseau  (pas assez)      │
 │ 2^1 = 2 sous-réseaux (pas assez)      │
-│ 2^2 = 4 sous-réseaux ✅ PARFAIT        │
+│ 2^2 = 4 sous-réseaux  PARFAIT        │
 │ 2^3 = 8 sous-réseaux (trop)           │
 └────────────────────────────────────────┘
 
@@ -939,7 +939,7 @@ Nouveau masque : /26 → 11111111.11111111.11111111.11000000
 Masque décimal : 255.255.255.192
 Calcul incrément : 256 - 192 = 64
 
-Vérification : 4 sous-réseaux × 64 adresses = 256 ✅
+Vérification : 4 sous-réseaux × 64 adresses = 256 
 ```
 
 ##### **3. CALCUL DES 4 SOUS-RÉSEAUX**
@@ -1037,13 +1037,13 @@ SOUS-RÉSEAU 4 : 192.168.10.192/26
 └─────────────────────────────────────────────────────┘
 ```
 
-**✅ VÉRIFICATION FINALE :** 4 × 62 hôtes = 248 hôtes utiles au total
+**VÉRIFICATION FINALE :** 4 × 62 hôtes = 248 hôtes utiles au total
 
 ---
 
-## 🎓 **Récapitulatif des Acquis**
+## **Récapitulatif des Acquis**
 
-### **✅ Ce que tu sais maintenant :**
+### **Ce que tu sais maintenant :**
 
 1. **Adresse IP** = adresse postale numérique (4 octets = 32 bits)
 2. **CIDR /24** = "24 bits pour le quartier, 8 bits pour les maisons"  
@@ -1052,7 +1052,7 @@ SOUS-RÉSEAU 4 : 192.168.10.192/26
 5. **Formule hôtes** = 2^(bits_hôtes) - 2
 6. **Méthode découpage** = emprunter des bits aux hôtes
 
-### **🚀 Es-tu Prêt pour la Suite ?**
+### **Es-tu Prêt pour la Suite ?**
 
 **Test Rapide :**
 1. Combien d'hôtes dans un /27 ? → **30**
@@ -1060,17 +1060,17 @@ SOUS-RÉSEAU 4 : 192.168.10.192/26
 3. L'adresse 192.168.1.50/26 est dans quel sous-réseau ? → **192.168.1.0/26** (.0 à .63)
 
 Si tu as **tout juste**, tu peux passer aux **exercices pratiques avancés** !  
-Si tu **hésites encore**, relis les sections précédentes. 😊
+Si tu **hésites encore**, relis les sections précédentes. 
 
 ---
 
-## 🟢 **NIVEAU 1 : Exercices Pratiques**
+## **NIVEAU 1 : Exercices Pratiques**
 
 *Maintenant que tu comprends les concepts, voici des exercices pour t'entraîner :*
 
 ### **Exercice 1.1 : Analyse Simple**
 
-**Question :** Analyse cette configuration réseau : `192.168.1.150/24`
+**Question :**Analyse cette configuration réseau : `192.168.1.150/24`
 
 **Méthode guidée :**
 ```
@@ -1082,15 +1082,15 @@ Si tu **hésites encore**, relis les sections précédentes. 😊
 ```
 
 **Ta réponse :**
-- 🏠 Adresse réseau : 192.168.1.0/24
-- 🔢 Première IP utile : 192.168.1.1  
-- 🔢 Dernière IP utile : 192.168.1.254
-- 📢 Adresse broadcast : 192.168.1.255
-- 👥 Nombre d'hôtes : 254
+-  Adresse réseau : 192.168.1.0/24
+-  Première IP utile : 192.168.1.1  
+-  Dernière IP utile : 192.168.1.254
+-  Adresse broadcast : 192.168.1.255
+-  Nombre d'hôtes : 254
 
 ### **Exercice 1.2 : Calcul Simple /25**
 
-**Question :** Découpez 192.168.10.0/24 en 2 sous-réseaux égaux
+**Question :**Découpez 192.168.10.0/24 en 2 sous-réseaux égaux
 
 **Méthode :**
 ```
@@ -1127,11 +1127,11 @@ Sous-réseau 2 : 192.168.10.128/25
 2. Découpez 172.16.0.0/16 en 4 sous-réseaux égaux
 3. Dans quel sous-réseau est 192.168.100.75/26 ?
 
-## 🟡 **NIVEAU 2 : Exercices Intermédiaires**
+## **NIVEAU 2 : Exercices Intermédiaires**
 
 ### **Exercice 2.1 : VLSM (Variable Length Subnet Mask)**
 
-**Scénario :** Une entreprise a besoin de :
+**Scénario :**Une entreprise a besoin de :
 - Réseau A : 100 hôtes
 - Réseau B : 50 hôtes  
 - Réseau C : 25 hôtes
@@ -1180,7 +1180,7 @@ Inutilisé : 192.168.1.252 à 192.168.1.255
 
 ### **Exercice 2.2 : Analyse d'Erreur**
 
-**Question :** Trouvez l'erreur dans cette configuration :
+**Question :**Trouvez l'erreur dans cette configuration :
 ```
 Interface Fa0/0 : 172.16.10.1/26
 Interface Fa0/1 : 172.16.10.75/26
@@ -1201,14 +1201,14 @@ IP .1 est dans 172.16.10.0/26 (0-63)
 IP .75 est dans 172.16.10.64/26 (64-127)
 ```
 
-**Erreur :** Les deux interfaces sont dans des sous-réseaux différents !
-**Correction :** Utiliser des IPs du même sous-réseau ou des masques appropriés.
+**Erreur :**Les deux interfaces sont dans des sous-réseaux différents !
+**Correction :**Utiliser des IPs du même sous-réseau ou des masques appropriés.
 
-## 🔴 **NIVEAU 3 : Exercices Avancés**
+## **NIVEAU 3 : Exercices Avancés**
 
 ### **Exercice 3.1 : Optimisation Complexe**
 
-**Scénario :** Conception pour un campus avec :
+**Scénario :**Conception pour un campus avec :
 - Bâtiment A : 500 utilisateurs + 50 serveurs
 - Bâtiment B : 300 utilisateurs + 20 imprimantes  
 - Bâtiment C : 150 utilisateurs + 10 WiFi AP
@@ -1263,7 +1263,7 @@ Liaisons P2P (10 × 2 hôtes) : 172.20.5.208/28
 
 ### **Exercice 3.2 : Troubleshooting Avancé**
 
-**Problème :** Le réseau ne fonctionne pas correctement :
+**Problème :**Le réseau ne fonctionne pas correctement :
 ```
 Router R1 :
 • Fa0/0 : 10.1.1.1/24 (vers LAN-A)
@@ -1308,11 +1308,11 @@ ip route 10.1.1.0 255.255.255.0 10.1.100.1
 ip route 10.1.2.0 255.255.255.0 10.1.100.1
 ```
 
-## 🎯 **Défis Pratiques**
+## **Défis Pratiques**
 
 ### **Défi 1 : Reverse Engineering**
 
-**Donnée :** Un host a l'IP 172.16.47.92/22
+**Donnée :**Un host a l'IP 172.16.47.92/22
 **Trouvez :**
 - Adresse réseau
 - Première et dernière IP
@@ -1321,7 +1321,7 @@ ip route 10.1.2.0 255.255.255.0 10.1.100.1
 
 ### **Défi 2 : Optimisation Extrême**
 
-**Mission :** Avec 192.168.0.0/24, créez :
+**Mission :**Avec 192.168.0.0/24, créez :
 - 1 réseau de 100 hôtes
 - 2 réseaux de 25 hôtes chacun
 - 4 réseaux de 10 hôtes chacun  
@@ -1330,7 +1330,7 @@ ip route 10.1.2.0 255.255.255.0 10.1.100.1
 
 ### **Défi 3 : Dépannage Expert**
 
-**Scénario :** Dans une entreprise, certains VLANs ne communiquent plus entre eux après une reconfiguration. Analysez et corrigez :
+**Scénario :**Dans une entreprise, certains VLANs ne communiquent plus entre eux après une reconfiguration. Analysez et corrigez :
 ```
 VLAN 10 : 192.168.10.0/25 (Users)
 VLAN 20 : 192.168.10.128/26 (Servers)  
@@ -1343,7 +1343,7 @@ Interface VLAN 30 : 192.168.10.193/27
 Interface VLAN 40 : 192.168.10.225/28
 ```
 
-## ✅ **Solutions des Exercices Niveau 1**
+## **Solutions des Exercices Niveau 1**
 
 ### **Solution 1.3 :**
 
@@ -1384,7 +1384,7 @@ Subnets /26 :
 Réponse : 192.168.100.64/26
 ```
 
-## 📊 **Auto-Évaluation**
+## **Auto-Évaluation**
 
 ### **Critères de Maîtrise :**
 
@@ -1406,7 +1406,7 @@ Réponse : 192.168.100.64/26
 └─────────────────────┴─────────────────────────────────────────┘
 ```
 
-## 🎓 **Méthodes de Calcul Rapide**
+## **Méthodes de Calcul Rapide**
 
 ### **Astuce 1 : Méthode Binaire Rapide**
 ```
@@ -1431,7 +1431,7 @@ Exemple : 192.168.1.75 dans /26 ?
 
 ---
 
-**💡 Conseil CCNA :** Pratiquez ces calculs quotidiennement jusqu'à les faire mentalement. C'est la base de toute expertise réseau !
+**Conseil CCNA :**Pratiquez ces calculs quotidiennement jusqu'à les faire mentalement. C'est la base de toute expertise réseau !
 
 ---
 

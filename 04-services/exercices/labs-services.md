@@ -414,7 +414,7 @@ Configuration actuelle :
   ip nat inside source list 1 interface GigabitEthernet 0/1 overload
 ```
 
-**Diagnostic :** Trouvez les 2 erreurs.
+**Diagnostic :**Trouvez les 2 erreurs.
 
 <details>
 <summary>Solution</summary>
@@ -449,7 +449,7 @@ Configuration :
    ip helper-address 10.1.20.100
 ```
 
-**Diagnostic :** Trouvez l'erreur.
+**Diagnostic :**Trouvez l'erreur.
 
 <details>
 <summary>Solution</summary>
@@ -479,7 +479,7 @@ Configuration ACL :
    permit tcp 10.1.10.0 0.0.0.255 any eq 443
 ```
 
-**Diagnostic :** Trouvez l'erreur.
+**Diagnostic :**Trouvez l'erreur.
 
 <details>
 <summary>Solution</summary>
@@ -512,7 +512,7 @@ Configuration :
   no service timestamps log
 ```
 
-**Diagnostic :** Comment corriger ?
+**Diagnostic :**Comment corriger ?
 
 <details>
 <summary>Solution</summary>
@@ -541,7 +541,7 @@ R1# show ntp status
 
 ### Section A : NAT/PAT (10 Questions)
 
-**Q1.** Quel type de NAT associe une adresse privee a une adresse publique de facon permanente ?
+**Q1.**Quel type de NAT associe une adresse privee a une adresse publique de facon permanente ?
 - a) NAT dynamique
 - b) NAT statique
 - c) PAT
@@ -549,7 +549,7 @@ R1# show ntp status
 
 <details><summary>Reponse</summary>b) NAT statique</details>
 
-**Q2.** Quelle commande configure PAT avec l'adresse de l'interface de sortie ?
+**Q2.**Quelle commande configure PAT avec l'adresse de l'interface de sortie ?
 - a) `ip nat inside source list 1 pool POOL`
 - b) `ip nat inside source static 10.1.1.10 203.0.113.1`
 - c) `ip nat inside source list 1 interface Gi0/1 overload`
@@ -557,7 +557,7 @@ R1# show ntp status
 
 <details><summary>Reponse</summary>c) `ip nat inside source list 1 interface Gi0/1 overload`</details>
 
-**Q3.** Quelle est la difference entre Inside Local et Inside Global ?
+**Q3.**Quelle est la difference entre Inside Local et Inside Global ?
 - a) Inside Local est l'IP publique, Inside Global est l'IP privee
 - b) Inside Local est l'IP privee vue depuis l'interieur, Inside Global est l'IP publique representant l'hote interne
 - c) Ce sont deux noms pour la meme adresse
@@ -565,7 +565,7 @@ R1# show ntp status
 
 <details><summary>Reponse</summary>b) Inside Local est l'IP privee vue depuis l'interieur, Inside Global est l'IP publique representant l'hote interne</details>
 
-**Q4.** Quelle commande affiche les traductions NAT actives ?
+**Q4.**Quelle commande affiche les traductions NAT actives ?
 - a) `show nat translations`
 - b) `show ip nat translations`
 - c) `show ip nat statistics`
@@ -573,7 +573,7 @@ R1# show ntp status
 
 <details><summary>Reponse</summary>b) `show ip nat translations`</details>
 
-**Q5.** Combien de sessions simultanees le PAT peut-il theoriquement supporter avec une seule adresse publique ?
+**Q5.**Combien de sessions simultanees le PAT peut-il theoriquement supporter avec une seule adresse publique ?
 - a) 254
 - b) 1024
 - c) Environ 65 000
@@ -583,7 +583,7 @@ R1# show ntp status
 
 ### Section B : DHCP (10 Questions)
 
-**Q6.** Dans le processus DORA, quel message est envoye en premier par le client ?
+**Q6.**Dans le processus DORA, quel message est envoye en premier par le client ?
 - a) DHCP Offer
 - b) DHCP Request
 - c) DHCP Discover
@@ -591,7 +591,7 @@ R1# show ntp status
 
 <details><summary>Reponse</summary>c) DHCP Discover</details>
 
-**Q7.** Pourquoi le DHCP Discover est-il envoye en broadcast ?
+**Q7.**Pourquoi le DHCP Discover est-il envoye en broadcast ?
 - a) C'est plus rapide qu'en unicast
 - b) Le client ne connait pas l'adresse du serveur DHCP
 - c) Le serveur DHCP l'exige
@@ -599,7 +599,7 @@ R1# show ntp status
 
 <details><summary>Reponse</summary>b) Le client ne connait pas l'adresse du serveur DHCP (il n'a pas encore d'IP)</details>
 
-**Q8.** Quelle commande configure un relay agent DHCP sur une interface Cisco ?
+**Q8.**Quelle commande configure un relay agent DHCP sur une interface Cisco ?
 - a) `dhcp relay 10.1.1.100`
 - b) `ip helper-address 10.1.1.100`
 - c) `ip dhcp relay 10.1.1.100`
@@ -607,7 +607,7 @@ R1# show ntp status
 
 <details><summary>Reponse</summary>b) `ip helper-address 10.1.1.100`</details>
 
-**Q9.** A quel pourcentage du bail le client DHCP tente-t-il un renouvellement (T1) ?
+**Q9.**A quel pourcentage du bail le client DHCP tente-t-il un renouvellement (T1) ?
 - a) 25%
 - b) 50%
 - c) 75%
@@ -615,7 +615,7 @@ R1# show ntp status
 
 <details><summary>Reponse</summary>b) 50% du bail (T1 = Renewal)</details>
 
-**Q10.** Quelle adresse obtient un client si aucun serveur DHCP n'est joignable ?
+**Q10.**Quelle adresse obtient un client si aucun serveur DHCP n'est joignable ?
 - a) 0.0.0.0
 - b) 255.255.255.255
 - c) 169.254.x.x (APIPA)
@@ -625,7 +625,7 @@ R1# show ntp status
 
 ### Section C : ACLs (10 Questions)
 
-**Q11.** Quelle est la plage de numeros des ACL standard ?
+**Q11.**Quelle est la plage de numeros des ACL standard ?
 - a) 1-99 et 1300-1999
 - b) 100-199 et 2000-2699
 - c) 1-199
@@ -633,7 +633,7 @@ R1# show ntp status
 
 <details><summary>Reponse</summary>a) 1-99 et 1300-1999</details>
 
-**Q12.** Ou doit-on placer une ACL standard ?
+**Q12.**Ou doit-on placer une ACL standard ?
 - a) Pres de la source
 - b) Pres de la destination
 - c) Au milieu du reseau
@@ -641,7 +641,7 @@ R1# show ntp status
 
 <details><summary>Reponse</summary>b) Pres de la destination</details>
 
-**Q13.** Quel est le wildcard mask pour le reseau 192.168.1.0/24 ?
+**Q13.**Quel est le wildcard mask pour le reseau 192.168.1.0/24 ?
 - a) 255.255.255.0
 - b) 0.0.0.255
 - c) 255.0.0.0
@@ -649,7 +649,7 @@ R1# show ntp status
 
 <details><summary>Reponse</summary>b) 0.0.0.255 (255.255.255.255 - 255.255.255.0)</details>
 
-**Q14.** Que fait le "deny implicite" a la fin de chaque ACL ?
+**Q14.**Que fait le "deny implicite" a la fin de chaque ACL ?
 - a) Autorise tout le trafic restant
 - b) Refuse tout le trafic qui ne match aucune regle
 - c) Envoie le trafic vers une autre ACL
@@ -657,7 +657,7 @@ R1# show ntp status
 
 <details><summary>Reponse</summary>b) Refuse tout le trafic qui ne match aucune regle</details>
 
-**Q15.** Quelle commande applique une ACL sur une interface en direction entrante ?
+**Q15.**Quelle commande applique une ACL sur une interface en direction entrante ?
 - a) `ip access-group 100 in`
 - b) `ip access-list 100 in`
 - c) `access-group 100 inbound`
@@ -667,7 +667,7 @@ R1# show ntp status
 
 ### Section D : Monitoring (10 Questions)
 
-**Q16.** Quel est le niveau de severite Syslog pour "Warning" ?
+**Q16.**Quel est le niveau de severite Syslog pour "Warning" ?
 - a) 3
 - b) 4
 - c) 5
@@ -675,7 +675,7 @@ R1# show ntp status
 
 <details><summary>Reponse</summary>b) 4 (Warning)</details>
 
-**Q17.** Quel protocole de couche 2 est proprietaire Cisco pour la decouverte de voisins ?
+**Q17.**Quel protocole de couche 2 est proprietaire Cisco pour la decouverte de voisins ?
 - a) LLDP
 - b) CDP
 - c) SNMP
@@ -683,7 +683,7 @@ R1# show ntp status
 
 <details><summary>Reponse</summary>b) CDP (Cisco Discovery Protocol)</details>
 
-**Q18.** Quelle version de SNMP offre l'authentification et le chiffrement ?
+**Q18.**Quelle version de SNMP offre l'authentification et le chiffrement ?
 - a) SNMPv1
 - b) SNMPv2c
 - c) SNMPv3
@@ -691,7 +691,7 @@ R1# show ntp status
 
 <details><summary>Reponse</summary>c) SNMPv3 (avec le niveau de securite authPriv)</details>
 
-**Q19.** Quel est le role du stratum dans NTP ?
+**Q19.**Quel est le role du stratum dans NTP ?
 - a) Definir la frequence de synchronisation
 - b) Indiquer la distance par rapport a la source de reference (precision)
 - c) Chiffrer les communications NTP
@@ -699,7 +699,7 @@ R1# show ntp status
 
 <details><summary>Reponse</summary>b) Indiquer la distance par rapport a la source de reference (plus le stratum est bas, plus la source est precise)</details>
 
-**Q20.** Quelle est la difference entre un SNMP Trap et un SNMP Inform ?
+**Q20.**Quelle est la difference entre un SNMP Trap et un SNMP Inform ?
 - a) Les Traps sont chiffres, les Informs ne le sont pas
 - b) Les Traps n'ont pas d'accusé de reception, les Informs en ont un
 - c) Les Traps sont pour SNMPv2, les Informs pour SNMPv3

@@ -8,10 +8,10 @@ Ce module couvre les services reseau essentiels au fonctionnement d'une infrastr
 
 A la fin de ce module, vous serez capable de :
 
-- **Configurer** NAT statique, dynamique et PAT sur routeurs Cisco
+- **Configurer**NAT statique, dynamique et PAT sur routeurs Cisco
 - **Deployer** un serveur DHCP et configurer le relay agent
 - **Implementer** des ACLs standard et etendues pour filtrer le trafic
-- **Mettre en place** NTP, Syslog et SNMP pour le monitoring reseau
+- **Mettre en place**NTP, Syslog et SNMP pour le monitoring reseau
 - **Depanner** les problemes lies aux services reseau
 
 ## Contenu du Module

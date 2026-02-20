@@ -1,10 +1,10 @@
-# 🌐 Adressage IPv4 & IPv6
+# Adressage IPv4 & IPv6
 
-## 🎯 **Vue d'Ensemble**
+## **Vue d'Ensemble**
 
 L'adressage IP est le système qui permet d'identifier de manière unique chaque équipement sur un réseau. Cette fiche couvre IPv4 (actuel) et IPv6 (futur) avec leurs spécificités techniques.
 
-## 🔰 Qu'est-ce que la notation CIDR ?
+## Qu'est-ce que la notation CIDR ?
 
 La notation **CIDR (Classless Inter-Domain Routing)** remplace l’ancienne logique « Classes A/B/C ».  
 Elle se présente sous la forme **adresse /nombre_de_bits_reseau** :
@@ -28,7 +28,7 @@ Terminologie rapide :
 
 ---
 
-## 📊 **IPv4 - Adressage 32 bits**
+## **IPv4 - Adressage 32 bits**
 
 ### **Structure d'une Adresse IPv4**
 
@@ -100,7 +100,7 @@ Adresse IPv4 : 192.168.1.100/24
 └─────────────────────┴──────────────────────────────────────┘
 ```
 
-## 🔢 **Masques de Sous-Réseau**
+## **Masques de Sous-Réseau**
 
 ### **Notation CIDR vs Décimale**
 
@@ -140,7 +140,7 @@ Exemples :
 /30 → 2^(32-30) - 2 = 2^2 - 2 = 4 - 2 = 2 hôtes
 ```
 
-## 🔧 **Configuration IPv4 sur Cisco**
+## **Configuration IPv4 sur Cisco**
 
 ### **Configuration Interface Routeur**
 
@@ -173,7 +173,7 @@ Switch# show ip interface brief
 Switch# ping 192.168.1.1
 ```
 
-## 🌐 **IPv6 - Adressage 128 bits**
+## **IPv6 - Adressage 128 bits**
 
 ### **Structure d'une Adresse IPv6**
 
@@ -248,7 +248,7 @@ Router# show ipv6 route
 Router# ping ipv6 2001:db8:1::2
 ```
 
-## 📊 **Comparaison IPv4 vs IPv6**
+## **Comparaison IPv4 vs IPv6**
 
 ```
 ┌─────────────────┬─────────────────────┬─────────────────────┐
@@ -266,7 +266,7 @@ Router# ping ipv6 2001:db8:1::2
 └─────────────────┴─────────────────────┴─────────────────────┘
 ```
 
-## 🛠️ **Outils de Diagnostic**
+## **Outils de Diagnostic**
 
 ### **Commandes de Base**
 
@@ -300,7 +300,7 @@ ipv6.src == fe80::1
 icmpv6
 ```
 
-## 💡 **Astuces CCNA**
+## **Astuces CCNA**
 
 ### **Calcul Rapide Sous-Réseaux**
 
@@ -328,7 +328,7 @@ ipconfig /all
 route print
 ```
 
-## ❓ **Questions de Révision**
+## **Questions de Révision**
 
 ### **IPv4**
 1. Combien d'hôtes dans un réseau /26 ?
@@ -347,7 +347,7 @@ route print
 
 ---
 
-**💡 Astuce CCNA :** Maîtrisez les calculs de sous-réseaux ! C'est fondamental pour tout le reste de votre parcours réseau.
+**Astuce CCNA :**Maîtrisez les calculs de sous-réseaux ! C'est fondamental pour tout le reste de votre parcours réseau.
 
 ---
 

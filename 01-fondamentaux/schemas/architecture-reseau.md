@@ -1,10 +1,10 @@
-# 🏗️ Architecture Réseau - Schémas et Topologies
+# Architecture Réseau - Schémas et Topologies
 
-## 🎯 **Vue d'Ensemble**
+## **Vue d'Ensemble**
 
 Cette section présente les architectures réseau fondamentales avec des schémas ASCII détaillés pour comprendre visuellement les concepts de base de la CCNA.
 
-## 🌐 **Modèle Réseau Hiérarchique à 3 Niveaux**
+## **Modèle Réseau Hiérarchique à 3 Niveaux**
 
 ### **Architecture Traditionnelle Cisco**
 
@@ -75,7 +75,7 @@ Légende :
 └─────────────────┴────────────────────────────────────────────┘
 ```
 
-## 🏢 **Modèle Collapsed Core (PME)**
+## **Modèle Collapsed Core (PME)**
 
 ### **Architecture Simplifiée 2 Niveaux**
 
@@ -116,7 +116,7 @@ Inconvénients :
 • Performance réduite si surcharge
 ```
 
-## 🔗 **Topologies de Connectivité**
+## **Topologies de Connectivité**
 
 ### **Topologie Étoile (Star)**
 
@@ -173,7 +173,7 @@ Maillage Partiel (Partial Mesh) :
 • Plus courant en pratique
 ```
 
-## 🏗️ **Architecture Campus Enterprise**
+## **Architecture Campus Enterprise**
 
 ### **Design Typique Grande Entreprise**
 
@@ -220,7 +220,7 @@ Maillage Partiel (Partial Mesh) :
 └─────────────────────────────────────────────────────────────┘
 ```
 
-## 🌍 **Architecture WAN Entreprise**
+## **Architecture WAN Entreprise**
 
 ### **Connectivité Multi-Sites**
 
@@ -257,7 +257,7 @@ Connectivité :
 • 4G/5G (secours mobile)
 ```
 
-## 🔧 **Redondance et Haute Disponibilité**
+## **Redondance et Haute Disponibilité**
 
 ### **Modèle HSR (Hot Standby Routing)**
 
@@ -302,7 +302,7 @@ Configuration Gateway : 192.168.1.1 (IP Virtuelle)
 • Basculement automatique si panne Router-1
 ```
 
-## 📊 **Design de Segmentation VLAN**
+## **Design de Segmentation VLAN**
 
 ### **Séparation par Fonction**
 
@@ -338,7 +338,7 @@ Ports Access Switch :
 • Port 25-48 : VLAN 20 + Voice VLAN 40
 ```
 
-## 💡 **Bonnes Pratiques Architecture**
+## **Bonnes Pratiques Architecture**
 
 ### **Principes de Design**
 
@@ -363,7 +363,7 @@ Ports Access Switch :
 └─────────────────────┴────────────────────────────────────────┘
 ```
 
-## ❓ **Questions de Révision**
+## **Questions de Révision**
 
 ### **Architecture**
 1. Quels sont les 3 niveaux du modèle hiérarchique Cisco ?
@@ -382,7 +382,7 @@ Ports Access Switch :
 
 ---
 
-**💡 Astuce CCNA :** Comprenez d'abord l'architecture avant de plonger dans les détails techniques. La vue d'ensemble est cruciale !
+**Astuce CCNA :**Comprenez d'abord l'architecture avant de plonger dans les détails techniques. La vue d'ensemble est cruciale !
 
 ---
 

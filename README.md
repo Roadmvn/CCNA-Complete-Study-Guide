@@ -1,10 +1,10 @@
-# 🌐 Repository de Révision CCNA - Guide Complet
+# Repository de Révision CCNA - Guide Complet
 
-## 📋 **Vue d'Ensemble**
+## **Vue d'Ensemble**
 
 Ce repository contient une révision complète et structurée pour la certification **Cisco CCNA (200-301)**. Chaque module est organisé de manière pédagogique avec des schémas ASCII, des exercices pratiques et des scripts de configuration.
 
-## 🎯 **Plan de Révision - 11 Semaines**
+## **Plan de Révision - 11 Semaines**
 
 ```
 Semaines 1-2  │ 01-fondamentaux     │ Modèle OSI, IPv4/IPv6, Sous-réseaux
@@ -14,7 +14,7 @@ Semaines 8-9  │ 04-services         │ NAT, DHCP, ACLs, Monitoring
 Semaines 10-11│ 05-securite-wan     │ Sécurité, PPP, VPNs
 ```
 
-## 📁 **Structure du Repository**
+## **Structure du Repository**
 
 ```
 ccna/
@@ -46,7 +46,7 @@ ccna/
     └── schemas/                # Topologies WAN
 ```
 
-## 🚀 **Comment Utiliser ce Repository**
+## **Comment Utiliser ce Repository**
 
 ### **1. Navigation Rapide**
 - **[Module 1 - Fondamentaux](./01-fondamentaux/README.md)** - Modèle OSI, adressage, protocoles
@@ -59,10 +59,10 @@ ccna/
 
 Pour chaque module, suivez cette séquence :
 
-1. **📖 Fiche théorique** : Comprenez les concepts (`./fiches/`)
-2. **🔍 Schémas visuels** : Visualisez les topologies (`./schemas/`)
-3. **⚙️ Configuration** : Pratiquez avec les scripts (`./scripts/`)
-4. **🎯 Exercices** : Testez vos connaissances (`./exercices/`)
+1. **Fiche théorique** : Comprenez les concepts (`./fiches/`)
+2. **Schémas visuels** : Visualisez les topologies (`./schemas/`)
+3. **Configuration** : Pratiquez avec les scripts (`./scripts/`)
+4. **Exercices** : Testez vos connaissances (`./exercices/`)
 
 ### **3. Outils Recommandés**
 
@@ -71,7 +71,7 @@ Pour chaque module, suivez cette séquence :
 - **[Wireshark](https://www.wireshark.org/)** - Analyse de trafic
 - **Documentation Cisco** - Référence officielle
 
-## ✅ **Checklist de Progression**
+## **Checklist de Progression**
 
 ### **Phase 1 : Fondamentaux** *(Semaines 1-2)*
 - [ ] Modèle OSI (7 couches)
@@ -106,27 +106,27 @@ Pour chaque module, suivez cette séquence :
 - [ ] VPNs site-to-site
 - [ ] Troubleshooting avancé
 
-## 🎓 **Conseils de Révision**
+## **Conseils de Révision**
 
-### **📚 Techniques d'Apprentissage**
+### **Techniques d'Apprentissage**
 - **Méthode Feynman** : Expliquez chaque concept simplement
 - **Pomodoro** : Sessions de 25 min avec pauses
 - **Mind Mapping** : Cartes mentales des protocoles
 - **Pratique régulière** : Labos quotidiens
 
-### **🔧 Configuration Pratique**
+### **Configuration Pratique**
 - Utilisez les scripts fournis comme base
 - Modifiez les configurations pour comprendre
 - Testez différents scénarios de panne
 - Documentez vos découvertes
 
-### **📊 Évaluation Continue**
+### **Évaluation Continue**
 - Auto-évaluation après chaque module
 - Exercices pratiques réguliers
 - Simulation d'examen final
 - Révision des points faibles
 
-## 🏆 **Objectifs d'Apprentissage**
+## **Objectifs d'Apprentissage**
 
 **À la fin de cette révision, vous serez capable de :**
 
@@ -137,7 +137,7 @@ Pour chaque module, suivez cette séquence :
 5. **Sécuriser** infrastructures avec bonnes pratiques
 6. **Diagnostiquer** et résoudre problèmes réseau complexes
 
-## 📞 **Support et Ressources**
+## **Support et Ressources**
 
 - **Documentation Cisco** : [cisco.com/go/docs](https://cisco.com/go/docs)
 - **Cisco Learning Network** : Communauté officielle
@@ -146,14 +146,14 @@ Pour chaque module, suivez cette séquence :
 
 ---
 
-## 🎯 **Prochaines Étapes**
+## **Prochaines Étapes**
 
 1. **Commencez par [Module 1 - Fondamentaux](./01-fondamentaux/README.md)**
 2. **Suivez l'ordre des phases** pour une progression logique
 3. **Pratiquez régulièrement** avec les labos
 4. **Utilisez la checklist** pour suivre votre progression
 
-**Bonne révision et succès pour votre CCNA ! 🎉**
+**Bonne révision et succès pour votre CCNA ! **
 
 ---
 

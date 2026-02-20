@@ -30,15 +30,15 @@ Topologie SANS STP (boucle active) :
 Sequence de la Broadcast Storm :
 
 1. PC-A envoie un broadcast
-   PC-A ──broadcast──▶ SW-B
+   PC-A ──broadcast── SW-B
 
 2. SW-B forward sur tous ses ports (sauf source)
-   SW-B ──▶ SW-A (via Lien1)
-   SW-B ──▶ SW-A (via Lien2)
+   SW-B ── SW-A (via Lien1)
+   SW-B ── SW-A (via Lien2)
 
 3. SW-A recoit 2 copies, forward chacune
-   SW-A ──▶ SW-B (via Lien2, copie de Lien1)
-   SW-A ──▶ SW-B (via Lien1, copie de Lien2)
+   SW-A ── SW-B (via Lien2, copie de Lien1)
+   SW-A ── SW-B (via Lien1, copie de Lien2)
 
 4. SW-B re-forward... et ainsi de suite
    = BOUCLE INFINIE = BROADCAST STORM
@@ -303,10 +303,10 @@ Panne → Alternate Port promu → Proposal/Agreement → FWD
 
 Mecanisme Proposal/Agreement (RSTP) :
 ┌──────────┐    Proposal     ┌──────────┐
-│  SW-A    │────────────────▶│  SW-B    │
+│  SW-A    │────────────────│  SW-B    │
 │          │                 │          │
 │          │    Agreement    │ Bloque   │
-│          │◀────────────────│ ses ports│
+│          │────────────────│ ses ports│
 │          │                 │ non-edge │
 │ Port FWD │                 │ puis     │
 │          │                 │ Agreement│

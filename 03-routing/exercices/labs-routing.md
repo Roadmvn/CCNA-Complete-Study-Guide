@@ -121,11 +121,11 @@ R1# traceroute 192.168.3.1
 
 ### Questions
 
-**Q1 :** Quelle est la difference entre une route next-hop et une route exit-interface ?
-**R1 :** La route next-hop specifie l'adresse IP du prochain routeur (ex: `ip route ... 10.0.12.2`). La route exit-interface specifie l'interface de sortie (ex: `ip route ... Serial0/0/0`). L'exit-interface est recommandee sur les liens point-a-point (Serial). Sur les reseaux multi-access (Ethernet), la route next-hop est preferee car l'exit-interface necessite une resolution ARP supplementaire.
+**Q1 :**Quelle est la difference entre une route next-hop et une route exit-interface ?
+**R1 :**La route next-hop specifie l'adresse IP du prochain routeur (ex: `ip route ... 10.0.12.2`). La route exit-interface specifie l'interface de sortie (ex: `ip route ... Serial0/0/0`). L'exit-interface est recommandee sur les liens point-a-point (Serial). Sur les reseaux multi-access (Ethernet), la route next-hop est preferee car l'exit-interface necessite une resolution ARP supplementaire.
 
-**Q2 :** Que se passe-t-il si on supprime la route vers 10.0.23.0/30 sur R1 ?
-**R2 :** R1 pourra toujours joindre LAN-C car le trafic vers 192.168.3.0/24 passe par 10.0.12.2 (R2), et R2 connait le lien 10.0.23.0/30 car il y est directement connecte. En revanche, R1 ne pourrait plus faire un ping directement vers 10.0.23.2 (interface de R3).
+**Q2 :**Que se passe-t-il si on supprime la route vers 10.0.23.0/30 sur R1 ?
+**R2 :**R1 pourra toujours joindre LAN-C car le trafic vers 192.168.3.0/24 passe par 10.0.12.2 (R2), et R2 connait le lien 10.0.23.0/30 car il y est directement connecte. En revanche, R1 ne pourrait plus faire un ping directement vers 10.0.23.2 (interface de R3).
 
 ---
 
@@ -262,14 +262,14 @@ R1# show ip ospf
 
 ### Questions
 
-**Q1 :** Pourquoi configure-t-on `passive-interface` sur Gi0/0 ?
-**R1 :** L'interface Gi0/0 est connectee au LAN. Il n'y a pas de routeur OSPF sur ce segment, donc envoyer des paquets Hello est inutile. La passive-interface empeche l'envoi de Hello tout en continuant d'annoncer le reseau dans OSPF.
+**Q1 :**Pourquoi configure-t-on `passive-interface` sur Gi0/0 ?
+**R1 :**L'interface Gi0/0 est connectee au LAN. Il n'y a pas de routeur OSPF sur ce segment, donc envoyer des paquets Hello est inutile. La passive-interface empeche l'envoi de Hello tout en continuant d'annoncer le reseau dans OSPF.
 
-**Q2 :** Pourquoi utiliser `auto-cost reference-bandwidth 10000` ?
-**R2 :** Par defaut, la reference bandwidth est 100 Mbps. Cela donne le meme cout (1) a FastEthernet, GigabitEthernet et 10GigE. En augmentant la reference a 10000 Mbps, les couts deviennent : FastEthernet=100, GigE=10, 10GigE=1. Cela permet a OSPF de choisir les meilleurs chemins en fonction de la bande passante reelle.
+**Q2 :**Pourquoi utiliser `auto-cost reference-bandwidth 10000` ?
+**R2 :**Par defaut, la reference bandwidth est 100 Mbps. Cela donne le meme cout (1) a FastEthernet, GigabitEthernet et 10GigE. En augmentant la reference a 10000 Mbps, les couts deviennent : FastEthernet=100, GigE=10, 10GigE=1. Cela permet a OSPF de choisir les meilleurs chemins en fonction de la bande passante reelle.
 
-**Q3 :** Quel est le cout total de R1 vers LAN-5 (192.168.5.0/24) ?
-**R3 :** Le chemin R1 -> R3 -> R5 : cout Gi0/2 (10) + cout R3-R5 (10) + cout LAN-5 (10) = 30. Si les interfaces sont GigabitEthernet avec reference-bandwidth 10000, chaque lien GigE coute 10.
+**Q3 :**Quel est le cout total de R1 vers LAN-5 (192.168.5.0/24) ?
+**R3 :**Le chemin R1 -> R3 -> R5 : cout Gi0/2 (10) + cout R3-R5 (10) + cout LAN-5 (10) = 30. Si les interfaces sont GigabitEthernet avec reference-bandwidth 10000, chaque lien GigE coute 10.
 
 ---
 
@@ -406,14 +406,14 @@ R2# show ip ospf border-routers
 
 ### Questions
 
-**Q1 :** Sur le segment 10.0.0.0/24, si R2 a la priorite 255 et R3 la priorite 100, qui est DR et BDR ?
-**R1 :** R2 est DR (priorite la plus haute : 255). R3 est BDR (priorite suivante : 100). Tout autre routeur avec la priorite par defaut (1) serait DROther.
+**Q1 :**Sur le segment 10.0.0.0/24, si R2 a la priorite 255 et R3 la priorite 100, qui est DR et BDR ?
+**R1 :**R2 est DR (priorite la plus haute : 255). R3 est BDR (priorite suivante : 100). Tout autre routeur avec la priorite par defaut (1) serait DROther.
 
-**Q2 :** Pourquoi les routes apprises depuis Area 2 apparaissent avec le code "O IA" sur R1 ?
-**R2 :** R1 est dans Area 1. Les routes d'Area 2 sont des routes inter-area qui traversent Area 0 via les ABR (R2 et R4). L'ABR genere des LSA Type 3 (Summary) pour annoncer ces routes aux autres areas. Le code "O IA" indique une route OSPF Inter-Area.
+**Q2 :**Pourquoi les routes apprises depuis Area 2 apparaissent avec le code "O IA" sur R1 ?
+**R2 :**R1 est dans Area 1. Les routes d'Area 2 sont des routes inter-area qui traversent Area 0 via les ABR (R2 et R4). L'ABR genere des LSA Type 3 (Summary) pour annoncer ces routes aux autres areas. Le code "O IA" indique une route OSPF Inter-Area.
 
-**Q3 :** Si on ajoute un routeur R7 sur le segment 10.0.0.0/24 avec une priorite de 255, deviendra-t-il DR ?
-**R3 :** Non. L'election DR/BDR est non-preemptive. R7 restera DROther tant que le DR actuel (R2) est operationnel. R7 ne deviendra DR que si R2 et R3 tombent en panne, ou si le processus OSPF est redemarre sur tous les routeurs du segment.
+**Q3 :**Si on ajoute un routeur R7 sur le segment 10.0.0.0/24 avec une priorite de 255, deviendra-t-il DR ?
+**R3 :**Non. L'election DR/BDR est non-preemptive. R7 restera DROther tant que le DR actuel (R2) est operationnel. R7 ne deviendra DR que si R2 et R3 tombent en panne, ou si le processus OSPF est redemarre sur tous les routeurs du segment.
 
 ---
 
@@ -558,11 +558,11 @@ Gi0/1         1      0/0         1      0/0          50         0
 
 ### Questions
 
-**Q1 :** Pourquoi le trafic de R1 vers LAN-3 passe par R4 et non par R2 ?
-**R1 :** Le lien R1-R2 est un lien Serial a 1.544 Mbps alors que le chemin R1-R4-R3 utilise des liens GigabitEthernet a 1 Gbps. La metrique EIGRP (composite de bandwidth + delay par defaut) est bien meilleure via les liens Gigabit. Le chemin R1->R4->R3 a une metrique totale plus basse.
+**Q1 :**Pourquoi le trafic de R1 vers LAN-3 passe par R4 et non par R2 ?
+**R1 :**Le lien R1-R2 est un lien Serial a 1.544 Mbps alors que le chemin R1-R4-R3 utilise des liens GigabitEthernet a 1 Gbps. La metrique EIGRP (composite de bandwidth + delay par defaut) est bien meilleure via les liens Gigabit. Le chemin R1->R4->R3 a une metrique totale plus basse.
 
-**Q2 :** Quelle est la difference entre le mode classique et le Named Mode EIGRP ?
-**R2 :** Le Named Mode offre une configuration hierarchique (address-family, af-interface, topology) qui permet de gerer IPv4 et IPv6 sous le meme processus EIGRP. Il supporte aussi des fonctionnalites additionnelles comme les wide metrics. Le mode classique utilise la syntaxe `router eigrp <ASN>` traditionnelle.
+**Q2 :**Quelle est la difference entre le mode classique et le Named Mode EIGRP ?
+**R2 :**Le Named Mode offre une configuration hierarchique (address-family, af-interface, topology) qui permet de gerer IPv4 et IPv6 sous le meme processus EIGRP. Il supporte aussi des fonctionnalites additionnelles comme les wide metrics. Le mode classique utilise la syntaxe `router eigrp <ASN>` traditionnelle.
 
 ---
 
@@ -602,7 +602,7 @@ R2# show ip route
 ! Resultat : Pas de route vers 192.168.1.0/24 !
 ```
 
-**Cause :** Routes statiques manquantes sur R1 et R2.
+**Cause :**Routes statiques manquantes sur R1 et R2.
 
 **Solution :**
 
@@ -702,7 +702,7 @@ R1# show ip route 192.168.3.0
 ! Mais le chemin via R2 serait 10 + 10 + 10 = 30
 ```
 
-**Cause :** La reference-bandwidth n'est pas configuree de maniere uniforme. R2 utilise probablement la reference par defaut (100 Mbps) ce qui donne un cout de 1 au lieu de 10 sur ses interfaces GigE.
+**Cause :**La reference-bandwidth n'est pas configuree de maniere uniforme. R2 utilise probablement la reference par defaut (100 Mbps) ce qui donne un cout de 1 au lieu de 10 sur ses interfaces GigE.
 
 **Solution :**
 
@@ -748,7 +748,7 @@ R2# show run | section eigrp
 router eigrp 200
 ```
 
-**Cause :** Les numeros d'AS (Autonomous System) sont differents. EIGRP necessite le meme numero AS pour former une adjacence.
+**Cause :**Les numeros d'AS (Autonomous System) sont differents. EIGRP necessite le meme numero AS pour former une adjacence.
 
 **Solution :**
 

@@ -1,38 +1,38 @@
-# 🔀 Module 2 : Switching & VLANs
+# Module 2 : Switching & VLANs
 
-## 📋 **Vue d'Ensemble du Module**
+## **Vue d'Ensemble du Module**
 
 Ce module couvre la commutation Ethernet et les VLANs, technologies essentielles de la couche 2. Vous maîtriserez la segmentation réseau, la redondance et l'optimisation du trafic.
 
-## 🎯 **Objectifs d'Apprentissage** *(Semaines 3-4)*
+## **Objectifs d'Apprentissage** *(Semaines 3-4)*
 
 À la fin de ce module, vous serez capable de :
 
-- **Configurer** VLANs et trunking 802.1Q
-- **Implémenter** Spanning Tree Protocol (STP)
-- **Déployer** EtherChannel pour agrégation de liens
+- **Configurer**VLANs et trunking 802.1Q
+- **Implémenter**Spanning Tree Protocol (STP)
+- **Déployer**EtherChannel pour agrégation de liens
 - **Sécuriser** les ports avec port-security
 - **Diagnostiquer** problèmes de commutation L2
 
-## 📚 **Contenu du Module**
+## **Contenu du Module**
 
-### **[📖 Fiches de Révision](./fiches/)**
+### **[Fiches de Révision](./fiches/)**
 - [VLANs et Trunking](./fiches/vlans-trunking.md)
 - [Spanning Tree Protocol](./fiches/stp.md)
 - [EtherChannel](./fiches/etherchannel.md)
 
-### **[🔍 Schémas & Topologies](./schemas/)**
+### **[Schémas & Topologies](./schemas/)**
 - [Topologies Switching](./schemas/topologies-switching.md)
 
-### **[⚙️ Scripts de Configuration](./scripts/)**
+### **[Scripts de Configuration](./scripts/)**
 - [Setup STP](./scripts/config-stp.sh)
 - [Déploiement EtherChannel](./scripts/config-etherchannel.sh)
 - [Port-Security](./scripts/config-port-security.sh)
 
-### **[🎯 Exercices Pratiques](./exercices/)**
+### **[Exercices Pratiques](./exercices/)**
 - [Labs Switching](./exercices/labs-switching.md)
 
-## ✅ **Checklist de Progression**
+## **Checklist de Progression**
 
 ### **Semaine 3 : VLANs et Trunking**
 - [ ] **VLANs de base** : Création, assignation ports
@@ -46,7 +46,7 @@ Ce module couvre la commutation Ethernet et les VLANs, technologies essentielles
 - [ ] **EtherChannel** : LACP, PAgP, static
 - [ ] **Sécurité L2** : Port-security, BPDU Guard
 
-## 🔧 **Technologies Couvertes**
+## **Technologies Couvertes**
 
 ### **VLANs (Virtual LANs)**
 ```
@@ -97,7 +97,7 @@ Switch-A                    Switch-B
 └─────────┘                └─────────┘
 ```
 
-## 🛠️ **Outils et Labos Recommandés**
+## **Outils et Labos Recommandés**
 
 ### **Simulations Packet Tracer**
 1. **Labo VLAN** : 3 switches, 4 VLANs, inter-VLAN routing
@@ -154,7 +154,7 @@ show etherchannel summary
 show interfaces port-channel 1
 ```
 
-## 📊 **Scénarios de Dépannage**
+## **Scénarios de Dépannage**
 
 ### **Problème 1 : VLAN Non Fonctionnel**
 ```
@@ -191,7 +191,7 @@ Solution :
 • Activer BPDU Guard
 ```
 
-## 🎯 **Questions d'Auto-Évaluation**
+## **Questions d'Auto-Évaluation**
 
 ### **VLANs**
 1. Différence entre access et trunk ?
@@ -208,7 +208,7 @@ Solution :
 2. Avantages EtherChannel ?
 3. Troubleshooting agrégation échouée ?
 
-## 🚀 **Laboratoires Pratiques**
+## **Laboratoires Pratiques**
 
 ### **Lab 1 : VLANs Multi-Switches**
 ```
@@ -245,13 +245,13 @@ Tâches :
 5. Simuler panne et recovery
 ```
 
-## 📈 **Validation des Compétences**
+## **Validation des Compétences**
 
 ### **Critères de Maîtrise**
-- ✅ **Configuration** : VLANs et trunks sans documentation
-- ✅ **Diagnostic** : Identifier problème L2 en 5 minutes
-- ✅ **Optimisation** : Ajuster STP pour performance
-- ✅ **Sécurité** : Implémenter port-security correctement
+-  **Configuration** : VLANs et trunks sans documentation
+-  **Diagnostic** : Identifier problème L2 en 5 minutes
+-  **Optimisation** : Ajuster STP pour performance
+-  **Sécurité** : Implémenter port-security correctement
 
 ### **Mini-Projet Final**
 ```
@@ -269,14 +269,14 @@ Exigences :
 5. Documentation complète
 ```
 
-## 🔗 **Liens avec Autres Modules**
+## **Liens avec Autres Modules**
 
 - **Module 1 (Fondamentaux)** : Couche 2 OSI, adressage
 - **Module 3 (Routing)** : Inter-VLAN routing, distribution
 - **Module 4 (Services)** : DHCP par VLAN, management
 - **Module 5 (Sécurité)** : 802.1X, VLANs de sécurité
 
-## 📞 **Ressources Complémentaires**
+## **Ressources Complémentaires**
 
 - **IEEE 802.1Q** : Standard VLAN tagging
 - **IEEE 802.1D** : Spanning Tree Protocol original
@@ -285,7 +285,7 @@ Exigences :
 
 ---
 
-**💡 Conseil :** Pratiquez la configuration de VLANs jusqu'à la maîtriser parfaitement. C'est une base quotidienne de l'administration réseau !
+**Conseil :**Pratiquez la configuration de VLANs jusqu'à la maîtriser parfaitement. C'est une base quotidienne de l'administration réseau !
 
 ---
 

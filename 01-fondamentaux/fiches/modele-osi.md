@@ -1,10 +1,10 @@
-# 📡 Modèle OSI - Les 7 Couches Réseau
+# Modèle OSI - Les 7 Couches Réseau
 
-## 🎯 **Vue d'Ensemble**
+## **Vue d'Ensemble**
 
 Le modèle OSI (Open Systems Interconnection) est un modèle conceptuel qui standardise les fonctions de communication d'un système de télécommunication sans se préoccuper de sa structure interne.
 
-## 🏗️ **Architecture des 7 Couches**
+## **Architecture des 7 Couches**
 
 ```
 ┌─────────────────────────────────────────────────────┐
@@ -24,10 +24,10 @@ Le modèle OSI (Open Systems Interconnection) est un modèle conceptuel qui stan
 └─────────────────────────────────────────────────────┘
 ```
 
-## 📋 **Détail des Couches**
+## **Détail des Couches**
 
 ### **Couche 1 : PHYSIQUE**
-**Rôle :** Transmission des bits bruts sur le support physique
+**Rôle :**Transmission des bits bruts sur le support physique
 
 **Caractéristiques :**
 - Signaux électriques, optiques, radio
@@ -46,7 +46,7 @@ PC1 ─[Câble UTP]─ HUB ─[Câble UTP]─ PC2
 ```
 
 ### **Couche 2 : LIAISON DE DONNÉES**
-**Rôle :** Détection/correction d'erreurs, contrôle de flux local
+**Rôle :**Détection/correction d'erreurs, contrôle de flux local
 
 **Caractéristiques :**
 - Adresses MAC (Media Access Control)
@@ -67,7 +67,7 @@ PC1 ─[Câble UTP]─ HUB ─[Câble UTP]─ PC2
 ```
 
 ### **Couche 3 : RÉSEAU**
-**Rôle :** Routage des paquets entre réseaux différents
+**Rôle :**Routage des paquets entre réseaux différents
 
 **Caractéristiques :**
 - Adresses IP (IPv4/IPv6)
@@ -89,7 +89,7 @@ Router 1 (192.168.1.1) ─ [Internet] ─ Router 2 (10.0.0.1)
 ```
 
 ### **Couche 4 : TRANSPORT**
-**Rôle :** Fiabilité de bout en bout, contrôle de flux
+**Rôle :**Fiabilité de bout en bout, contrôle de flux
 
 **Protocoles Principaux :**
 
@@ -107,16 +107,16 @@ Router 1 (192.168.1.1) ─ [Internet] ─ Router 2 (10.0.0.1)
 ```
 TCP                           UDP
 ┌─────────────┐              ┌─────────────┐
-│ SYN         │──────────────▶│             │
-│             │◀──────────────│ SYN-ACK     │
-│ ACK         │──────────────▶│             │
-│ Données     │◀─────────────▶│ Données     │
+│ SYN         │──────────────│             │
+│             │──────────────│ SYN-ACK     │
+│ ACK         │──────────────│             │
+│ Données     │─────────────│ Données     │
 │ Fiable      │               │ Rapide      │
 └─────────────┘               └─────────────┘
 ```
 
 ### **Couche 5 : SESSION**
-**Rôle :** Établissement, gestion et fermeture de sessions
+**Rôle :**Établissement, gestion et fermeture de sessions
 
 **Fonctions :**
 - Dialogue entre applications
@@ -129,7 +129,7 @@ TCP                           UDP
 - SQL Sessions
 
 ### **Couche 6 : PRÉSENTATION**
-**Rôle :** Formatting, chiffrement, compression des données
+**Rôle :**Formatting, chiffrement, compression des données
 
 **Fonctions :**
 - Conversion de formats (ASCII, JPEG, MPEG)
@@ -142,7 +142,7 @@ TCP                           UDP
 - ASCII, EBCDIC (Formats texte)
 
 ### **Couche 7 : APPLICATION**
-**Rôle :** Interface directe avec l'utilisateur
+**Rôle :**Interface directe avec l'utilisateur
 
 **Protocoles Courants :**
 - **HTTP/HTTPS** : Navigation web
@@ -152,7 +152,7 @@ TCP                           UDP
 - **DNS** : Résolution de noms
 - **DHCP** : Attribution IP automatique
 
-## 🔄 **Flux de Communication OSI**
+## **Flux de Communication OSI**
 
 ### **Envoi de Données (Encapsulation) :**
 ```
@@ -176,7 +176,7 @@ Présentation   │ Décompression/Déchiffrement
 Application    │ Données pour l'utilisateur
 ```
 
-## 🛠️ **Correspondance OSI ↔ TCP/IP**
+## **Correspondance OSI ↔ TCP/IP**
 
 ```
 ┌──────────────┬─────────────────┬─────────────────┐
@@ -195,7 +195,7 @@ Application    │ Données pour l'utilisateur
 └──────────────┴─────────────────┴─────────────────┘
 ```
 
-## 💡 **Mnémotechniques**
+## **Mnémotechniques**
 
 ### **Couches 1→7 (Ascendant) :**
 **"Please Do Not Throw Sausage Pizza Away"**
@@ -207,7 +207,7 @@ Application    │ Données pour l'utilisateur
 - **A**pplication → **P**résentation → **S**ession → **T**ransport
 - **N**etwork → **D**onnées → **P**hysique
 
-## 🎯 **Exemples Pratiques CCNA**
+## **Exemples Pratiques CCNA**
 
 ### **Scénario 1 : Navigation Web (HTTP)**
 ```
@@ -230,7 +230,7 @@ Application    │ Données pour l'utilisateur
 7. Physique (1)      : Transmission bits
 ```
 
-## ❓ **Questions de Révision**
+## **Questions de Révision**
 
 ### **Niveau Fondamental**
 1. Citez les 7 couches OSI dans l'ordre
@@ -247,7 +247,7 @@ Application    │ Données pour l'utilisateur
 2. Pourquoi séparer en couches ? Avantages ?
 3. Dépannage : problème couche 1 vs couche 3 ?
 
-## 🔗 **Liens avec Autres Modules**
+## **Liens avec Autres Modules**
 
 - **Module 2 (Switching)** : Couche 2 - VLANs, STP
 - **Module 3 (Routing)** : Couche 3 - OSPF, EIGRP  
@@ -256,7 +256,7 @@ Application    │ Données pour l'utilisateur
 
 ---
 
-**💡 Astuce CCNA :** Le modèle OSI est LA référence pour le dépannage réseau. Commencez toujours par la couche 1 (physique) et remontez !
+**Astuce CCNA :**Le modèle OSI est LA référence pour le dépannage réseau. Commencez toujours par la couche 1 (physique) et remontez !
 
 ---
 

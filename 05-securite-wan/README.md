@@ -110,7 +110,7 @@ Une fois ce module maitrise :
 
 1. **Revision finale** de tous les modules (01 a 05)
 2. **Examen blanc** complet type CCNA 200-301
-3. **Passage de l'examen** Cisco CCNA
+3. **Passage de l'examen**Cisco CCNA
 
 ## Ressources Complementaires
 

@@ -1,10 +1,10 @@
-# 🏷️ VLANs et Trunking - Segmentation Réseau
+# VLANs et Trunking - Segmentation Réseau
 
-## 🎯 **Vue d'Ensemble**
+## **Vue d'Ensemble**
 
 Les VLANs (Virtual Local Area Networks) permettent de segmenter logiquement un réseau physique en plusieurs domaines de broadcast isolés. Le trunking permet de transporter plusieurs VLANs sur une seule liaison.
 
-## 📚 **Concepts Fondamentaux**
+## **Concepts Fondamentaux**
 
 ### **Qu'est-ce qu'un VLAN ?**
 
@@ -54,7 +54,7 @@ Segmentation par VLANs :
 └─────────────────────┴────────────────────────────────────────┘
 ```
 
-## 🏗️ **Types de VLANs**
+## **Types de VLANs**
 
 ### **Classification par Usage**
 
@@ -89,13 +89,13 @@ VLAN 1004   : fddinet-default
 VLAN 1005   : trnet-default
 VLAN 4095   : Réservé système
 
-⚠️  Bonnes Pratiques :
+  Bonnes Pratiques :
 • Ne jamais utiliser VLAN 1 pour données utilisateur
 • Changer native VLAN du défaut (1)
 • Utiliser VLAN management dédié
 ```
 
-## 🔌 **Types de Ports Switch**
+## **Types de Ports Switch**
 
 ### **Port Access (Mode Access)**
 
@@ -148,7 +148,7 @@ Switch(config-if)# description "Trunk to Switch-B"
 Switch(config-if)# exit
 ```
 
-## 🏷️ **Protocole 802.1Q (Dot1Q)**
+## **Protocole 802.1Q (Dot1Q)**
 
 ### **Structure de la Trame 802.1Q**
 
@@ -209,19 +209,19 @@ Transmission Trame depuis Port Trunk :
 
 Port de Destination Access :
 ┌─────────────┐    ┌──────────────┐    ┌─────────────┐
-│ Trame +Tag  │ ──▶│ Suppression  │──▶ │ Trame seule │
+│ Trame +Tag  │ ──│ Suppression  │── │ Trame seule │
 │             │    │ Tag 802.1Q   │    │             │
 └─────────────┘    └──────────────┘    └─────────────┘
 
 Port de Destination Trunk :
 ┌─────────────┐    ┌──────────────┐    ┌─────────────┐
-│ Trame +Tag  │ ──▶│ Conservation │──▶ │ Trame +Tag  │
+│ Trame +Tag  │ ──│ Conservation │── │ Trame +Tag  │
 │             │    │ Tag si ≠     │    │             │
 │             │    │ Native VLAN  │    │             │
 └─────────────┘    └──────────────┘    └─────────────┘
 ```
 
-## ⚙️ **Configuration des VLANs**
+## **Configuration des VLANs**
 
 ### **Création et Configuration de Base**
 
@@ -287,7 +287,7 @@ Switch(config-if)# description "Trunk to Distribution"
 Switch(config-if)# exit
 ```
 
-## 🔍 **Commandes de Vérification**
+## **Commandes de Vérification**
 
 ### **Vérification VLANs**
 
@@ -373,7 +373,7 @@ Fa0/24      10,20,30,99
 Gi0/1       1,10,20,30,99
 ```
 
-## 🔧 **Routing Inter-VLAN**
+## **Routing Inter-VLAN**
 
 ### **Méthode 1 : Router-on-a-Stick**
 
@@ -470,7 +470,7 @@ Switch(config-if)# no shutdown
 Switch(config-if)# exit
 ```
 
-## 🐛 **Dépannage VLANs et Trunking**
+## **Dépannage VLANs et Trunking**
 
 ### **Problèmes Courants et Solutions**
 
@@ -553,7 +553,7 @@ Switch# show spanning-tree vlan 10
 Switch# show vtp status
 ```
 
-## 💡 **Bonnes Pratiques VLAN**
+## **Bonnes Pratiques VLAN**
 
 ### **Design et Sécurité**
 
@@ -596,7 +596,7 @@ Gateways :
 • 192.168.x.100+ = Utilisateurs/équipements finaux
 ```
 
-## ❓ **Questions de Révision**
+## **Questions de Révision**
 
 ### **Concepts de Base**
 1. Qu'est-ce qu'un VLAN et pourquoi l'utiliser ?
@@ -615,7 +615,7 @@ Gateways :
 
 ---
 
-**💡 Astuce CCNA :** Maîtrisez parfaitement les commandes show vlan et show interfaces trunk. Elles sont essentielles pour le dépannage quotidien !
+**Astuce CCNA :**Maîtrisez parfaitement les commandes show vlan et show interfaces trunk. Elles sont essentielles pour le dépannage quotidien !
 
 ---
 

@@ -18,24 +18,19 @@ Ce module couvre la commutation Ethernet et les VLANs, technologies essentielles
 
 ### **[📖 Fiches de Révision](./fiches/)**
 - [VLANs et Trunking](./fiches/vlans-trunking.md)
-- [Spanning Tree Protocol](./fiches/spanning-tree.md)
+- [Spanning Tree Protocol](./fiches/stp.md)
 - [EtherChannel](./fiches/etherchannel.md)
-- [Sécurité des Ports](./fiches/port-security.md)
 
 ### **[🔍 Schémas & Topologies](./schemas/)**
-- [Topologies VLAN](./schemas/topologies-vlan.md)
-- [Architecture STP](./schemas/architecture-stp.md)
-- [Configurations EtherChannel](./schemas/etherchannel-topologies.md)
+- [Topologies Switching](./schemas/topologies-switching.md)
 
 ### **[⚙️ Scripts de Configuration](./scripts/)**
-- [Configuration VLANs](./scripts/config-vlans.sh)
 - [Setup STP](./scripts/config-stp.sh)
 - [Déploiement EtherChannel](./scripts/config-etherchannel.sh)
+- [Port-Security](./scripts/config-port-security.sh)
 
 ### **[🎯 Exercices Pratiques](./exercices/)**
-- [Labos VLANs](./exercices/labo-vlans.md)
-- [Scénarios STP](./exercices/scenarios-stp.md)
-- [Tests EtherChannel](./exercices/tests-etherchannel.md)
+- [Labs Switching](./exercices/labs-switching.md)
 
 ## ✅ **Checklist de Progression**
 

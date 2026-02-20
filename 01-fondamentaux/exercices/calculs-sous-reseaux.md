@@ -27,8 +27,8 @@ Une adresse IP, c'est comme une adresse postale pour ordinateurs :
 ```
 Adresse Postale          |  Adresse IP
 123 Rue des Fleurs       |  192.168.1.10
-75001 Paris             |  (dans le réseau 192.168.1.0)
-France                  |  
+75001 Paris              |  (dans le réseau 192.168.1.0)
+France                   |  
 ```
 
 **Différence importante :** 

@@ -12,10 +12,10 @@ Le NAT (Network Address Translation) permet de traduire des adresses IP privees 
                     INSIDE                    OUTSIDE
                   (Reseau prive)            (Internet)
 
- ┌─────────┐     ┌──────────┐     ┌──────────┐     ┌─────────────┐
- │  PC-A    │────>│  Routeur │────>│  ISP     │────>│ Serveur Web │
- │10.1.1.10 │     │   NAT    │     │          │     │ 93.184.216.34│
- └─────────┘     └──────────┘     └──────────┘     └─────────────┘
+ +---------+     +----------+     +----------+     +-------------+
+ |  PC-A    |---->|  Routeur |---->|  ISP     |---->| Serveur Web |
+ |10.1.1.10 |     |   NAT    |     |          |     | 93.184.216.34|
+ +---------+     +----------+     +----------+     +-------------+
 
  Inside Local    Inside Global    Outside Local   Outside Global
  10.1.1.10       203.0.113.1      93.184.216.34   93.184.216.34
@@ -24,25 +24,25 @@ Le NAT (Network Address Translation) permet de traduire des adresses IP privees 
 ### Les 4 Types d'Adresses NAT
 
 ```
-┌──────────────────┬─────────────────────────────────────────────────────┐
-│ Terme            │ Definition                                          │
-├──────────────────┼─────────────────────────────────────────────────────┤
-│ Inside Local     │ Adresse IP privee de l'hote interne                │
-│                  │ (vue depuis le reseau interne)                     │
-│                  │ Exemple : 10.1.1.10                               │
-├──────────────────┼─────────────────────────────────────────────────────┤
-│ Inside Global    │ Adresse IP publique representant l'hote interne    │
-│                  │ (vue depuis Internet)                              │
-│                  │ Exemple : 203.0.113.1                             │
-├──────────────────┼─────────────────────────────────────────────────────┤
-│ Outside Local    │ Adresse IP de l'hote externe vue depuis l'interieur│
-│                  │ (generalement identique a Outside Global)          │
-│                  │ Exemple : 93.184.216.34                           │
-├──────────────────┼─────────────────────────────────────────────────────┤
-│ Outside Global   │ Adresse IP publique reelle de l'hote externe      │
-│                  │ (vue depuis Internet)                              │
-│                  │ Exemple : 93.184.216.34                           │
-└──────────────────┴─────────────────────────────────────────────────────┘
++------------------+-----------------------------------------------------+
+| Terme            | Definition                                          |
++------------------+-----------------------------------------------------+
+| Inside Local     | Adresse IP privee de l'hote interne                |
+|                  | (vue depuis le reseau interne)                     |
+|                  | Exemple : 10.1.1.10                               |
++------------------+-----------------------------------------------------+
+| Inside Global    | Adresse IP publique representant l'hote interne    |
+|                  | (vue depuis Internet)                              |
+|                  | Exemple : 203.0.113.1                             |
++------------------+-----------------------------------------------------+
+| Outside Local    | Adresse IP de l'hote externe vue depuis l'interieur|
+|                  | (generalement identique a Outside Global)          |
+|                  | Exemple : 93.184.216.34                           |
++------------------+-----------------------------------------------------+
+| Outside Global   | Adresse IP publique reelle de l'hote externe      |
+|                  | (vue depuis Internet)                              |
+|                  | Exemple : 93.184.216.34                           |
++------------------+-----------------------------------------------------+
 ```
 
 ---
@@ -57,32 +57,32 @@ Mapping permanent 1:1 entre une adresse IP privee et une adresse IP publique. Ch
 
 ```
 AVANT TRADUCTION (paquet sortant) :
-┌──────────────────────────────────────────────────────────────┐
-│ Src IP : 10.1.1.10    │ Dst IP : 93.184.216.34             │
-│ Src MAC: AA:AA:AA:AA   │ Dst MAC: [MAC routeur]            │
-└──────────────────────────────────────────────────────────────┘
-         │
-         │ Routeur NAT consulte la table statique :
-         │ 10.1.1.10 <--> 203.0.113.1
++--------------------------------------------------------------+
+| Src IP : 10.1.1.10    | Dst IP : 93.184.216.34             |
+| Src MAC: AA:AA:AA:AA   | Dst MAC: [MAC routeur]            |
++--------------------------------------------------------------+
+         |
+         | Routeur NAT consulte la table statique :
+         | 10.1.1.10 <--> 203.0.113.1
          v
 APRES TRADUCTION (paquet sur Internet) :
-┌──────────────────────────────────────────────────────────────┐
-│ Src IP : 203.0.113.1  │ Dst IP : 93.184.216.34             │
-│ Src MAC: [MAC routeur] │ Dst MAC: [MAC ISP]                │
-└──────────────────────────────────────────────────────────────┘
++--------------------------------------------------------------+
+| Src IP : 203.0.113.1  | Dst IP : 93.184.216.34             |
+| Src MAC: [MAC routeur] | Dst MAC: [MAC ISP]                |
++--------------------------------------------------------------+
 
 RETOUR (paquet entrant) :
-┌──────────────────────────────────────────────────────────────┐
-│ Src IP : 93.184.216.34 │ Dst IP : 203.0.113.1              │
-└──────────────────────────────────────────────────────────────┘
-         │
-         │ Routeur NAT traduit en sens inverse :
-         │ 203.0.113.1 --> 10.1.1.10
++--------------------------------------------------------------+
+| Src IP : 93.184.216.34 | Dst IP : 203.0.113.1              |
++--------------------------------------------------------------+
+         |
+         | Routeur NAT traduit en sens inverse :
+         | 203.0.113.1 --> 10.1.1.10
          v
 APRES TRADUCTION INVERSE :
-┌──────────────────────────────────────────────────────────────┐
-│ Src IP : 93.184.216.34 │ Dst IP : 10.1.1.10                │
-└──────────────────────────────────────────────────────────────┘
++--------------------------------------------------------------+
+| Src IP : 93.184.216.34 | Dst IP : 10.1.1.10                |
++--------------------------------------------------------------+
 ```
 
 ### Configuration Cisco : NAT Statique
@@ -127,14 +127,14 @@ Mapping temporaire entre adresses privees et un pool d'adresses publiques. L'ass
 Pool d'adresses publiques : 203.0.113.10 a 203.0.113.14 (5 adresses)
 
 Hotes internes :                           Pool NAT :
-┌─────────────┐                      ┌──────────────────┐
-│ 10.1.1.10   │──────┐               │ 203.0.113.10 [X] │ <- attribue a .10
-│ 10.1.1.20   │──────┤  ┌────────┐  │ 203.0.113.11 [X] │ <- attribue a .20
-│ 10.1.1.30   │──────┼─>│ NAT    │─>│ 203.0.113.12 [ ] │ <- disponible
-│ 10.1.1.40   │──────┤  │ Router │  │ 203.0.113.13 [ ] │ <- disponible
-│ 10.1.1.50   │──────┤  └────────┘  │ 203.0.113.14 [ ] │ <- disponible
-│ 10.1.1.60   │──────┘               └──────────────────┘
-└─────────────┘
++-------------+                      +------------------+
+| 10.1.1.10   |------+               | 203.0.113.10 [X] | <- attribue a .10
+| 10.1.1.20   |------+  +--------+  | 203.0.113.11 [X] | <- attribue a .20
+| 10.1.1.30   |------+->| NAT    |->| 203.0.113.12 [ ] | <- disponible
+| 10.1.1.40   |------+  | Router |  | 203.0.113.13 [ ] | <- disponible
+| 10.1.1.50   |------+  +--------+  | 203.0.113.14 [ ] | <- disponible
+| 10.1.1.60   |------+               +------------------+
++-------------+
    6 hotes          Si pool epuise (5 adresses utilisees),
                     le 6eme hote est REFUSE (pas de traduction)
 ```
@@ -174,18 +174,18 @@ Plusieurs adresses privees partagent UNE SEULE adresse publique. La differenciat
 ```
 AVANT TRADUCTION :
 
-PC-A (10.1.1.10)  port src 50001 ──┐
-PC-B (10.1.1.20)  port src 50002 ──┼──> Routeur NAT ──> Internet
-PC-C (10.1.1.30)  port src 50001 ──┘    (203.0.113.1)
+PC-A (10.1.1.10)  port src 50001 --+
+PC-B (10.1.1.20)  port src 50002 --+--> Routeur NAT --> Internet
+PC-C (10.1.1.30)  port src 50001 --+    (203.0.113.1)
 
 TABLE NAT DU ROUTEUR :
-┌───────────────────────────┬───────────────────────────┬──────────┐
-│ Inside Local              │ Inside Global             │ Outside  │
-├───────────────────────────┼───────────────────────────┼──────────┤
-│ 10.1.1.10:50001           │ 203.0.113.1:50001         │ 80       │
-│ 10.1.1.20:50002           │ 203.0.113.1:50002         │ 80       │
-│ 10.1.1.30:50001           │ 203.0.113.1:50003         │ 443      │
-└───────────────────────────┴───────────────────────────┴──────────┘
++---------------------------+---------------------------+----------+
+| Inside Local              | Inside Global             | Outside  |
++---------------------------+---------------------------+----------+
+| 10.1.1.10:50001           | 203.0.113.1:50001         | 80       |
+| 10.1.1.20:50002           | 203.0.113.1:50002         | 80       |
+| 10.1.1.30:50001           | 203.0.113.1:50003         | 443      |
++---------------------------+---------------------------+----------+
                                           ^
                    Port change de 50001 a 50003 pour eviter le conflit
 
@@ -232,24 +232,24 @@ Router(config)# ip nat inside source list 1 pool PAT-POOL overload
 ## Comparaison des 3 Types de NAT
 
 ```
-┌─────────────────┬──────────────┬──────────────┬─────────────────┐
-│ Critere         │ NAT Statique │ NAT Dynamique│ PAT (Overload)  │
-├─────────────────┼──────────────┼──────────────┼─────────────────┤
-│ Mapping         │ 1:1          │ 1:1 temporaire│ Many:1          │
-│                 │ permanent    │              │                 │
-├─────────────────┼──────────────┼──────────────┼─────────────────┤
-│ Nb IP publiques │ 1 par hote   │ 1 par session│ 1 pour tous     │
-│ requises        │              │              │                 │
-├─────────────────┼──────────────┼──────────────┼─────────────────┤
-│ Connexion       │ Oui          │ Non          │ Non             │
-│ entrante        │ (bidirection)│              │ (sauf port fwd) │
-├─────────────────┼──────────────┼──────────────┼─────────────────┤
-│ Cas d'usage     │ Serveurs     │ Pool limite  │ Acces Internet  │
-│                 │ publics      │              │ general         │
-├─────────────────┼──────────────┼──────────────┼─────────────────┤
-│ Limite          │ Nb IP pub.   │ Taille pool  │ ~65000 ports    │
-│                 │ = Nb hotes   │              │ par IP publique │
-└─────────────────┴──────────────┴──────────────┴─────────────────┘
++-----------------+--------------+--------------+-----------------+
+| Critere         | NAT Statique | NAT Dynamique| PAT (Overload)  |
++-----------------+--------------+--------------+-----------------+
+| Mapping         | 1:1          | 1:1 temporaire| Many:1          |
+|                 | permanent    |              |                 |
++-----------------+--------------+--------------+-----------------+
+| Nb IP publiques | 1 par hote   | 1 par session| 1 pour tous     |
+| requises        |              |              |                 |
++-----------------+--------------+--------------+-----------------+
+| Connexion       | Oui          | Non          | Non             |
+| entrante        | (bidirection)|              | (sauf port fwd) |
++-----------------+--------------+--------------+-----------------+
+| Cas d'usage     | Serveurs     | Pool limite  | Acces Internet  |
+|                 | publics      |              | general         |
++-----------------+--------------+--------------+-----------------+
+| Limite          | Nb IP pub.   | Taille pool  | ~65000 ports    |
+|                 | = Nb hotes   |              | par IP publique |
++-----------------+--------------+--------------+-----------------+
 ```
 
 ---
@@ -305,15 +305,15 @@ Etape 5 : Verifier le routage
   -> Route par defaut presente ?
 
 Erreurs courantes :
-┌─────────────────────────────────┬────────────────────────────────────┐
-│ Probleme                        │ Solution                           │
-├─────────────────────────────────┼────────────────────────────────────┤
-│ Interface inside/outside inversee│ Verifier ip nat inside/outside    │
-│ ACL ne match pas le trafic      │ Verifier les wildcard masks       │
-│ Pool epuise (NAT dynamique)     │ Augmenter le pool ou passer a PAT │
-│ Pas de route par defaut         │ ip route 0.0.0.0 0.0.0.0 [next-hop]│
-│ Oubli du mot-cle overload       │ Ajouter overload pour PAT         │
-└─────────────────────────────────┴────────────────────────────────────┘
++---------------------------------+------------------------------------+
+| Probleme                        | Solution                           |
++---------------------------------+------------------------------------+
+| Interface inside/outside inversee| Verifier ip nat inside/outside    |
+| ACL ne match pas le trafic      | Verifier les wildcard masks       |
+| Pool epuise (NAT dynamique)     | Augmenter le pool ou passer a PAT |
+| Pas de route par defaut         | ip route 0.0.0.0 0.0.0.0 [next-hop]|
+| Oubli du mot-cle overload       | Ajouter overload pour PAT         |
++---------------------------------+------------------------------------+
 ```
 
 ### Effacer les Traductions NAT

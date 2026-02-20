@@ -349,7 +349,7 @@ OSPF utilise le cout (cost) comme metrique. Le cout est base sur la bande passan
 Formule du Cout OSPF :
 
                    Reference Bandwidth
-    Cost = ────────────────────────────────
+    Cost = --------------------------------
                 Interface Bandwidth
 
     Reference Bandwidth par defaut = 100 Mbps (10^8)

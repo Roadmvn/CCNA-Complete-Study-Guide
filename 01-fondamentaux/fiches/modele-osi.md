@@ -7,21 +7,21 @@ Le modèle OSI (Open Systems Interconnection) est un modèle conceptuel qui stan
 ## **Architecture des 7 Couches**
 
 ```
-┌─────────────────────────────────────────────────────┐
-│ 7. APPLICATION  │ Interface utilisateur             │
-├─────────────────────────────────────────────────────┤
-│ 6. PRÉSENTATION │ Chiffrement, Compression          │
-├─────────────────────────────────────────────────────┤
-│ 5. SESSION      │ Établissement de sessions         │
-├─────────────────────────────────────────────────────┤
-│ 4. TRANSPORT    │ TCP/UDP - Fiabilité               │
-├─────────────────────────────────────────────────────┤
-│ 3. RÉSEAU       │ IP - Routage                      │
-├─────────────────────────────────────────────────────┤
-│ 2. LIAISON      │ Ethernet - Trames                 │
-├─────────────────────────────────────────────────────┤
-│ 1. PHYSIQUE     │ Bits sur le média                 │
-└─────────────────────────────────────────────────────┘
++-----------------------------------------------------+
+| 7. APPLICATION  | Interface utilisateur             |
++-----------------------------------------------------+
+| 6. PRÉSENTATION | Chiffrement, Compression          |
++-----------------------------------------------------+
+| 5. SESSION      | Établissement de sessions         |
++-----------------------------------------------------+
+| 4. TRANSPORT    | TCP/UDP - Fiabilité               |
++-----------------------------------------------------+
+| 3. RÉSEAU       | IP - Routage                      |
++-----------------------------------------------------+
+| 2. LIAISON      | Ethernet - Trames                 |
++-----------------------------------------------------+
+| 1. PHYSIQUE     | Bits sur le média                 |
++-----------------------------------------------------+
 ```
 
 ## **Détail des Couches**
@@ -41,7 +41,7 @@ Le modèle OSI (Open Systems Interconnection) est un modèle conceptuel qui stan
 
 **Exemple :**
 ```
-PC1 ─[Câble UTP]─ HUB ─[Câble UTP]─ PC2
+PC1 -[Câble UTP]- HUB -[Câble UTP]- PC2
      Bits: 1010110111001...
 ```
 
@@ -60,10 +60,10 @@ PC1 ─[Câble UTP]─ HUB ─[Câble UTP]─ PC2
 
 **Format Trame Ethernet :**
 ```
-┌──────────┬──────────┬──────┬─────────┬─────┐
-│ MAC Dest │ MAC Src  │ Type │ Données │ CRC │
-│  6 bytes │ 6 bytes  │2 byte│ Variable│4 bit│
-└──────────┴──────────┴──────┴─────────┴─────┘
++----------+----------+------+---------+-----+
+| MAC Dest | MAC Src  | Type | Données | CRC |
+|  6 bytes | 6 bytes  |2 byte| Variable|4 bit|
++----------+----------+------+---------+-----+
 ```
 
 ### **Couche 3 : RÉSEAU**
@@ -82,9 +82,9 @@ PC1 ─[Câble UTP]─ HUB ─[Câble UTP]─ PC2
 **Exemple de Routage :**
 ```
 PC A (192.168.1.10) 
-    ↓
-Router 1 (192.168.1.1) ─ [Internet] ─ Router 2 (10.0.0.1)
-                                           ↓
+    v
+Router 1 (192.168.1.1) - [Internet] - Router 2 (10.0.0.1)
+                                           v
                                     PC B (10.0.0.10)
 ```
 
@@ -106,13 +106,13 @@ Router 1 (192.168.1.1) ─ [Internet] ─ Router 2 (10.0.0.1)
 **Comparaison TCP vs UDP :**
 ```
 TCP                           UDP
-┌─────────────┐              ┌─────────────┐
-│ SYN         │──────────────│             │
-│             │──────────────│ SYN-ACK     │
-│ ACK         │──────────────│             │
-│ Données     │─────────────│ Données     │
-│ Fiable      │               │ Rapide      │
-└─────────────┘               └─────────────┘
++-------------+              +-------------+
+| SYN         |--------------|             |
+|             |--------------| SYN-ACK     |
+| ACK         |--------------|             |
+| Données     |-------------| Données     |
+| Fiable      |               | Rapide      |
++-------------+               +-------------+
 ```
 
 ### **Couche 5 : SESSION**
@@ -156,56 +156,56 @@ TCP                           UDP
 
 ### **Envoi de Données (Encapsulation) :**
 ```
-Application    │ Données utilisateur
-Présentation   │ + En-tête présentation
-Session        │ + En-tête session  
-Transport      │ + En-tête TCP/UDP = SEGMENT
-Réseau         │ + En-tête IP = PAQUET
-Liaison        │ + En-tête Ethernet = TRAME  
-Physique       │ Conversion en bits = BITS
+Application    | Données utilisateur
+Présentation   | + En-tête présentation
+Session        | + En-tête session  
+Transport      | + En-tête TCP/UDP = SEGMENT
+Réseau         | + En-tête IP = PAQUET
+Liaison        | + En-tête Ethernet = TRAME  
+Physique       | Conversion en bits = BITS
 ```
 
 ### **Réception de Données (Désencapsulation) :**
 ```
-Physique       │ Bits reçus
-Liaison        │ Analyse trame Ethernet
-Réseau         │ Analyse paquet IP
-Transport      │ Analyse segment TCP/UDP
-Session        │ Gestion session
-Présentation   │ Décompression/Déchiffrement  
-Application    │ Données pour l'utilisateur
+Physique       | Bits reçus
+Liaison        | Analyse trame Ethernet
+Réseau         | Analyse paquet IP
+Transport      | Analyse segment TCP/UDP
+Session        | Gestion session
+Présentation   | Décompression/Déchiffrement  
+Application    | Données pour l'utilisateur
 ```
 
-## **Correspondance OSI ↔ TCP/IP**
+## **Correspondance OSI <-> TCP/IP**
 
 ```
-┌──────────────┬─────────────────┬─────────────────┐
-│ Modèle OSI   │ Modèle TCP/IP   │ Protocoles      │
-├──────────────┼─────────────────┼─────────────────┤
-│ Application  │                 │ HTTP, FTP, DNS  │
-│ Présentation │   Application   │ SMTP, POP3      │
-│ Session      │                 │ Telnet, SSH     │
-├──────────────┼─────────────────┼─────────────────┤
-│ Transport    │   Transport     │ TCP, UDP        │
-├──────────────┼─────────────────┼─────────────────┤
-│ Réseau       │   Internet      │ IP, ICMP, ARP   │
-├──────────────┼─────────────────┼─────────────────┤
-│ Liaison      │   Accès Réseau  │ Ethernet, WiFi  │
-│ Physique     │                 │ Câbles, Signaux │
-└──────────────┴─────────────────┴─────────────────┘
++--------------+-----------------+-----------------+
+| Modèle OSI   | Modèle TCP/IP   | Protocoles      |
++--------------+-----------------+-----------------+
+| Application  |                 | HTTP, FTP, DNS  |
+| Présentation |   Application   | SMTP, POP3      |
+| Session      |                 | Telnet, SSH     |
++--------------+-----------------+-----------------+
+| Transport    |   Transport     | TCP, UDP        |
++--------------+-----------------+-----------------+
+| Réseau       |   Internet      | IP, ICMP, ARP   |
++--------------+-----------------+-----------------+
+| Liaison      |   Accès Réseau  | Ethernet, WiFi  |
+| Physique     |                 | Câbles, Signaux |
++--------------+-----------------+-----------------+
 ```
 
 ## **Mnémotechniques**
 
-### **Couches 1→7 (Ascendant) :**
+### **Couches 1->7 (Ascendant) :**
 **"Please Do Not Throw Sausage Pizza Away"**
-- **P**hysique → **D**onnées → **N**etwork → **T**ransport  
-- **S**ession → **P**résentation → **A**pplication
+- **P**hysique -> **D**onnées -> **N**etwork -> **T**ransport  
+- **S**ession -> **P**résentation -> **A**pplication
 
-### **Couches 7→1 (Descendant) :**
+### **Couches 7->1 (Descendant) :**
 **"All People Seem To Need Data Processing"**
-- **A**pplication → **P**résentation → **S**ession → **T**ransport
-- **N**etwork → **D**onnées → **P**hysique
+- **A**pplication -> **P**résentation -> **S**ession -> **T**ransport
+- **N**etwork -> **D**onnées -> **P**hysique
 
 ## **Exemples Pratiques CCNA**
 

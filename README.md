@@ -7,43 +7,43 @@ Ce repository contient une révision complète et structurée pour la certificat
 ## **Plan de Révision - 11 Semaines**
 
 ```
-Semaines 1-2  │ 01-fondamentaux     │ Modèle OSI, IPv4/IPv6, Sous-réseaux
-Semaines 3-4  │ 02-switching        │ VLANs, STP, EtherChannel  
-Semaines 5-7  │ 03-routing          │ Statique, OSPF, EIGRP, BGP
-Semaines 8-9  │ 04-services         │ NAT, DHCP, ACLs, Monitoring
-Semaines 10-11│ 05-securite-wan     │ Sécurité, PPP, VPNs
+Semaines 1-2  | 01-fondamentaux     | Modèle OSI, IPv4/IPv6, Sous-réseaux
+Semaines 3-4  | 02-switching        | VLANs, STP, EtherChannel  
+Semaines 5-7  | 03-routing          | Statique, OSPF, EIGRP, BGP
+Semaines 8-9  | 04-services         | NAT, DHCP, ACLs, Monitoring
+Semaines 10-11| 05-securite-wan     | Sécurité, PPP, VPNs
 ```
 
 ## **Structure du Repository**
 
 ```
 ccna/
-├── README.md                    # Ce fichier - Guide principal
-├── 01-fondamentaux/            # Phase 1 : Bases réseau
-│   ├── fiches/                 # Fiches de révision détaillées
-│   ├── exercices/              # Exercices pratiques + solutions
-│   ├── scripts/                # Scripts de configuration
-│   └── schemas/                # Topologies et schémas ASCII
-├── 02-switching/               # Phase 2 : Commutation
-│   ├── fiches/                 # VLANs, STP, EtherChannel
-│   ├── exercices/              # Labos switching
-│   ├── scripts/                # Configurations switch
-│   └── schemas/                # Topologies switching
-├── 03-routing/                 # Phase 3 : Routage
-│   ├── fiches/                 # OSPF, EIGRP, BGP
-│   ├── exercices/              # Labos routing
-│   ├── scripts/                # Configurations routing
-│   └── schemas/                # Topologies routing
-├── 04-services/                # Phase 4 : Services réseau
-│   ├── fiches/                 # NAT, DHCP, ACLs
-│   ├── exercices/              # Labos services
-│   ├── scripts/                # Configurations services
-│   └── schemas/                # Schémas services
-└── 05-securite-wan/            # Phase 5 : Sécurité & WAN
-    ├── fiches/                 # Sécurité, PPP, VPNs
-    ├── exercices/              # Labos sécurité
-    ├── scripts/                # Configurations sécurité
-    └── schemas/                # Topologies WAN
++-- README.md                    # Ce fichier - Guide principal
++-- 01-fondamentaux/            # Phase 1 : Bases réseau
+|   +-- fiches/                 # Fiches de révision détaillées
+|   +-- exercices/              # Exercices pratiques + solutions
+|   +-- scripts/                # Scripts de configuration
+|   +-- schemas/                # Topologies et schémas ASCII
++-- 02-switching/               # Phase 2 : Commutation
+|   +-- fiches/                 # VLANs, STP, EtherChannel
+|   +-- exercices/              # Labos switching
+|   +-- scripts/                # Configurations switch
+|   +-- schemas/                # Topologies switching
++-- 03-routing/                 # Phase 3 : Routage
+|   +-- fiches/                 # OSPF, EIGRP, BGP
+|   +-- exercices/              # Labos routing
+|   +-- scripts/                # Configurations routing
+|   +-- schemas/                # Topologies routing
++-- 04-services/                # Phase 4 : Services réseau
+|   +-- fiches/                 # NAT, DHCP, ACLs
+|   +-- exercices/              # Labos services
+|   +-- scripts/                # Configurations services
+|   +-- schemas/                # Schémas services
++-- 05-securite-wan/            # Phase 5 : Sécurité & WAN
+    +-- fiches/                 # Sécurité, PPP, VPNs
+    +-- exercices/              # Labos sécurité
+    +-- scripts/                # Configurations sécurité
+    +-- schemas/                # Topologies WAN
 ```
 
 ## **Comment Utiliser ce Repository**

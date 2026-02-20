@@ -50,37 +50,37 @@ Ce module couvre la commutation Ethernet et les VLANs, technologies essentielles
 
 ### **VLANs (Virtual LANs)**
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                   VLAN Segmentation                        │
-│                                                             │
-│ VLAN 10 (Sales)     VLAN 20 (IT)     VLAN 30 (Management) │
-│ ┌─────────────┐     ┌─────────────┐   ┌─────────────┐      │
-│ │   PC-Sales  │     │    PC-IT    │   │  Management │      │
-│ │             │     │             │   │   Station   │      │
-│ └─────────────┘     └─────────────┘   └─────────────┘      │
-│        │                   │                 │             │
-│        └───────────────────┼─────────────────┘             │
-│                            │                               │
-│                    ┌─────────────┐                         │
-│                    │   Switch    │                         │
-│                    │   L2/L3     │                         │
-│                    └─────────────┘                         │
-└─────────────────────────────────────────────────────────────┘
++-------------------------------------------------------------+
+|                   VLAN Segmentation                        |
+|                                                             |
+| VLAN 10 (Sales)     VLAN 20 (IT)     VLAN 30 (Management) |
+| +-------------+     +-------------+   +-------------+      |
+| |   PC-Sales  |     |    PC-IT    |   |  Management |      |
+| |             |     |             |   |   Station   |      |
+| +-------------+     +-------------+   +-------------+      |
+|        |                   |                 |             |
+|        +-------------------+-----------------+             |
+|                            |                               |
+|                    +-------------+                         |
+|                    |   Switch    |                         |
+|                    |   L2/L3     |                         |
+|                    +-------------+                         |
++-------------------------------------------------------------+
 ```
 
 ### **Spanning Tree Protocol**
 ```
 Élimination des boucles L2 :
 
-     ┌─────────┐
-     │  SW-A   │ (Root Bridge)
-     └─────────┘
-        │    │
-    ┌───┘    └───┐
-    │            │
-┌─────────┐  ┌─────────┐
-│  SW-B   │──│  SW-C   │
-└─────────┘  └─────────┘
+     +---------+
+     |  SW-A   | (Root Bridge)
+     +---------+
+        |    |
+    +---+    +---+
+    |            |
++---------+  +---------+
+|  SW-B   |--|  SW-C   |
++---------+  +---------+
               Port Blocked
 ```
 
@@ -89,12 +89,12 @@ Ce module couvre la commutation Ethernet et les VLANs, technologies essentielles
 Agrégation de bande passante :
 
 Switch-A                    Switch-B
-┌─────────┐                ┌─────────┐
-│ Port 1  │================│ Port 1  │
-│ Port 2  │================│ Port 2  │ EtherChannel
-│ Port 3  │================│ Port 3  │ (3 x 1Gbps = 3Gbps)
-│ Port 4  │================│ Port 4  │
-└─────────┘                └─────────┘
++---------+                +---------+
+| Port 1  |================| Port 1  |
+| Port 2  |================| Port 2  | EtherChannel
+| Port 3  |================| Port 3  | (3 x 1Gbps = 3Gbps)
+| Port 4  |================| Port 4  |
++---------+                +---------+
 ```
 
 ## **Outils et Labos Recommandés**
@@ -215,8 +215,8 @@ Solution :
 Objectif : Configurer 3 VLANs sur 2 switches avec trunk
 
 Topologie :
-SW1 [Fa0/24] ─── [Fa0/24] SW2
- │                    │
+SW1 [Fa0/24] --- [Fa0/24] SW2
+ |                    |
 PC1 (VLAN10)      PC2 (VLAN10)
 PC3 (VLAN20)      PC4 (VLAN20)
 
@@ -235,7 +235,7 @@ Objectif : Optimiser STP dans topologie redondante
 Topologie en triangle :
     SW1 (Root souhaité)
     /  \
-  SW2──SW3
+  SW2--SW3
 
 Tâches :
 1. Identifier root bridge actuel

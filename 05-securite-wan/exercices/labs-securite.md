@@ -15,23 +15,23 @@ Configurer la securite des ports sur un switch pour limiter le nombre d'adresses
 ### Topologie
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                        SW1 (2960)                           │
-│                                                             │
-│  Fa0/1          Fa0/2          Fa0/3          Fa0/4        │
-│  Port-Sec       Port-Sec       Port-Sec       Port-Sec     │
-│  max: 1         max: 2         max: 1         max: 1       │
-│  sticky         sticky         static         static       │
-│  shutdown       restrict       protect         shutdown     │
-└──┬──────────────┬──────────────┬──────────────┬────────────┘
-   │              │              │              │
-┌──┴──┐       ┌──┴──┐       ┌──┴──┐       ┌──┴──┐
-│PC-A │       │PC-B │       │PC-C │       │HUB  │
-│VLAN │       │VLAN │       │VLAN │       │     │
-│ 10  │       │ 10  │       │ 10  │       │ ┌─┴─┐
-└─────┘       └─────┘       └─────┘       │PC-D│
-                                           │PC-E│ <-- Violation !
-                                           └───┘
++-------------------------------------------------------------+
+|                        SW1 (2960)                           |
+|                                                             |
+|  Fa0/1          Fa0/2          Fa0/3          Fa0/4        |
+|  Port-Sec       Port-Sec       Port-Sec       Port-Sec     |
+|  max: 1         max: 2         max: 1         max: 1       |
+|  sticky         sticky         static         static       |
+|  shutdown       restrict       protect         shutdown     |
++--+--------------+--------------+--------------+------------+
+   |              |              |              |
++--+--+       +--+--+       +--+--+       +--+--+
+|PC-A |       |PC-B |       |PC-C |       |HUB  |
+|VLAN |       |VLAN |       |VLAN |       |     |
+| 10  |       | 10  |       | 10  |       | +-+-+
++-----+       +-----+       +-----+       |PC-D|
+                                           |PC-E| <-- Violation !
+                                           +---+
 
 Adressage :
   PC-A : 192.168.10.10/24   MAC : AAAA.BBBB.0001
@@ -153,34 +153,34 @@ Proteger le reseau contre les attaques DHCP rogue et ARP spoofing en configurant
 ### Topologie
 
 ```
-                         ┌──────────────┐
-                         │ DHCP Server  │
-                         │ 192.168.10.1 │
-                         │ Gi0/0        │
-                         └──────┬───────┘
-                                │
-                         ┌──────┴───────┐
-                         │    SW1       │
-                         │   (Core)     │
-                         │              │
-                         │ Gi0/1:TRUST  │
-                         │              │
-                         │ Fa0/1─┐      │
-                         │ Fa0/2─┤UNTRUST
-                         │ Fa0/3─┘      │
-                         │              │
-                         │ Fa0/10:      │
-                         │ UNTRUST      │
-                         └─┬──┬──┬──┬───┘
-                           │  │  │  │
-              ┌────────────┘  │  │  └────────────┐
-              │               │  │               │
-         ┌────┴────┐    ┌────┴──┴──┐       ┌────┴────┐
-         │  PC-1   │    │  PC-2    │       │ATTACKER │
-         │ Legitime│    │ Legitime │       │ Rogue   │
-         │.10.10   │    │.10.20    │       │ DHCP    │
-         │ Fa0/1   │    │ Fa0/2    │       │ Fa0/10  │
-         └─────────┘    └──────────┘       └─────────┘
+                         +--------------+
+                         | DHCP Server  |
+                         | 192.168.10.1 |
+                         | Gi0/0        |
+                         +------+-------+
+                                |
+                         +------+-------+
+                         |    SW1       |
+                         |   (Core)     |
+                         |              |
+                         | Gi0/1:TRUST  |
+                         |              |
+                         | Fa0/1-+      |
+                         | Fa0/2-+UNTRUST
+                         | Fa0/3-+      |
+                         |              |
+                         | Fa0/10:      |
+                         | UNTRUST      |
+                         +-+--+--+--+---+
+                           |  |  |  |
+              +------------+  |  |  +------------+
+              |               |  |               |
+         +----+----+    +----+--+--+       +----+----+
+         |  PC-1   |    |  PC-2    |       |ATTACKER |
+         | Legitime|    | Legitime |       | Rogue   |
+         |.10.10   |    |.10.20    |       | DHCP    |
+         | Fa0/1   |    | Fa0/2    |       | Fa0/10  |
+         +---------+    +----------+       +---------+
 
 Adressage :
   DHCP Server : 192.168.10.1/24 (pool: .10 a .100)
@@ -307,40 +307,40 @@ Configurer des ACLs standard et etendues pour controler le trafic reseau et prot
 ### Topologie
 
 ```
-                    ┌──────────────┐
-                    │  INTERNET    │
-                    └──────┬───────┘
-                           │
-                    ┌──────┴───────┐
-                    │    R1        │
-                    │              │
-                    │ Gi0/0: WAN  │
-                    │ 203.0.113.1 │
-                    │              │
-                    │ Gi0/1:      │
-                    │ 192.168.10.1│
-                    │ (VLAN 10)   │
-                    │              │
-                    │ Gi0/2:      │
-                    │ 192.168.20.1│
-                    │ (VLAN 20)   │
-                    │              │
-                    │ Gi0/3:      │
-                    │ 192.168.30.1│
-                    │ (VLAN 30)   │
-                    └─┬────┬────┬─┘
-                      │    │    │
-         ┌────────────┘    │    └────────────┐
-         │                 │                 │
-  ┌──────┴──────┐   ┌─────┴──────┐   ┌──────┴──────┐
-  │  VLAN 10    │   │  VLAN 20   │   │  VLAN 30    │
-  │ USERS       │   │ SERVERS    │   │ MANAGEMENT  │
-  │.10.0/24     │   │.20.0/24    │   │.30.0/24     │
-  │             │   │            │   │             │
-  │ PC-A .10   │   │ SRV-WEB .10│   │ ADMIN .10   │
-  │ PC-B .20   │   │ SRV-DB  .20│   │             │
-  │ PC-C .30   │   │ SRV-FTP .30│   │             │
-  └─────────────┘   └────────────┘   └─────────────┘
+                    +--------------+
+                    |  INTERNET    |
+                    +------+-------+
+                           |
+                    +------+-------+
+                    |    R1        |
+                    |              |
+                    | Gi0/0: WAN  |
+                    | 203.0.113.1 |
+                    |              |
+                    | Gi0/1:      |
+                    | 192.168.10.1|
+                    | (VLAN 10)   |
+                    |              |
+                    | Gi0/2:      |
+                    | 192.168.20.1|
+                    | (VLAN 20)   |
+                    |              |
+                    | Gi0/3:      |
+                    | 192.168.30.1|
+                    | (VLAN 30)   |
+                    +-+----+----+-+
+                      |    |    |
+         +------------+    |    +------------+
+         |                 |                 |
+  +------+------+   +-----+------+   +------+------+
+  |  VLAN 10    |   |  VLAN 20   |   |  VLAN 30    |
+  | USERS       |   | SERVERS    |   | MANAGEMENT  |
+  |.10.0/24     |   |.20.0/24    |   |.30.0/24     |
+  |             |   |            |   |             |
+  | PC-A .10   |   | SRV-WEB .10|   | ADMIN .10   |
+  | PC-B .20   |   | SRV-DB  .20|   |             |
+  | PC-C .30   |   | SRV-FTP .30|   |             |
+  +-------------+   +------------+   +-------------+
 
 Regles de securite a implementer :
   1. USERS peuvent acceder au web (HTTP/HTTPS) sur SRV-WEB
@@ -460,28 +460,28 @@ Configurer un tunnel GRE entre deux sites distants pour permettre la communicati
    SITE A                     INTERNET                    SITE B
    LAN: 10.1.1.0/24                                      LAN: 10.2.2.0/24
 
-   ┌─────────┐          ┌─────────────────┐          ┌─────────┐
-   │  PC-A   │          │                 │          │  PC-B   │
-   │10.1.1.10│          │   ISP CLOUD     │          │10.2.2.10│
-   └────┬────┘          │                 │          └────┬────┘
-        │               └────┬───────┬────┘               │
-   ┌────┴────┐               │       │               ┌────┴────┐
-   │  SW-A   │          ┌────┴──┐ ┌──┴────┐          │  SW-B   │
-   └────┬────┘          │ISP-R1│ │ISP-R2 │          └────┬────┘
-        │               └───┬──┘ └──┬────┘               │
-   ┌────┴──────┐            │       │            ┌───────┴────┐
-   │   R1      │            │       │            │    R2      │
-   │           ├────────────┘       └────────────┤            │
-   │Gi0/0:    │                                  │Gi0/0:     │
-   │10.1.1.1  │    ╔════════════════════════╗    │10.2.2.1   │
-   │          │    ║  GRE TUNNEL            ║    │           │
-   │Gi0/1:    │    ║  Tunnel0               ║    │Gi0/1:    │
-   │1.1.1.1/30├────╢  172.16.0.1 <-> .2    ╟────┤2.2.2.1/30│
-   │          │    ║  Source: 1.1.1.1       ║    │           │
-   │Tunnel0:  │    ║  Dest:   2.2.2.1      ║    │Tunnel0:  │
-   │172.16.   │    ╚════════════════════════╝    │172.16.   │
-   │0.1/30    │                                  │0.2/30    │
-   └──────────┘                                  └──────────┘
+   +---------+          +-----------------+          +---------+
+   |  PC-A   |          |                 |          |  PC-B   |
+   |10.1.1.10|          |   ISP CLOUD     |          |10.2.2.10|
+   +----+----+          |                 |          +----+----+
+        |               +----+-------+----+               |
+   +----+----+               |       |               +----+----+
+   |  SW-A   |          +----+--+ +--+----+          |  SW-B   |
+   +----+----+          |ISP-R1| |ISP-R2 |          +----+----+
+        |               +---+--+ +--+----+               |
+   +----+------+            |       |            +-------+----+
+   |   R1      |            |       |            |    R2      |
+   |           +------------+       +------------+            |
+   |Gi0/0:    |                                  |Gi0/0:     |
+   |10.1.1.1  |    +========================+    |10.2.2.1   |
+   |          |    |  GRE TUNNEL            |    |           |
+   |Gi0/1:    |    |  Tunnel0               |    |Gi0/1:    |
+   |1.1.1.1/30+----+  172.16.0.1 <-> .2    +----+2.2.2.1/30|
+   |          |    |  Source: 1.1.1.1       |    |           |
+   |Tunnel0:  |    |  Dest:   2.2.2.1      |    |Tunnel0:  |
+   |172.16.   |    +========================+    |172.16.   |
+   |0.1/30    |                                  |0.2/30    |
+   +----------+                                  +----------+
 ```
 
 ### Configuration R1 (Site A)
@@ -617,34 +617,34 @@ Configurer l'authentification, l'autorisation et la comptabilite (AAA) en mode l
 ### Topologie
 
 ```
-                    ┌──────────────┐
-                    │    R1        │
-                    │              │
-                    │  AAA Local   │
-                    │  SSH active  │
-                    │              │
-                    │ Gi0/0:      │
-                    │ 192.168.1.1 │
-                    │              │
-                    │ Console:    │
-                    │ AAA local   │
-                    │              │
-                    │ VTY 0-4:    │
-                    │ SSH only    │
-                    │ AAA local   │
-                    └──────┬──────┘
-                           │
-                    ┌──────┴──────┐
-                    │   SW1       │
-                    └──────┬──────┘
-                           │
-              ┌────────────┼────────────┐
-              │            │            │
-         ┌────┴────┐  ┌───┴────┐  ┌────┴────┐
-         │ ADMIN   │  │ TECH   │  │ GUEST   │
-         │ Level 15│  │ Level 7│  │ Level 1 │
-         │ .1.10   │  │ .1.20  │  │ .1.30   │
-         └─────────┘  └────────┘  └─────────┘
+                    +--------------+
+                    |    R1        |
+                    |              |
+                    |  AAA Local   |
+                    |  SSH active  |
+                    |              |
+                    | Gi0/0:      |
+                    | 192.168.1.1 |
+                    |              |
+                    | Console:    |
+                    | AAA local   |
+                    |              |
+                    | VTY 0-4:    |
+                    | SSH only    |
+                    | AAA local   |
+                    +------+------+
+                           |
+                    +------+------+
+                    |   SW1       |
+                    +------+------+
+                           |
+              +------------+------------+
+              |            |            |
+         +----+----+  +---+----+  +----+----+
+         | ADMIN   |  | TECH   |  | GUEST   |
+         | Level 15|  | Level 7|  | Level 1 |
+         | .1.10   |  | .1.20  |  | .1.30   |
+         +---------+  +--------+  +---------+
 
 Utilisateurs :
   admin  : privilege 15 (acces complet)
@@ -779,42 +779,42 @@ Securiser un switch et un routeur en desactivant les services inutiles, configur
 ### Topologie
 
 ```
-                    ┌──────────────┐
-                    │  INTERNET    │
-                    └──────┬───────┘
-                           │
-                    ┌──────┴──────────────────┐
-                    │         R1              │
-                    │   (Router de bordure)   │
-                    │                         │
-                    │   Services a desactiver:│
-                    │   - CDP sur WAN         │
-                    │   - HTTP server         │
-                    │   - IP source routing   │
-                    │   - Finger              │
-                    │   - Bootp server        │
-                    │   + NTP, logging, SSH   │
-                    └──────┬──────────────────┘
-                           │
-                    ┌──────┴──────────────────┐
-                    │         SW1             │
-                    │   (Switch access)       │
-                    │                         │
-                    │   Services a desactiver:│
-                    │   - Ports inutilises    │
-                    │   - CDP sur access      │
-                    │   - DTP sur access      │
-                    │   - VLAN 1 management   │
-                    │   + Port-security       │
-                    │   + DHCP snooping       │
-                    └──────┬──────────────────┘
-                           │
-              ┌────────────┼────────────┐
-              │            │            │
-         ┌────┴────┐  ┌───┴────┐  ┌────┴────┐
-         │  PC-1   │  │ PC-2   │  │  VIDE   │
-         │ Fa0/1   │  │ Fa0/2  │  │ Fa0/3-24│
-         └─────────┘  └────────┘  └─────────┘
+                    +--------------+
+                    |  INTERNET    |
+                    +------+-------+
+                           |
+                    +------+------------------+
+                    |         R1              |
+                    |   (Router de bordure)   |
+                    |                         |
+                    |   Services a desactiver:|
+                    |   - CDP sur WAN         |
+                    |   - HTTP server         |
+                    |   - IP source routing   |
+                    |   - Finger              |
+                    |   - Bootp server        |
+                    |   + NTP, logging, SSH   |
+                    +------+------------------+
+                           |
+                    +------+------------------+
+                    |         SW1             |
+                    |   (Switch access)       |
+                    |                         |
+                    |   Services a desactiver:|
+                    |   - Ports inutilises    |
+                    |   - CDP sur access      |
+                    |   - DTP sur access      |
+                    |   - VLAN 1 management   |
+                    |   + Port-security       |
+                    |   + DHCP snooping       |
+                    +------+------------------+
+                           |
+              +------------+------------+
+              |            |            |
+         +----+----+  +---+----+  +----+----+
+         |  PC-1   |  | PC-2   |  |  VIDE   |
+         | Fa0/1   |  | Fa0/2  |  | Fa0/3-24|
+         +---------+  +--------+  +---------+
                                    (shutdown)
 ```
 
@@ -1069,27 +1069,27 @@ show running-config | include banner
 ## Recapitulatif des Labs
 
 ```
-┌──────┬────────────────────────┬─────────────────────────────────────┐
-│ Lab  │ Theme                  │ Competences Acquises                │
-├──────┼────────────────────────┼─────────────────────────────────────┤
-│  1   │ Port-Security          │ Limiter MAC, modes violation,       │
-│      │                        │ sticky, recovery err-disabled       │
-├──────┼────────────────────────┼─────────────────────────────────────┤
-│  2   │ DHCP Snooping + DAI   │ Trust/untrust, binding table,       │
-│      │                        │ bloquer rogue DHCP, ARP spoofing   │
-├──────┼────────────────────────┼─────────────────────────────────────┤
-│  3   │ ACLs Securite          │ ACL standard/etendue, wildcard,     │
-│      │                        │ placement, filtrage trafic          │
-├──────┼────────────────────────┼─────────────────────────────────────┤
-│  4   │ VPN GRE Tunnel         │ Tunnel GRE, encapsulation,          │
-│      │                        │ routage inter-sites                 │
-├──────┼────────────────────────┼─────────────────────────────────────┤
-│  5   │ AAA Local              │ Authentication, authorization,      │
-│      │                        │ privilege levels, SSH               │
-├──────┼────────────────────────┼─────────────────────────────────────┤
-│  6   │ Hardening              │ Desactiver services, bannieres,     │
-│      │                        │ securiser trunks, ports inutilises │
-└──────┴────────────────────────┴─────────────────────────────────────┘
++------+------------------------+-------------------------------------+
+| Lab  | Theme                  | Competences Acquises                |
++------+------------------------+-------------------------------------+
+|  1   | Port-Security          | Limiter MAC, modes violation,       |
+|      |                        | sticky, recovery err-disabled       |
++------+------------------------+-------------------------------------+
+|  2   | DHCP Snooping + DAI   | Trust/untrust, binding table,       |
+|      |                        | bloquer rogue DHCP, ARP spoofing   |
++------+------------------------+-------------------------------------+
+|  3   | ACLs Securite          | ACL standard/etendue, wildcard,     |
+|      |                        | placement, filtrage trafic          |
++------+------------------------+-------------------------------------+
+|  4   | VPN GRE Tunnel         | Tunnel GRE, encapsulation,          |
+|      |                        | routage inter-sites                 |
++------+------------------------+-------------------------------------+
+|  5   | AAA Local              | Authentication, authorization,      |
+|      |                        | privilege levels, SSH               |
++------+------------------------+-------------------------------------+
+|  6   | Hardening              | Desactiver services, bannieres,     |
+|      |                        | securiser trunks, ports inutilises |
++------+------------------------+-------------------------------------+
 ```
 
 ---

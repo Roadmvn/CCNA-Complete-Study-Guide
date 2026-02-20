@@ -21,22 +21,22 @@ La synchronisation horaire est critique pour :
 ```
 Stratum 0 : Sources de reference (horloge atomique, GPS)
             Non directement accessibles sur le reseau
-                          │
+                          |
                           v
 Stratum 1 : Serveurs primaires (connectes directement au Stratum 0)
             Exemples : pool.ntp.org, time.google.com
-  ┌───────────────────────┼───────────────────────┐
-  │                       │                       │
+  +-----------------------+-----------------------+
+  |                       |                       |
   v                       v                       v
 Stratum 2 : Serveurs secondaires (synchronises sur Stratum 1)
             Serveurs NTP d'entreprise
-  ┌───────────┼───────────┐
-  │           │           │
+  +-----------+-----------+
+  |           |           |
   v           v           v
 Stratum 3 : Clients NTP (routeurs, switches, serveurs)
             Equipements reseau de l'entreprise
-  ┌─────┼─────┐
-  │     │     │
+  +-----+-----+
+  |     |     |
   v     v     v
 Stratum 4 : Clients finaux (PC, telephones IP)
 
@@ -97,18 +97,18 @@ Router# show clock
 ### Niveaux de Severite Syslog
 
 ```
-┌────────┬────────────────┬──────────────────────────────────────────────┐
-│ Niveau │ Nom            │ Description                                  │
-├────────┼────────────────┼──────────────────────────────────────────────┤
-│   0    │ Emergency      │ Systeme inutilisable                        │
-│   1    │ Alert          │ Action immediate requise                    │
-│   2    │ Critical       │ Condition critique                          │
-│   3    │ Error          │ Condition d'erreur                          │
-│   4    │ Warning        │ Condition d'avertissement                   │
-│   5    │ Notification   │ Condition normale mais significative        │
-│   6    │ Informational  │ Message informatif                          │
-│   7    │ Debugging      │ Message de debogage                        │
-└────────┴────────────────┴──────────────────────────────────────────────┘
++--------+----------------+----------------------------------------------+
+| Niveau | Nom            | Description                                  |
++--------+----------------+----------------------------------------------+
+|   0    | Emergency      | Systeme inutilisable                        |
+|   1    | Alert          | Action immediate requise                    |
+|   2    | Critical       | Condition critique                          |
+|   3    | Error          | Condition d'erreur                          |
+|   4    | Warning        | Condition d'avertissement                   |
+|   5    | Notification   | Condition normale mais significative        |
+|   6    | Informational  | Message informatif                          |
+|   7    | Debugging      | Message de debogage                        |
++--------+----------------+----------------------------------------------+
 
 Mnemonique : "Every Awesome Cisco Engineer Will Need Ice-cream Daily"
              Emergency Alert Critical Error Warning Notification Info Debug
@@ -121,31 +121,31 @@ Exemple : "logging trap 4" capture les niveaux 0, 1, 2, 3 et 4
 
 ```
 Equipements reseau                           Serveur Syslog
-┌──────────┐                                ┌───────────────┐
-│ Routeur  │───┐                            │               │
-└──────────┘   │   UDP port 514             │  Syslog       │
-┌──────────┐   ├──────────────────────────> │  Server       │
-│ Switch   │───┤                            │               │
-└──────────┘   │                            │  Stockage     │
-┌──────────┐   │                            │  Analyse      │
-│ Firewall │───┘                            │  Alertes      │
-└──────────┘                                └───────────────┘
++----------+                                +---------------+
+| Routeur  |---+                            |               |
++----------+   |   UDP port 514             |  Syslog       |
++----------+   +--------------------------> |  Server       |
+| Switch   |---+                            |               |
++----------+   |                            |  Stockage     |
++----------+   |                            |  Analyse      |
+| Firewall |---+                            |  Alertes      |
++----------+                                +---------------+
 
 Format d'un message Syslog :
-┌──────────────────────────────────────────────────────────────────┐
-│ seq no: timestamp: %facility-severity-MNEMONIC: description     │
-│                                                                  │
-│ Exemple :                                                        │
-│ 000045: Feb 20 15:30:45: %LINK-3-UPDOWN: Interface Gi0/1,       │
-│         changed state to down                                    │
-│                                                                  │
-│ Decodage :                                                       │
-│ - 000045 = numero de sequence                                   │
-│ - Feb 20 15:30:45 = horodatage (importance du NTP !)            │
-│ - LINK = facility (type de composant)                           │
-│ - 3 = severity (Error)                                          │
-│ - UPDOWN = mnemonique (nom de l'evenement)                      │
-└──────────────────────────────────────────────────────────────────┘
++------------------------------------------------------------------+
+| seq no: timestamp: %facility-severity-MNEMONIC: description     |
+|                                                                  |
+| Exemple :                                                        |
+| 000045: Feb 20 15:30:45: %LINK-3-UPDOWN: Interface Gi0/1,       |
+|         changed state to down                                    |
+|                                                                  |
+| Decodage :                                                       |
+| - 000045 = numero de sequence                                   |
+| - Feb 20 15:30:45 = horodatage (importance du NTP !)            |
+| - LINK = facility (type de composant)                           |
+| - 3 = severity (Error)                                          |
+| - UPDOWN = mnemonique (nom de l'evenement)                      |
++------------------------------------------------------------------+
 ```
 
 ### Configuration Syslog sur Cisco
@@ -196,73 +196,73 @@ Router# show logging | include %LINK
 ### Architecture SNMP
 
 ```
-┌──────────────────────────────────────────────────────────────────────┐
-│                        SNMP Architecture                             │
-│                                                                      │
-│  ┌────────────────┐         ┌─────────────────┐                     │
-│  │  NMS (Network  │         │  SNMP Agent     │                     │
-│  │  Management    │ <------>│  (sur chaque     │                     │
-│  │  Station)      │ UDP 161 │  equipement)    │                     │
-│  │                │         │                  │                     │
-│  │  - Monitoring  │ <-------│  TRAP            │                     │
-│  │  - Alertes     │ UDP 162 │  (notification   │                     │
-│  │  - Graphiques  │         │   non sollicitee)│                     │
-│  └────────────────┘         └─────────────────┘                     │
-│         │                          │                                 │
-│         │                          │                                 │
-│         v                          v                                 │
-│  ┌─────────────────────────────────────────────┐                    │
-│  │              MIB (Management Information     │                    │
-│  │                   Base)                      │                    │
-│  │                                              │                    │
-│  │  Structure arborescente des objets geres :  │                    │
-│  │  .1.3.6.1.2.1.1.1.0 = sysDescr             │                    │
-│  │  .1.3.6.1.2.1.1.3.0 = sysUpTime            │                    │
-│  │  .1.3.6.1.2.1.1.5.0 = sysName              │                    │
-│  │  .1.3.6.1.2.1.2.2.1.10 = ifInOctets        │                    │
-│  │  .1.3.6.1.2.1.2.2.1.16 = ifOutOctets       │                    │
-│  └─────────────────────────────────────────────┘                    │
-└──────────────────────────────────────────────────────────────────────┘
++----------------------------------------------------------------------+
+|                        SNMP Architecture                             |
+|                                                                      |
+|  +----------------+         +-----------------+                     |
+|  |  NMS (Network  |         |  SNMP Agent     |                     |
+|  |  Management    | <------>|  (sur chaque     |                     |
+|  |  Station)      | UDP 161 |  equipement)    |                     |
+|  |                |         |                  |                     |
+|  |  - Monitoring  | <-------|  TRAP            |                     |
+|  |  - Alertes     | UDP 162 |  (notification   |                     |
+|  |  - Graphiques  |         |   non sollicitee)|                     |
+|  +----------------+         +-----------------+                     |
+|         |                          |                                 |
+|         |                          |                                 |
+|         v                          v                                 |
+|  +---------------------------------------------+                    |
+|  |              MIB (Management Information     |                    |
+|  |                   Base)                      |                    |
+|  |                                              |                    |
+|  |  Structure arborescente des objets geres :  |                    |
+|  |  .1.3.6.1.2.1.1.1.0 = sysDescr             |                    |
+|  |  .1.3.6.1.2.1.1.3.0 = sysUpTime            |                    |
+|  |  .1.3.6.1.2.1.1.5.0 = sysName              |                    |
+|  |  .1.3.6.1.2.1.2.2.1.10 = ifInOctets        |                    |
+|  |  .1.3.6.1.2.1.2.2.1.16 = ifOutOctets       |                    |
+|  +---------------------------------------------+                    |
++----------------------------------------------------------------------+
 
 Operations SNMP :
-┌──────────────┬────────────────────────────────────────────────┐
-│ Operation    │ Description                                     │
-├──────────────┼────────────────────────────────────────────────┤
-│ GET          │ NMS demande la valeur d'un objet a l'agent    │
-│ GET-NEXT     │ NMS demande l'objet suivant dans la MIB       │
-│ GET-BULK     │ NMS demande plusieurs objets (SNMPv2+)        │
-│ SET          │ NMS modifie la valeur d'un objet sur l'agent  │
-│ TRAP         │ Agent envoie une notification au NMS           │
-│ INFORM       │ Comme TRAP mais avec accusee de reception      │
-└──────────────┴────────────────────────────────────────────────┘
++--------------+------------------------------------------------+
+| Operation    | Description                                     |
++--------------+------------------------------------------------+
+| GET          | NMS demande la valeur d'un objet a l'agent    |
+| GET-NEXT     | NMS demande l'objet suivant dans la MIB       |
+| GET-BULK     | NMS demande plusieurs objets (SNMPv2+)        |
+| SET          | NMS modifie la valeur d'un objet sur l'agent  |
+| TRAP         | Agent envoie une notification au NMS           |
+| INFORM       | Comme TRAP mais avec accusee de reception      |
++--------------+------------------------------------------------+
 ```
 
 ### Comparaison SNMPv2c vs SNMPv3
 
 ```
-┌─────────────────┬──────────────────────┬──────────────────────┐
-│ Critere         │ SNMPv2c              │ SNMPv3               │
-├─────────────────┼──────────────────────┼──────────────────────┤
-│ Authentification│ Community string     │ Username/Password    │
-│                 │ (texte en clair !)   │ (MD5 ou SHA)         │
-├─────────────────┼──────────────────────┼──────────────────────┤
-│ Chiffrement     │ Aucun               │ DES, 3DES, AES       │
-├─────────────────┼──────────────────────┼──────────────────────┤
-│ Controle acces  │ RO / RW             │ Vues, groupes, users │
-├─────────────────┼──────────────────────┼──────────────────────┤
-│ Securite        │ Faible              │ Elevee               │
-├─────────────────┼──────────────────────┼──────────────────────┤
-│ Recommandation  │ Labs/tests          │ Production           │
-└─────────────────┴──────────────────────┴──────────────────────┘
++-----------------+----------------------+----------------------+
+| Critere         | SNMPv2c              | SNMPv3               |
++-----------------+----------------------+----------------------+
+| Authentification| Community string     | Username/Password    |
+|                 | (texte en clair !)   | (MD5 ou SHA)         |
++-----------------+----------------------+----------------------+
+| Chiffrement     | Aucun               | DES, 3DES, AES       |
++-----------------+----------------------+----------------------+
+| Controle acces  | RO / RW             | Vues, groupes, users |
++-----------------+----------------------+----------------------+
+| Securite        | Faible              | Elevee               |
++-----------------+----------------------+----------------------+
+| Recommandation  | Labs/tests          | Production           |
++-----------------+----------------------+----------------------+
 
 Niveaux de securite SNMPv3 :
-┌──────────────────┬──────────────────┬───────────────────────┐
-│ Niveau           │ Authentification │ Chiffrement           │
-├──────────────────┼──────────────────┼───────────────────────┤
-│ noAuthNoPriv     │ Non              │ Non                   │
-│ authNoPriv       │ Oui (MD5/SHA)    │ Non                   │
-│ authPriv         │ Oui (MD5/SHA)    │ Oui (AES/DES)        │
-└──────────────────┴──────────────────┴───────────────────────┘
++------------------+------------------+-----------------------+
+| Niveau           | Authentification | Chiffrement           |
++------------------+------------------+-----------------------+
+| noAuthNoPriv     | Non              | Non                   |
+| authNoPriv       | Oui (MD5/SHA)    | Non                   |
+| authPriv         | Oui (MD5/SHA)    | Oui (AES/DES)        |
++------------------+------------------+-----------------------+
 ```
 
 ### Configuration SNMP sur Cisco
@@ -347,16 +347,16 @@ CDP = Protocole proprietaire Cisco
 - Multicast : 01:00:0C:CC:CC:CC
 
 Informations partagees :
-┌────────────────────────────────────────────────┐
-│ - Nom de l'equipement (hostname)               │
-│ - Adresse IP de l'interface                    │
-│ - Plateforme (modele : Catalyst 3560, ISR 4321)│
-│ - Interface locale et distante                 │
-│ - Version IOS                                  │
-│ - Capabilities (Router, Switch, Phone...)      │
-│ - VLAN natif (sur les switches)                │
-│ - Duplex                                       │
-└────────────────────────────────────────────────┘
++------------------------------------------------+
+| - Nom de l'equipement (hostname)               |
+| - Adresse IP de l'interface                    |
+| - Plateforme (modele : Catalyst 3560, ISR 4321)|
+| - Interface locale et distante                 |
+| - Version IOS                                  |
+| - Capabilities (Router, Switch, Phone...)      |
+| - VLAN natif (sur les switches)                |
+| - Duplex                                       |
++------------------------------------------------+
 ```
 
 ### LLDP (Link Layer Discovery Protocol)
@@ -374,16 +374,16 @@ Meme type d'informations que CDP mais compatible avec tous les constructeurs
 ### Comparaison CDP vs LLDP
 
 ```
-┌──────────────────┬──────────────────────┬──────────────────────┐
-│ Critere          │ CDP                  │ LLDP                 │
-├──────────────────┼──────────────────────┼──────────────────────┤
-│ Standard         │ Proprietaire Cisco   │ IEEE 802.1AB (ouvert)│
-│ Timer annonce    │ 60 secondes          │ 30 secondes          │
-│ Hold time        │ 180 secondes         │ 120 secondes         │
-│ Couche OSI       │ 2 (Data Link)        │ 2 (Data Link)        │
-│ Compatibilite    │ Cisco uniquement     │ Multi-vendor         │
-│ Actif par defaut │ Oui (Cisco)          │ Non (a activer)      │
-└──────────────────┴──────────────────────┴──────────────────────┘
++------------------+----------------------+----------------------+
+| Critere          | CDP                  | LLDP                 |
++------------------+----------------------+----------------------+
+| Standard         | Proprietaire Cisco   | IEEE 802.1AB (ouvert)|
+| Timer annonce    | 60 secondes          | 30 secondes          |
+| Hold time        | 180 secondes         | 120 secondes         |
+| Couche OSI       | 2 (Data Link)        | 2 (Data Link)        |
+| Compatibilite    | Cisco uniquement     | Multi-vendor         |
+| Actif par defaut | Oui (Cisco)          | Non (a activer)      |
++------------------+----------------------+----------------------+
 ```
 
 ### Configuration CDP et LLDP

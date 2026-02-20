@@ -11,60 +11,60 @@ Le DHCP fonctionne en 4 etapes, memorisees par l'acronyme **DORA** :
 ```
 CLIENT                                              SERVEUR DHCP
 (0.0.0.0)                                          (10.1.1.1)
-   │                                                     │
-   │  1. DHCP DISCOVER (Broadcast)                       │
-   │  "Y a-t-il un serveur DHCP ici ?"                  │
-   │  Src: 0.0.0.0       Dst: 255.255.255.255           │
-   │  Src MAC: AA:BB:CC   Dst MAC: FF:FF:FF:FF:FF:FF    │
-   │─────────────────────────────────────────────────────>│
-   │                                                     │
-   │  2. DHCP OFFER (Unicast ou Broadcast)               │
-   │  "Oui, je te propose l'IP 10.1.1.50"               │
-   │  Contient : IP proposee, masque, bail, gateway, DNS │
-   │<─────────────────────────────────────────────────────│
-   │                                                     │
-   │  3. DHCP REQUEST (Broadcast)                        │
-   │  "J'accepte l'IP 10.1.1.50"                        │
-   │  Src: 0.0.0.0       Dst: 255.255.255.255           │
-   │  (Broadcast car d'autres serveurs DHCP peuvent      │
-   │   etre presents et doivent savoir que l'offre       │
-   │   n'a pas ete retenue)                              │
-   │─────────────────────────────────────────────────────>│
-   │                                                     │
-   │  4. DHCP ACKNOWLEDGE (Unicast ou Broadcast)         │
-   │  "Confirme : 10.1.1.50 est a toi pour 24h"         │
-   │  Le client configure son interface                  │
-   │<─────────────────────────────────────────────────────│
-   │                                                     │
-   (10.1.1.50)                                           │
-   Client configure                                      │
+   |                                                     |
+   |  1. DHCP DISCOVER (Broadcast)                       |
+   |  "Y a-t-il un serveur DHCP ici ?"                  |
+   |  Src: 0.0.0.0       Dst: 255.255.255.255           |
+   |  Src MAC: AA:BB:CC   Dst MAC: FF:FF:FF:FF:FF:FF    |
+   |----------------------------------------------------->|
+   |                                                     |
+   |  2. DHCP OFFER (Unicast ou Broadcast)               |
+   |  "Oui, je te propose l'IP 10.1.1.50"               |
+   |  Contient : IP proposee, masque, bail, gateway, DNS |
+   |<-----------------------------------------------------|
+   |                                                     |
+   |  3. DHCP REQUEST (Broadcast)                        |
+   |  "J'accepte l'IP 10.1.1.50"                        |
+   |  Src: 0.0.0.0       Dst: 255.255.255.255           |
+   |  (Broadcast car d'autres serveurs DHCP peuvent      |
+   |   etre presents et doivent savoir que l'offre       |
+   |   n'a pas ete retenue)                              |
+   |----------------------------------------------------->|
+   |                                                     |
+   |  4. DHCP ACKNOWLEDGE (Unicast ou Broadcast)         |
+   |  "Confirme : 10.1.1.50 est a toi pour 24h"         |
+   |  Le client configure son interface                  |
+   |<-----------------------------------------------------|
+   |                                                     |
+   (10.1.1.50)                                           |
+   Client configure                                      |
 ```
 
 ### Contenu des Messages DHCP
 
 ```
-┌────────────────────┬────────────────────────────────────────────┐
-│ Message            │ Contenu Principal                          │
-├────────────────────┼────────────────────────────────────────────┤
-│ DISCOVER           │ - MAC du client                            │
-│ (client -> serveur)│ - Identifiant de transaction (XID)         │
-│                    │ - Options demandees (masque, GW, DNS)      │
-├────────────────────┼────────────────────────────────────────────┤
-│ OFFER              │ - IP proposee (yiaddr)                     │
-│ (serveur -> client)│ - Masque de sous-reseau                    │
-│                    │ - Passerelle par defaut                    │
-│                    │ - Serveurs DNS                             │
-│                    │ - Duree du bail (lease time)               │
-│                    │ - IP du serveur DHCP                       │
-├────────────────────┼────────────────────────────────────────────┤
-│ REQUEST            │ - IP demandee (celle de l'OFFER)           │
-│ (client -> serveur)│ - Identifiant du serveur DHCP choisi       │
-│                    │ - Identifiant de transaction (XID)         │
-├────────────────────┼────────────────────────────────────────────┤
-│ ACKNOWLEDGE        │ - Confirmation de l'IP                     │
-│ (serveur -> client)│ - Tous les parametres reseau               │
-│                    │ - Duree du bail confirmee                  │
-└────────────────────┴────────────────────────────────────────────┘
++--------------------+--------------------------------------------+
+| Message            | Contenu Principal                          |
++--------------------+--------------------------------------------+
+| DISCOVER           | - MAC du client                            |
+| (client -> serveur)| - Identifiant de transaction (XID)         |
+|                    | - Options demandees (masque, GW, DNS)      |
++--------------------+--------------------------------------------+
+| OFFER              | - IP proposee (yiaddr)                     |
+| (serveur -> client)| - Masque de sous-reseau                    |
+|                    | - Passerelle par defaut                    |
+|                    | - Serveurs DNS                             |
+|                    | - Duree du bail (lease time)               |
+|                    | - IP du serveur DHCP                       |
++--------------------+--------------------------------------------+
+| REQUEST            | - IP demandee (celle de l'OFFER)           |
+| (client -> serveur)| - Identifiant du serveur DHCP choisi       |
+|                    | - Identifiant de transaction (XID)         |
++--------------------+--------------------------------------------+
+| ACKNOWLEDGE        | - Confirmation de l'IP                     |
+| (serveur -> client)| - Tous les parametres reseau               |
+|                    | - Duree du bail confirmee                  |
++--------------------+--------------------------------------------+
 ```
 
 ### Renouvellement du Bail
@@ -73,15 +73,15 @@ CLIENT                                              SERVEUR DHCP
 Duree du bail : 24 heures (exemple)
 
 Temps 0h          12h (50%)           18h (87.5%)        24h
-  │                  │                    │                │
-  │  Bail obtenu     │  T1 : Renewal     │  T2 : Rebind   │ Expiration
-  │                  │  (Unicast au       │  (Broadcast a  │ (IP perdue)
-  │                  │   meme serveur)    │   tout serveur)│
-  │                  │                    │                │
-  ├──────────────────┼────────────────────┼────────────────┤
-  │  Utilisation     │  REQUEST unicast   │  REQUEST bcast │
-  │  normale         │  -> ACK = renouvele│  -> ACK = OK   │
-  │                  │  -> NACK = rebind  │  -> NACK = stop│
+  |                  |                    |                |
+  |  Bail obtenu     |  T1 : Renewal     |  T2 : Rebind   | Expiration
+  |                  |  (Unicast au       |  (Broadcast a  | (IP perdue)
+  |                  |   meme serveur)    |   tout serveur)|
+  |                  |                    |                |
+  +------------------+--------------------+----------------+
+  |  Utilisation     |  REQUEST unicast   |  REQUEST bcast |
+  |  normale         |  -> ACK = renouvele|  -> ACK = OK   |
+  |                  |  -> NACK = rebind  |  -> NACK = stop|
 ```
 
 ---
@@ -148,36 +148,36 @@ Les messages DHCP DISCOVER sont des broadcasts. Ils ne traversent pas les routeu
 
 ```
 VLAN 10 (10.1.10.0/24)              VLAN 20 (10.1.20.0/24)
-┌─────────┐                         ┌──────────────┐
-│ Client  │                         │ Serveur DHCP │
-│ DHCP    │                         │ 10.1.20.100  │
-│(0.0.0.0)│                         └──────────────┘
-└─────────┘                                │
-     │                                     │
-     │ 1. DISCOVER                         │
-     │    (broadcast)                      │
-     v                                     │
-┌──────────────────────────────────────────┐
-│              ROUTEUR                     │
-│                                          │
-│ Gi0/0 (10.1.10.1)    Gi0/1 (10.1.20.1) │
-│ ip helper-address     Vers serveur DHCP │
-│  10.1.20.100                            │
-│                                          │
-│ Le routeur recoit le broadcast DHCP      │
-│ sur Gi0/0 et le retransmet en UNICAST    │
-│ vers 10.1.20.100 via Gi0/1              │
-└──────────────────────────────────────────┘
-     │                                     │
-     │ 2. DISCOVER retransmis              │
-     │    (unicast vers 10.1.20.100)       │
-     │ ──────────────────────────────────> │
-     │                                     │
-     │ 3. OFFER en unicast                 │
-     │ <────────────────────────────────── │
-     │                                     │
-     │ 4. REQUEST/ACK                      │
-     │ <──────────────────────────────────>│
++---------+                         +--------------+
+| Client  |                         | Serveur DHCP |
+| DHCP    |                         | 10.1.20.100  |
+|(0.0.0.0)|                         +--------------+
++---------+                                |
+     |                                     |
+     | 1. DISCOVER                         |
+     |    (broadcast)                      |
+     v                                     |
++------------------------------------------+
+|              ROUTEUR                     |
+|                                          |
+| Gi0/0 (10.1.10.1)    Gi0/1 (10.1.20.1) |
+| ip helper-address     Vers serveur DHCP |
+|  10.1.20.100                            |
+|                                          |
+| Le routeur recoit le broadcast DHCP      |
+| sur Gi0/0 et le retransmet en UNICAST    |
+| vers 10.1.20.100 via Gi0/1              |
++------------------------------------------+
+     |                                     |
+     | 2. DISCOVER retransmis              |
+     |    (unicast vers 10.1.20.100)       |
+     | ----------------------------------> |
+     |                                     |
+     | 3. OFFER en unicast                 |
+     | <---------------------------------- |
+     |                                     |
+     | 4. REQUEST/ACK                      |
+     | <---------------------------------->|
 ```
 
 ### Configuration Cisco : DHCP Relay
@@ -200,18 +200,18 @@ Router(config-if)# exit
 
 ```
 ip helper-address relaye par defaut ces protocoles UDP :
-┌──────────────────────┬───────────┐
-│ Service              │ Port UDP  │
-├──────────────────────┼───────────┤
-│ DHCP/BOOTP (client)  │ 67        │
-│ DHCP/BOOTP (serveur) │ 68        │
-│ DNS                  │ 53        │
-│ TFTP                 │ 69        │
-│ TACACS               │ 49        │
-│ NetBIOS Name Service │ 137       │
-│ NetBIOS Datagram     │ 138       │
-│ Time Service         │ 37        │
-└──────────────────────┴───────────┘
++----------------------+-----------+
+| Service              | Port UDP  |
++----------------------+-----------+
+| DHCP/BOOTP (client)  | 67        |
+| DHCP/BOOTP (serveur) | 68        |
+| DNS                  | 53        |
+| TFTP                 | 69        |
+| TACACS               | 49        |
+| NetBIOS Name Service | 137       |
+| NetBIOS Datagram     | 138       |
+| Time Service         | 37        |
++----------------------+-----------+
 ```
 
 ---
@@ -221,20 +221,20 @@ ip helper-address relaye par defaut ces protocoles UDP :
 ### Modes de Configuration IPv6
 
 ```
-┌────────────────────────┬──────────────────────┬──────────────────────┐
-│ Methode                │ Adresse IPv6          │ Autres Params (DNS..)│
-├────────────────────────┼──────────────────────┼──────────────────────┤
-│ SLAAC seul             │ Auto-generee (EUI-64)│ Via RA du routeur    │
-│ (Stateless)            │                      │ (RDNSS)              │
-├────────────────────────┼──────────────────────┼──────────────────────┤
-│ SLAAC + DHCPv6         │ Auto-generee (EUI-64)│ Via DHCPv6           │
-│ Stateless              │                      │ (O flag = 1)         │
-├────────────────────────┼──────────────────────┼──────────────────────┤
-│ DHCPv6 Stateful        │ Attribuee par DHCPv6 │ Via DHCPv6           │
-│                        │ (M flag = 1)         │                      │
-├────────────────────────┼──────────────────────┼──────────────────────┤
-│ Manuel                 │ Configuree a la main │ Configure a la main  │
-└────────────────────────┴──────────────────────┴──────────────────────┘
++------------------------+----------------------+----------------------+
+| Methode                | Adresse IPv6          | Autres Params (DNS..)|
++------------------------+----------------------+----------------------+
+| SLAAC seul             | Auto-generee (EUI-64)| Via RA du routeur    |
+| (Stateless)            |                      | (RDNSS)              |
++------------------------+----------------------+----------------------+
+| SLAAC + DHCPv6         | Auto-generee (EUI-64)| Via DHCPv6           |
+| Stateless              |                      | (O flag = 1)         |
++------------------------+----------------------+----------------------+
+| DHCPv6 Stateful        | Attribuee par DHCPv6 | Via DHCPv6           |
+|                        | (M flag = 1)         |                      |
++------------------------+----------------------+----------------------+
+| Manuel                 | Configuree a la main | Configure a la main  |
++------------------------+----------------------+----------------------+
 ```
 
 ### SLAAC (Stateless Address Autoconfiguration)
@@ -261,14 +261,14 @@ Exemple EUI-64 :
    Adresse finale : 2001:db8:1::a8bb:ccff:fedd:eeff/64
 
 Flags RA :
-┌──────┬───────────────────────────────────────────┐
-│ Flag │ Signification                              │
-├──────┼───────────────────────────────────────────┤
-│ M=0  │ Ne pas utiliser DHCPv6 pour l'adresse     │
-│ M=1  │ Utiliser DHCPv6 Stateful pour l'adresse   │
-│ O=0  │ Ne pas utiliser DHCPv6 pour les options    │
-│ O=1  │ Utiliser DHCPv6 Stateless pour les options │
-└──────┴───────────────────────────────────────────┘
++------+-------------------------------------------+
+| Flag | Signification                              |
++------+-------------------------------------------+
+| M=0  | Ne pas utiliser DHCPv6 pour l'adresse     |
+| M=1  | Utiliser DHCPv6 Stateful pour l'adresse   |
+| O=0  | Ne pas utiliser DHCPv6 pour les options    |
+| O=1  | Utiliser DHCPv6 Stateless pour les options |
++------+-------------------------------------------+
 ```
 
 ### Configuration DHCPv6 Stateless
@@ -372,16 +372,16 @@ Etape 5 : Verifier les conflits
   -> Adresses en conflit a resoudre ?
 
 Erreurs courantes :
-┌───────────────────────────────────────┬──────────────────────────────────┐
-│ Probleme                              │ Solution                         │
-├───────────────────────────────────────┼──────────────────────────────────┤
-│ Pool epuise                           │ Reduire lease time ou agrandir   │
-│ ip helper-address manquant            │ Configurer sur interface client  │
-│ ip helper-address sur mauvaise interf.│ Mettre sur interface cote client │
-│ Exclusions trop larges                │ Verifier la plage exclue         │
-│ Mauvais masque dans le pool           │ Verifier network + masque        │
-│ Service DHCP desactive                │ no service dhcp -> service dhcp  │
-└───────────────────────────────────────┴──────────────────────────────────┘
++---------------------------------------+----------------------------------+
+| Probleme                              | Solution                         |
++---------------------------------------+----------------------------------+
+| Pool epuise                           | Reduire lease time ou agrandir   |
+| ip helper-address manquant            | Configurer sur interface client  |
+| ip helper-address sur mauvaise interf.| Mettre sur interface cote client |
+| Exclusions trop larges                | Verifier la plage exclue         |
+| Mauvais masque dans le pool           | Verifier network + masque        |
+| Service DHCP desactive                | no service dhcp -> service dhcp  |
++---------------------------------------+----------------------------------+
 ```
 
 ---

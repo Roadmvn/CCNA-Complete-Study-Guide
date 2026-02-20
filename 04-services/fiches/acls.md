@@ -11,55 +11,55 @@ Les ACLs (Access Control Lists) sont des regles de filtrage appliquees sur les i
 ```
 Paquet arrive sur le routeur :
 
-┌────────────┐     ┌──────────────────────────────────────┐
-│   Paquet   │────>│          ACL INBOUND (in)            │
-│  entrant   │     │                                      │
-└────────────┘     │  Regle 1 : permit 10.1.1.0/24 ?     │
-                   │    -> Match ? OUI -> PERMIT          │
-                   │    -> Match ? NON -> Regle suivante  │
-                   │                                      │
-                   │  Regle 2 : deny 10.2.0.0/16 ?       │
-                   │    -> Match ? OUI -> DENY (drop)     │
-                   │    -> Match ? NON -> Regle suivante  │
-                   │                                      │
-                   │  ...                                 │
-                   │                                      │
-                   │  Deny implicite (fin de liste) :     │
-                   │    -> Tout le reste est REFUSE       │
-                   └──────────────────────────────────────┘
-                              │
++------------+     +--------------------------------------+
+|   Paquet   |---->|          ACL INBOUND (in)            |
+|  entrant   |     |                                      |
++------------+     |  Regle 1 : permit 10.1.1.0/24 ?     |
+                   |    -> Match ? OUI -> PERMIT          |
+                   |    -> Match ? NON -> Regle suivante  |
+                   |                                      |
+                   |  Regle 2 : deny 10.2.0.0/16 ?       |
+                   |    -> Match ? OUI -> DENY (drop)     |
+                   |    -> Match ? NON -> Regle suivante  |
+                   |                                      |
+                   |  ...                                 |
+                   |                                      |
+                   |  Deny implicite (fin de liste) :     |
+                   |    -> Tout le reste est REFUSE       |
+                   +--------------------------------------+
+                              |
                               v
-                   ┌──────────────────┐
-                   │ Table de routage │
-                   │ (si autorise)    │
-                   └──────────────────┘
-                              │
+                   +------------------+
+                   | Table de routage |
+                   | (si autorise)    |
+                   +------------------+
+                              |
                               v
-                   ┌──────────────────────────────────────┐
-                   │          ACL OUTBOUND (out)          │
-                   │  (meme logique de verification)      │
-                   └──────────────────────────────────────┘
-                              │
+                   +--------------------------------------+
+                   |          ACL OUTBOUND (out)          |
+                   |  (meme logique de verification)      |
+                   +--------------------------------------+
+                              |
                               v
-                   ┌────────────┐
-                   │   Paquet   │
-                   │  sortant   │
-                   └────────────┘
+                   +------------+
+                   |   Paquet   |
+                   |  sortant   |
+                   +------------+
 ```
 
 ### Regles Fondamentales des ACLs
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│ REGLES A RETENIR                                                    │
-├─────────────────────────────────────────────────────────────────────┤
-│ 1. Les regles sont evaluees de HAUT en BAS, dans l'ordre           │
-│ 2. Des qu'un match est trouve, l'action est executee (pas de suite)│
-│ 3. Il y a un "deny any" IMPLICITE a la fin de chaque ACL          │
-│ 4. UNE ACL par interface, par direction, par protocole             │
-│ 5. Les ACLs ne filtrent PAS le trafic genere par le routeur        │
-│ 6. L'ordre des regles est CRUCIAL (du plus specifique au general)  │
-└─────────────────────────────────────────────────────────────────────┘
++---------------------------------------------------------------------+
+| REGLES A RETENIR                                                    |
++---------------------------------------------------------------------+
+| 1. Les regles sont evaluees de HAUT en BAS, dans l'ordre           |
+| 2. Des qu'un match est trouve, l'action est executee (pas de suite)|
+| 3. Il y a un "deny any" IMPLICITE a la fin de chaque ACL          |
+| 4. UNE ACL par interface, par direction, par protocole             |
+| 5. Les ACLs ne filtrent PAS le trafic genere par le routeur        |
+| 6. L'ordre des regles est CRUCIAL (du plus specifique au general)  |
++---------------------------------------------------------------------+
 ```
 
 ---
@@ -69,21 +69,21 @@ Paquet arrive sur le routeur :
 ### Caracteristiques
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│ ACL STANDARD                                            │
-├─────────────────────────────────────────────────────────┤
-│ Numeros       : 1-99 et 1300-1999                      │
-│ Critere       : Adresse IP SOURCE uniquement            │
-│ Placement     : Le plus PRES de la DESTINATION         │
-│ Granularite   : Faible (pas de filtrage par port/proto) │
-└─────────────────────────────────────────────────────────┘
++---------------------------------------------------------+
+| ACL STANDARD                                            |
++---------------------------------------------------------+
+| Numeros       : 1-99 et 1300-1999                      |
+| Critere       : Adresse IP SOURCE uniquement            |
+| Placement     : Le plus PRES de la DESTINATION         |
+| Granularite   : Faible (pas de filtrage par port/proto) |
++---------------------------------------------------------+
 ```
 
 ### Pourquoi Placer Pres de la Destination ?
 
 ```
 Topologie :
-PC-A ──── R1 ──── R2 ──── R3 ──── Serveur
+PC-A ---- R1 ---- R2 ---- R3 ---- Serveur
 (10.1.1.10)                        (10.1.4.100)
 
 Objectif : Bloquer PC-A vers le Serveur
@@ -138,22 +138,22 @@ Router(config-if)# exit
 ### Caracteristiques
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│ ACL ETENDUE                                             │
-├─────────────────────────────────────────────────────────┤
-│ Numeros       : 100-199 et 2000-2699                   │
-│ Criteres      : IP source, IP destination, protocole,  │
-│                 port source, port destination           │
-│ Placement     : Le plus PRES de la SOURCE              │
-│ Granularite   : Elevee (filtrage precis)               │
-└─────────────────────────────────────────────────────────┘
++---------------------------------------------------------+
+| ACL ETENDUE                                             |
++---------------------------------------------------------+
+| Numeros       : 100-199 et 2000-2699                   |
+| Criteres      : IP source, IP destination, protocole,  |
+|                 port source, port destination           |
+| Placement     : Le plus PRES de la SOURCE              |
+| Granularite   : Elevee (filtrage precis)               |
++---------------------------------------------------------+
 ```
 
 ### Pourquoi Placer Pres de la Source ?
 
 ```
 Topologie :
-PC-A ──── R1 ──── R2 ──── R3 ──── Serveur Web
+PC-A ---- R1 ---- R2 ---- R3 ---- Serveur Web
 (10.1.1.10)                        (10.1.4.100:80)
 
 Objectif : Bloquer UNIQUEMENT le HTTP de PC-A vers le Serveur Web
@@ -219,24 +219,24 @@ Le wildcard mask est l'inverse du masque de sous-reseau. Un bit a 0 signifie "ve
 Methode : Wildcard = 255.255.255.255 - Masque de sous-reseau
 
 Exemples :
-┌──────────────────────┬─────────────────┬──────────────────┐
-│ Reseau               │ Masque          │ Wildcard         │
-├──────────────────────┼─────────────────┼──────────────────┤
-│ 10.0.0.0/8           │ 255.0.0.0       │ 0.255.255.255    │
-│ 172.16.0.0/16        │ 255.255.0.0     │ 0.0.255.255      │
-│ 192.168.1.0/24       │ 255.255.255.0   │ 0.0.0.255        │
-│ 192.168.1.0/26       │ 255.255.255.192 │ 0.0.0.63         │
-│ 192.168.1.0/28       │ 255.255.255.240 │ 0.0.0.15         │
-│ 192.168.1.0/30       │ 255.255.255.252 │ 0.0.0.3          │
-└──────────────────────┴─────────────────┴──────────────────┘
++----------------------+-----------------+------------------+
+| Reseau               | Masque          | Wildcard         |
++----------------------+-----------------+------------------+
+| 10.0.0.0/8           | 255.0.0.0       | 0.255.255.255    |
+| 172.16.0.0/16        | 255.255.0.0     | 0.0.255.255      |
+| 192.168.1.0/24       | 255.255.255.0   | 0.0.0.255        |
+| 192.168.1.0/26       | 255.255.255.192 | 0.0.0.63         |
+| 192.168.1.0/28       | 255.255.255.240 | 0.0.0.15         |
+| 192.168.1.0/30       | 255.255.255.252 | 0.0.0.3          |
++----------------------+-----------------+------------------+
 
 Mots-cles speciaux :
-┌──────────────────────┬───────────────────────────────────────┐
-│ Mot-cle              │ Equivalent                            │
-├──────────────────────┼───────────────────────────────────────┤
-│ host 10.1.1.10       │ 10.1.1.10 0.0.0.0 (1 seul hote)     │
-│ any                  │ 0.0.0.0 255.255.255.255 (tout)        │
-└──────────────────────┴───────────────────────────────────────┘
++----------------------+---------------------------------------+
+| Mot-cle              | Equivalent                            |
++----------------------+---------------------------------------+
+| host 10.1.1.10       | 10.1.1.10 0.0.0.0 (1 seul hote)     |
+| any                  | 0.0.0.0 255.255.255.255 (tout)        |
++----------------------+---------------------------------------+
 ```
 
 ### Exemple Visuel du Wildcard
@@ -272,26 +272,26 @@ Resultats :
 ```
 REGLE DE PLACEMENT :
 
-┌────────────────────────────────────────────────────────────────────┐
-│                                                                    │
-│  ACL STANDARD : Placer PRES de la DESTINATION                     │
-│  (car elle ne filtre que par source -> eviter de bloquer           │
-│   le trafic legitime vers d'autres destinations)                  │
-│                                                                    │
-│  ACL ETENDUE : Placer PRES de la SOURCE                          │
-│  (car elle filtre par source + destination + port ->               │
-│   eliminer le trafic non desire au plus tot)                      │
-│                                                                    │
-└────────────────────────────────────────────────────────────────────┘
++--------------------------------------------------------------------+
+|                                                                    |
+|  ACL STANDARD : Placer PRES de la DESTINATION                     |
+|  (car elle ne filtre que par source -> eviter de bloquer           |
+|   le trafic legitime vers d'autres destinations)                  |
+|                                                                    |
+|  ACL ETENDUE : Placer PRES de la SOURCE                          |
+|  (car elle filtre par source + destination + port ->               |
+|   eliminer le trafic non desire au plus tot)                      |
+|                                                                    |
++--------------------------------------------------------------------+
 
 Schema de placement sur topologie :
 
      SOURCE                                          DESTINATION
-  ┌──────────┐    ┌────┐    ┌────┐    ┌────┐    ┌──────────┐
-  │  PC-A    │────│ R1 │────│ R2 │────│ R3 │────│ Serveur  │
-  │10.1.1.10 │    └────┘    └────┘    └────┘    │10.1.4.100│
-  └──────────┘      ^                    ^       └──────────┘
-                    │                    │
+  +----------+    +----+    +----+    +----+    +----------+
+  |  PC-A    |----| R1 |----| R2 |----| R3 |----| Serveur  |
+  |10.1.1.10 |    +----+    +----+    +----+    |10.1.4.100|
+  +----------+      ^                    ^       +----------+
+                    |                    |
               ACL ETENDUE          ACL STANDARD
               (pres source)        (pres destination)
 ```
@@ -301,35 +301,35 @@ Schema de placement sur topologie :
 ## Operateurs de Port (ACLs Etendues)
 
 ```
-┌────────────┬──────────────────────────────────────────────┐
-│ Operateur  │ Signification                                 │
-├────────────┼──────────────────────────────────────────────┤
-│ eq         │ Equal (egal a) - ex: eq 80                   │
-│ neq        │ Not Equal (different de) - ex: neq 23        │
-│ gt         │ Greater Than (superieur a) - ex: gt 1023     │
-│ lt         │ Less Than (inferieur a) - ex: lt 1024        │
-│ range      │ Range (plage) - ex: range 20 21              │
-└────────────┴──────────────────────────────────────────────┘
++------------+----------------------------------------------+
+| Operateur  | Signification                                 |
++------------+----------------------------------------------+
+| eq         | Equal (egal a) - ex: eq 80                   |
+| neq        | Not Equal (different de) - ex: neq 23        |
+| gt         | Greater Than (superieur a) - ex: gt 1023     |
+| lt         | Less Than (inferieur a) - ex: lt 1024        |
+| range      | Range (plage) - ex: range 20 21              |
++------------+----------------------------------------------+
 
 Ports courants a connaitre :
-┌──────────────┬──────────┬────────────────────────────────┐
-│ Service      │ Port     │ Protocole                      │
-├──────────────┼──────────┼────────────────────────────────┤
-│ FTP data     │ 20       │ TCP                            │
-│ FTP control  │ 21       │ TCP                            │
-│ SSH          │ 22       │ TCP                            │
-│ Telnet       │ 23       │ TCP                            │
-│ SMTP         │ 25       │ TCP                            │
-│ DNS          │ 53       │ TCP/UDP                        │
-│ DHCP server  │ 67       │ UDP                            │
-│ DHCP client  │ 68       │ UDP                            │
-│ HTTP         │ 80       │ TCP                            │
-│ POP3         │ 110      │ TCP                            │
-│ HTTPS        │ 443      │ TCP                            │
-│ SNMP         │ 161      │ UDP                            │
-│ Syslog       │ 514      │ UDP                            │
-│ NTP          │ 123      │ UDP                            │
-└──────────────┴──────────┴────────────────────────────────┘
++--------------+----------+--------------------------------+
+| Service      | Port     | Protocole                      |
++--------------+----------+--------------------------------+
+| FTP data     | 20       | TCP                            |
+| FTP control  | 21       | TCP                            |
+| SSH          | 22       | TCP                            |
+| Telnet       | 23       | TCP                            |
+| SMTP         | 25       | TCP                            |
+| DNS          | 53       | TCP/UDP                        |
+| DHCP server  | 67       | UDP                            |
+| DHCP client  | 68       | UDP                            |
+| HTTP         | 80       | TCP                            |
+| POP3         | 110      | TCP                            |
+| HTTPS        | 443      | TCP                            |
+| SNMP         | 161      | UDP                            |
+| Syslog       | 514      | UDP                            |
+| NTP          | 123      | UDP                            |
++--------------+----------+--------------------------------+
 ```
 
 ---
@@ -406,27 +406,27 @@ Etape 4 : Verifier la direction
   -> L'ACL est-elle appliquee en IN ou OUT sur la bonne interface ?
 
 Erreurs courantes :
-┌───────────────────────────────────────┬─────────────────────────────────┐
-│ Probleme                              │ Solution                        │
-├───────────────────────────────────────┼─────────────────────────────────┤
-│ Deny implicite oublie                │ Ajouter permit ip any any a la  │
-│                                       │ fin si necessaire               │
-├───────────────────────────────────────┼─────────────────────────────────┤
-│ Ordre des regles incorrect           │ Mettre les regles specifiques   │
-│                                       │ avant les regles generales      │
-├───────────────────────────────────────┼─────────────────────────────────┤
-│ Wildcard mask incorrect              │ Recalculer : 255.255.255.255    │
-│                                       │ - subnet mask                   │
-├───────────────────────────────────────┼─────────────────────────────────┤
-│ ACL sur mauvaise interface           │ Verifier placement standard     │
-│                                       │ vs etendue                      │
-├───────────────────────────────────────┼─────────────────────────────────┤
-│ Direction in/out inversee            │ in = paquet ENTRANT sur intf    │
-│                                       │ out = paquet SORTANT de intf    │
-├───────────────────────────────────────┼─────────────────────────────────┤
-│ ACL vide appliquee                   │ Une ACL vide = deny all         │
-│                                       │ (tout est bloque)               │
-└───────────────────────────────────────┴─────────────────────────────────┘
++---------------------------------------+---------------------------------+
+| Probleme                              | Solution                        |
++---------------------------------------+---------------------------------+
+| Deny implicite oublie                | Ajouter permit ip any any a la  |
+|                                       | fin si necessaire               |
++---------------------------------------+---------------------------------+
+| Ordre des regles incorrect           | Mettre les regles specifiques   |
+|                                       | avant les regles generales      |
++---------------------------------------+---------------------------------+
+| Wildcard mask incorrect              | Recalculer : 255.255.255.255    |
+|                                       | - subnet mask                   |
++---------------------------------------+---------------------------------+
+| ACL sur mauvaise interface           | Verifier placement standard     |
+|                                       | vs etendue                      |
++---------------------------------------+---------------------------------+
+| Direction in/out inversee            | in = paquet ENTRANT sur intf    |
+|                                       | out = paquet SORTANT de intf    |
++---------------------------------------+---------------------------------+
+| ACL vide appliquee                   | Une ACL vide = deny all         |
+|                                       | (tout est bloque)               |
++---------------------------------------+---------------------------------+
 ```
 
 ---

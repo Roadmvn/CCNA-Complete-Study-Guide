@@ -10,48 +10,48 @@ Les VLANs (Virtual Local Area Networks) permettent de segmenter logiquement un r
 
 ```
 Réseau Physique Traditionnel :
-┌─────────────────────────────────────────────────────────────┐
-│                    Switch Unique                           │
-│  ┌─────┐  ┌─────┐  ┌─────┐  ┌─────┐  ┌─────┐  ┌─────┐    │
-│  │ PC1 │  │ PC2 │  │ PC3 │  │ PC4 │  │ PC5 │  │ PC6 │    │
-│  └─────┘  └─────┘  └─────┘  └─────┘  └─────┘  └─────┘    │
-│                                                             │
-│ Tous dans le même domaine de broadcast                     │
-│ = Problèmes de sécurité et performance                     │
-└─────────────────────────────────────────────────────────────┘
++-------------------------------------------------------------+
+|                    Switch Unique                           |
+|  +-----+  +-----+  +-----+  +-----+  +-----+  +-----+    |
+|  | PC1 |  | PC2 |  | PC3 |  | PC4 |  | PC5 |  | PC6 |    |
+|  +-----+  +-----+  +-----+  +-----+  +-----+  +-----+    |
+|                                                             |
+| Tous dans le même domaine de broadcast                     |
+| = Problèmes de sécurité et performance                     |
++-------------------------------------------------------------+
 
 Segmentation par VLANs :
-┌─────────────────────────────────────────────────────────────┐
-│                Switch avec VLANs                           │
-│                                                             │
-│ VLAN 10 (Sales)    VLAN 20 (IT)     VLAN 30 (Management)  │
-│ ┌─────┐  ┌─────┐   ┌─────┐  ┌─────┐  ┌─────┐              │
-│ │ PC1 │  │ PC2 │   │ PC3 │  │ PC4 │  │ PC5 │              │
-│ └─────┘  └─────┘   └─────┘  └─────┘  └─────┘              │
-│                                                             │
-│ 3 domaines de broadcast séparés                            │
-│ = Sécurité et performance améliorées                       │
-└─────────────────────────────────────────────────────────────┘
++-------------------------------------------------------------+
+|                Switch avec VLANs                           |
+|                                                             |
+| VLAN 10 (Sales)    VLAN 20 (IT)     VLAN 30 (Management)  |
+| +-----+  +-----+   +-----+  +-----+  +-----+              |
+| | PC1 |  | PC2 |   | PC3 |  | PC4 |  | PC5 |              |
+| +-----+  +-----+   +-----+  +-----+  +-----+              |
+|                                                             |
+| 3 domaines de broadcast séparés                            |
+| = Sécurité et performance améliorées                       |
++-------------------------------------------------------------+
 ```
 
 ### **Avantages des VLANs**
 
 ```
-┌─────────────────────┬────────────────────────────────────────┐
-│ Avantage            │ Explication                            │
-├─────────────────────┼────────────────────────────────────────┤
-│ Sécurité            │ • Isolation du trafic                 │
-│                     │ • Contrôle d'accès granulaire         │
-├─────────────────────┼────────────────────────────────────────┤
-│ Performance         │ • Réduction domaines broadcast        │
-│                     │ • Optimisation utilisation BP         │
-├─────────────────────┼────────────────────────────────────────┤
-│ Flexibilité         │ • Groupes logiques vs physiques       │
-│                     │ • Facilité de gestion                 │
-├─────────────────────┼────────────────────────────────────────┤
-│ Économies           │ • Moins d'équipements physiques       │
-│                     │ • Infrastructure partagée             │
-└─────────────────────┴────────────────────────────────────────┘
++---------------------+----------------------------------------+
+| Avantage            | Explication                            |
++---------------------+----------------------------------------+
+| Sécurité            | • Isolation du trafic                 |
+|                     | • Contrôle d'accès granulaire         |
++---------------------+----------------------------------------+
+| Performance         | • Réduction domaines broadcast        |
+|                     | • Optimisation utilisation BP         |
++---------------------+----------------------------------------+
+| Flexibilité         | • Groupes logiques vs physiques       |
+|                     | • Facilité de gestion                 |
++---------------------+----------------------------------------+
+| Économies           | • Moins d'équipements physiques       |
+|                     | • Infrastructure partagée             |
++---------------------+----------------------------------------+
 ```
 
 ## **Types de VLANs**
@@ -59,24 +59,24 @@ Segmentation par VLANs :
 ### **Classification par Usage**
 
 ```
-┌─────────────────┬─────────────┬────────────────────────────────┐
-│ Type VLAN       │ Plage ID    │ Usage Typique                  │
-├─────────────────┼─────────────┼────────────────────────────────┤
-│ Data VLAN       │ 1-1005      │ • Trafic utilisateurs          │
-│                 │             │ • Applications métier          │
-├─────────────────┼─────────────┼────────────────────────────────┤
-│ Voice VLAN      │ 1-1005      │ • Téléphonie IP                │
-│                 │             │ • QoS prioritaire              │
-├─────────────────┼─────────────┼────────────────────────────────┤
-│ Management VLAN │ 1-1005      │ • Administration équipements   │
-│                 │             │ • Monitoring, SNMP             │
-├─────────────────┼─────────────┼────────────────────────────────┤
-│ Native VLAN     │ Configurable│ • Trafic non-tagué sur trunk   │
-│                 │             │ • Par défaut VLAN 1           │
-├─────────────────┼─────────────┼────────────────────────────────┤
-│ Extended VLAN   │ 1006-4094   │ • Grandes infrastructures      │
-│                 │             │ • VTP transparent seulement    │
-└─────────────────┴─────────────┴────────────────────────────────┘
++-----------------+-------------+--------------------------------+
+| Type VLAN       | Plage ID    | Usage Typique                  |
++-----------------+-------------+--------------------------------+
+| Data VLAN       | 1-1005      | • Trafic utilisateurs          |
+|                 |             | • Applications métier          |
++-----------------+-------------+--------------------------------+
+| Voice VLAN      | 1-1005      | • Téléphonie IP                |
+|                 |             | • QoS prioritaire              |
++-----------------+-------------+--------------------------------+
+| Management VLAN | 1-1005      | • Administration équipements   |
+|                 |             | • Monitoring, SNMP             |
++-----------------+-------------+--------------------------------+
+| Native VLAN     | Configurable| • Trafic non-tagué sur trunk   |
+|                 |             | • Par défaut VLAN 1           |
++-----------------+-------------+--------------------------------+
+| Extended VLAN   | 1006-4094   | • Grandes infrastructures      |
+|                 |             | • VTP transparent seulement    |
++-----------------+-------------+--------------------------------+
 ```
 
 ### **VLANs Réservés Cisco**
@@ -101,10 +101,10 @@ VLAN 4095   : Réservé système
 
 ```
 Configuration Port Access :
-┌─────────────┐      Port Fa0/1      ┌─────────────┐
-│     PC      │────[Access VLAN 10]───│   Switch    │
-│             │     (Non-tagué)       │             │
-└─────────────┘                       └─────────────┘
++-------------+      Port Fa0/1      +-------------+
+|     PC      |----[Access VLAN 10]---|   Switch    |
+|             |     (Non-tagué)       |             |
++-------------+                       +-------------+
 
 Caractéristiques :
 • Un seul VLAN par port
@@ -126,10 +126,10 @@ Switch(config-if)# exit
 
 ```
 Configuration Port Trunk :
-┌─────────────┐    Port Fa0/24 (Trunk)    ┌─────────────┐
-│   Switch-A  │─────[VLAN 10,20,30]──────│  Switch-B   │
-│             │        (Tagué)            │             │
-└─────────────┘                           └─────────────┘
++-------------+    Port Fa0/24 (Trunk)    +-------------+
+|   Switch-A  |-----[VLAN 10,20,30]------|  Switch-B   |
+|             |        (Tagué)            |             |
++-------------+                           +-------------+
 
 Caractéristiques :
 • Plusieurs VLANs sur un port
@@ -154,28 +154,28 @@ Switch(config-if)# exit
 
 ```
 Trame Ethernet Standard :
-┌──────────┬──────────┬──────┬─────────┬─────┐
-│ Dest MAC │ Src MAC  │ Type │ Données │ FCS │
-│ 6 bytes  │ 6 bytes  │2 byte│ Variable│4 bit│
-└──────────┴──────────┴──────┴─────────┴─────┘
++----------+----------+------+---------+-----+
+| Dest MAC | Src MAC  | Type | Données | FCS |
+| 6 bytes  | 6 bytes  |2 byte| Variable|4 bit|
++----------+----------+------+---------+-----+
 
 Trame 802.1Q (avec tag VLAN) :
-┌──────────┬──────────┬─────────┬──────┬─────────┬─────┐
-│ Dest MAC │ Src MAC  │802.1Q Tag│ Type │ Données │ FCS │
-│ 6 bytes  │ 6 bytes  │ 4 bytes │2 byte│ Variable│4 bit│
-└──────────┴──────────┴─────────┴──────┴─────────┴─────┘
++----------+----------+---------+------+---------+-----+
+| Dest MAC | Src MAC  |802.1Q Tag| Type | Données | FCS |
+| 6 bytes  | 6 bytes  | 4 bytes |2 byte| Variable|4 bit|
++----------+----------+---------+------+---------+-----+
 
 Détail du Tag 802.1Q (4 bytes) :
-┌─────────┬─────┬──────────────┐
-│  TPID   │ TCI │   VLAN ID    │
-│ 2 bytes │ 2 bytes (12 bits) │
-└─────────┴─────┴──────────────┘
++---------+-----+--------------+
+|  TPID   | TCI |   VLAN ID    |
+| 2 bytes | 2 bytes (12 bits) |
++---------+-----+--------------+
 
 TPID = 0x8100 (Tag Protocol Identifier)
 TCI  = Tag Control Information
-    ├─ PCP (3 bits) : Priority Code Point
-    ├─ DEI (1 bit)  : Drop Eligible Indicator  
-    └─ VID (12 bits): VLAN Identifier (0-4095)
+    +- PCP (3 bits) : Priority Code Point
+    +- DEI (1 bit)  : Drop Eligible Indicator  
+    +- VID (12 bits): VLAN Identifier (0-4095)
 ```
 
 ### **Traitement des Trames**
@@ -184,41 +184,41 @@ TCI  = Tag Control Information
 Réception Trame sur Port Trunk :
 
 1. Trame Taguée (802.1Q) :
-   ┌─────────────┐
-   │ Trame + Tag │ ──┐
-   └─────────────┘   │
-                     ▼
-   ┌─────────────────────┐
-   │ Lecture VLAN ID     │
-   │ Transmission vers   │ 
-   │ ports du VLAN       │
-   └─────────────────────┘
+   +-------------+
+   | Trame + Tag | --+
+   +-------------+   |
+                     v
+   +---------------------+
+   | Lecture VLAN ID     |
+   | Transmission vers   | 
+   | ports du VLAN       |
+   +---------------------+
 
 2. Trame Non-Taguée :
-   ┌─────────────┐
-   │ Trame seule │ ──┐
-   └─────────────┘   │
-                     ▼
-   ┌─────────────────────┐
-   │ Attribution         │
-   │ Native VLAN         │
-   │ (par défaut VLAN 1) │
-   └─────────────────────┘
+   +-------------+
+   | Trame seule | --+
+   +-------------+   |
+                     v
+   +---------------------+
+   | Attribution         |
+   | Native VLAN         |
+   | (par défaut VLAN 1) |
+   +---------------------+
 
 Transmission Trame depuis Port Trunk :
 
 Port de Destination Access :
-┌─────────────┐    ┌──────────────┐    ┌─────────────┐
-│ Trame +Tag  │ ──│ Suppression  │── │ Trame seule │
-│             │    │ Tag 802.1Q   │    │             │
-└─────────────┘    └──────────────┘    └─────────────┘
++-------------+    +--------------+    +-------------+
+| Trame +Tag  | --| Suppression  |-- | Trame seule |
+|             |    | Tag 802.1Q   |    |             |
++-------------+    +--------------+    +-------------+
 
 Port de Destination Trunk :
-┌─────────────┐    ┌──────────────┐    ┌─────────────┐
-│ Trame +Tag  │ ──│ Conservation │── │ Trame +Tag  │
-│             │    │ Tag si ≠     │    │             │
-│             │    │ Native VLAN  │    │             │
-└─────────────┘    └──────────────┘    └─────────────┘
++-------------+    +--------------+    +-------------+
+| Trame +Tag  | --| Conservation |-- | Trame +Tag  |
+|             |    | Tag si ≠     |    |             |
+|             |    | Native VLAN  |    |             |
++-------------+    +--------------+    +-------------+
 ```
 
 ## **Configuration des VLANs**
@@ -380,17 +380,17 @@ Gi0/1       1,10,20,30,99
 ```
 Topologie Router-on-a-Stick :
 
-┌─────────────┐     Trunk 802.1Q      ┌─────────────┐
-│   Switch    │───────────────────────│   Router    │
-│             │   VLANs 10,20,30      │             │
-└─────────────┘                       └─────────────┘
-     │                                 Subinterfaces:
-     │                                 • Gi0/0.10 : VLAN 10
-┌─────────────┐                        • Gi0/0.20 : VLAN 20  
-│ PC VLAN 10  │                        • Gi0/0.30 : VLAN 30
-│ PC VLAN 20  │
-│ PC VLAN 30  │
-└─────────────┘
++-------------+     Trunk 802.1Q      +-------------+
+|   Switch    |-----------------------|   Router    |
+|             |   VLANs 10,20,30      |             |
++-------------+                       +-------------+
+     |                                 Subinterfaces:
+     |                                 • Gi0/0.10 : VLAN 10
++-------------+                        • Gi0/0.20 : VLAN 20  
+| PC VLAN 10  |                        • Gi0/0.30 : VLAN 30
+| PC VLAN 20  |
+| PC VLAN 30  |
++-------------+
 ```
 
 **Configuration Router :**
@@ -427,20 +427,20 @@ Router(config-subif)# exit
 ```
 Switch Layer 3 avec SVIs :
 
-┌─────────────────────────────────────────────────────────────┐
-│                  Switch Layer 3                            │
-│                                                             │
-│ VLAN 10 ←─→ SVI 10 (192.168.10.1/24)                      │
-│ VLAN 20 ←─→ SVI 20 (192.168.20.1/24)                      │
-│ VLAN 30 ←─→ SVI 30 (192.168.30.1/24)                      │
-│                                                             │
-│ Routing inter-VLAN interne                                 │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                    ┌─────────────┐
-                    │    WAN      │
-                    │  Router     │
-                    └─────────────┘
++-------------------------------------------------------------+
+|                  Switch Layer 3                            |
+|                                                             |
+| VLAN 10 <---> SVI 10 (192.168.10.1/24)                      |
+| VLAN 20 <---> SVI 20 (192.168.20.1/24)                      |
+| VLAN 30 <---> SVI 30 (192.168.30.1/24)                      |
+|                                                             |
+| Routing inter-VLAN interne                                 |
++-------------------------------------------------------------+
+                              |
+                    +-------------+
+                    |    WAN      |
+                    |  Router     |
+                    +-------------+
 ```
 
 **Configuration Switch L3 :**
@@ -558,25 +558,25 @@ Switch# show vtp status
 ### **Design et Sécurité**
 
 ```
-┌─────────────────────┬────────────────────────────────────────┐
-│ Pratique            │ Justification                          │
-├─────────────────────┼────────────────────────────────────────┤
-│ Ne pas utiliser     │ • VLAN 1 = trafic management par      │
-│ VLAN 1 pour données │   défaut                               │
-│                     │ • Risques sécurité                    │
-├─────────────────────┼────────────────────────────────────────┤
-│ Changer Native VLAN │ • Éviter attaques VLAN hopping        │
-│ du défaut           │ • Sécuriser trafic non-tagué          │
-├─────────────────────┼────────────────────────────────────────┤
-│ Utiliser VLAN       │ • Isolation du trafic management      │
-│ management dédié    │ • Sécurité administrative             │
-├─────────────────────┼────────────────────────────────────────┤
-│ Limiter VLANs sur   │ • Réduire domaine broadcast           │
-│ trunk               │ • Optimiser performance               │
-├─────────────────────┼────────────────────────────────────────┤
-│ Documentation       │ • Convention nommage claire           │
-│ cohérente           │ • Schémas à jour                      │
-└─────────────────────┴────────────────────────────────────────┘
++---------------------+----------------------------------------+
+| Pratique            | Justification                          |
++---------------------+----------------------------------------+
+| Ne pas utiliser     | • VLAN 1 = trafic management par      |
+| VLAN 1 pour données |   défaut                               |
+|                     | • Risques sécurité                    |
++---------------------+----------------------------------------+
+| Changer Native VLAN | • Éviter attaques VLAN hopping        |
+| du défaut           | • Sécuriser trafic non-tagué          |
++---------------------+----------------------------------------+
+| Utiliser VLAN       | • Isolation du trafic management      |
+| management dédié    | • Sécurité administrative             |
++---------------------+----------------------------------------+
+| Limiter VLANs sur   | • Réduire domaine broadcast           |
+| trunk               | • Optimiser performance               |
++---------------------+----------------------------------------+
+| Documentation       | • Convention nommage claire           |
+| cohérente           | • Schémas à jour                      |
++---------------------+----------------------------------------+
 ```
 
 ### **Plan d'Adressage Recommandé**

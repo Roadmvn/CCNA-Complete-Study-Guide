@@ -15,12 +15,12 @@ Sans EtherChannel :
 STP bloque les liens redondants pour eviter les boucles
 
 Switch-A                    Switch-B
-┌─────────┐                ┌─────────┐
-│ Gi0/1   │════════════════│ Gi0/1   │  Forwarding (actif)
-│ Gi0/2   │────────────────│ Gi0/2   │  BLOCKED par STP
-│ Gi0/3   │────────────────│ Gi0/3   │  BLOCKED par STP
-│ Gi0/4   │────────────────│ Gi0/4   │  BLOCKED par STP
-└─────────┘                └─────────┘
++---------+                +---------+
+| Gi0/1   |================| Gi0/1   |  Forwarding (actif)
+| Gi0/2   |----------------| Gi0/2   |  BLOCKED par STP
+| Gi0/3   |----------------| Gi0/3   |  BLOCKED par STP
+| Gi0/4   |----------------| Gi0/4   |  BLOCKED par STP
++---------+                +---------+
 
 Bande passante effective : 1 Gbps (1 seul lien actif)
 3 liens gaspilles !
@@ -29,13 +29,13 @@ Avec EtherChannel :
 STP voit un seul lien logique, tous les liens physiques sont actifs
 
 Switch-A                    Switch-B
-┌─────────┐                ┌─────────┐
-│         │  Port-Channel 1│         │
-│ Gi0/1   │╔══════════════╗│ Gi0/1   │
-│ Gi0/2   │║  EtherChannel║│ Gi0/2   │  Tous actifs
-│ Gi0/3   │║  (1 lien     ║│ Gi0/3   │  simultanément
-│ Gi0/4   │╚══════════════╝│ Gi0/4   │
-└─────────┘                └─────────┘
++---------+                +---------+
+|         |  Port-Channel 1|         |
+| Gi0/1   |+==============+| Gi0/1   |
+| Gi0/2   ||  EtherChannel|| Gi0/2   |  Tous actifs
+| Gi0/3   ||  (1 lien     || Gi0/3   |  simultanément
+| Gi0/4   |+==============+| Gi0/4   |
++---------+                +---------+
 
 Bande passante effective : 4 Gbps (4 liens actifs)
 ```
@@ -43,24 +43,24 @@ Bande passante effective : 4 Gbps (4 liens actifs)
 ### Avantages
 
 ```
-┌────────────────────┬─────────────────────────────────────────┐
-│ Avantage           │ Detail                                  │
-├────────────────────┼─────────────────────────────────────────┤
-│ Bande passante     │ Additive : N liens x vitesse unitaire   │
-│                    │ Ex: 4 x 1Gbps = 4 Gbps logique         │
-├────────────────────┼─────────────────────────────────────────┤
-│ Redondance         │ Si un lien tombe, les autres restent    │
-│                    │ actifs (degradation gracieuse)           │
-├────────────────────┼─────────────────────────────────────────┤
-│ STP compatible     │ STP voit 1 lien = pas de port bloque   │
-│                    │ Un seul cout STP pour le bundle          │
-├────────────────────┼─────────────────────────────────────────┤
-│ Load balancing     │ Trafic reparti sur les liens physiques  │
-│                    │ Plusieurs methodes de hash disponibles   │
-├────────────────────┼─────────────────────────────────────────┤
-│ Convergence        │ Perte d'un lien = pas de recalcul STP  │
-│ rapide             │ Le bundle reste actif immediatement     │
-└────────────────────┴─────────────────────────────────────────┘
++--------------------+-----------------------------------------+
+| Avantage           | Detail                                  |
++--------------------+-----------------------------------------+
+| Bande passante     | Additive : N liens x vitesse unitaire   |
+|                    | Ex: 4 x 1Gbps = 4 Gbps logique         |
++--------------------+-----------------------------------------+
+| Redondance         | Si un lien tombe, les autres restent    |
+|                    | actifs (degradation gracieuse)           |
++--------------------+-----------------------------------------+
+| STP compatible     | STP voit 1 lien = pas de port bloque   |
+|                    | Un seul cout STP pour le bundle          |
++--------------------+-----------------------------------------+
+| Load balancing     | Trafic reparti sur les liens physiques  |
+|                    | Plusieurs methodes de hash disponibles   |
++--------------------+-----------------------------------------+
+| Convergence        | Perte d'un lien = pas de recalcul STP  |
+| rapide             | Le bundle reste actif immediatement     |
++--------------------+-----------------------------------------+
 ```
 
 ---
@@ -73,24 +73,24 @@ Bande passante effective : 4 Gbps (4 liens actifs)
 Standard ouvert IEEE, recommande pour les nouveaux deploiements.
 
 Modes LACP :
-┌──────────┬───────────────────────────────────────────────────┐
-│ Mode     │ Comportement                                      │
-├──────────┼───────────────────────────────────────────────────┤
-│ active   │ Initie activement la negociation LACP             │
-│          │ Envoie des PDUs LACP                              │
-├──────────┼───────────────────────────────────────────────────┤
-│ passive  │ Repond aux PDUs LACP mais ne les initie pas       │
-│          │ Attend qu'un partenaire active initie              │
-└──────────┴───────────────────────────────────────────────────┘
++----------+---------------------------------------------------+
+| Mode     | Comportement                                      |
++----------+---------------------------------------------------+
+| active   | Initie activement la negociation LACP             |
+|          | Envoie des PDUs LACP                              |
++----------+---------------------------------------------------+
+| passive  | Repond aux PDUs LACP mais ne les initie pas       |
+|          | Attend qu'un partenaire active initie              |
++----------+---------------------------------------------------+
 
 Matrice de Formation LACP :
-┌──────────────┬──────────┬──────────┐
-│ SW-A \ SW-B  │ active   │ passive  │
-├──────────────┼──────────┼──────────┤
-│ active       │ FORME    │ FORME    │
-├──────────────┼──────────┼──────────┤
-│ passive      │ FORME    │ PAS forme│
-└──────────────┴──────────┴──────────┘
++--------------+----------+----------+
+| SW-A \ SW-B  | active   | passive  |
++--------------+----------+----------+
+| active       | FORME    | FORME    |
++--------------+----------+----------+
+| passive      | FORME    | PAS forme|
++--------------+----------+----------+
 
 Au moins un cote doit etre "active" pour que le channel se forme.
 ```
@@ -101,24 +101,24 @@ Au moins un cote doit etre "active" pour que le channel se forme.
 Protocole Cisco, uniquement entre equipements Cisco.
 
 Modes PAgP :
-┌──────────┬───────────────────────────────────────────────────┐
-│ Mode     │ Comportement                                      │
-├──────────┼───────────────────────────────────────────────────┤
-│ desirable│ Initie activement la negociation PAgP             │
-│          │ Envoie des PDUs PAgP                              │
-├──────────┼───────────────────────────────────────────────────┤
-│ auto     │ Repond aux PDUs PAgP mais ne les initie pas       │
-│          │ Attend qu'un partenaire desirable initie           │
-└──────────┴───────────────────────────────────────────────────┘
++----------+---------------------------------------------------+
+| Mode     | Comportement                                      |
++----------+---------------------------------------------------+
+| desirable| Initie activement la negociation PAgP             |
+|          | Envoie des PDUs PAgP                              |
++----------+---------------------------------------------------+
+| auto     | Repond aux PDUs PAgP mais ne les initie pas       |
+|          | Attend qu'un partenaire desirable initie           |
++----------+---------------------------------------------------+
 
 Matrice de Formation PAgP :
-┌──────────────┬──────────┬──────────┐
-│ SW-A \ SW-B  │ desirable│ auto     │
-├──────────────┼──────────┼──────────┤
-│ desirable    │ FORME    │ FORME    │
-├──────────────┼──────────┼──────────┤
-│ auto         │ FORME    │ PAS forme│
-└──────────────┴──────────┴──────────┘
++--------------+----------+----------+
+| SW-A \ SW-B  | desirable| auto     |
++--------------+----------+----------+
+| desirable    | FORME    | FORME    |
++--------------+----------+----------+
+| auto         | FORME    | PAS forme|
++--------------+----------+----------+
 ```
 
 ### Mode Static (On)
@@ -126,25 +126,25 @@ Matrice de Formation PAgP :
 ```
 Mode "on" : Force l'EtherChannel sans negociation
 
-┌──────────┬───────────────────────────────────────────────────┐
-│ Mode     │ Comportement                                      │
-├──────────┼───────────────────────────────────────────────────┤
-│ on       │ Force le channel sans protocole de negociation    │
-│          │ Les deux cotes DOIVENT etre "on"                  │
-│          │ Pas de detection automatique des erreurs          │
-│          │ Deconseille en production                         │
-└──────────┴───────────────────────────────────────────────────┘
++----------+---------------------------------------------------+
+| Mode     | Comportement                                      |
++----------+---------------------------------------------------+
+| on       | Force le channel sans protocole de negociation    |
+|          | Les deux cotes DOIVENT etre "on"                  |
+|          | Pas de detection automatique des erreurs          |
+|          | Deconseille en production                         |
++----------+---------------------------------------------------+
 
 Matrice avec le mode "on" :
-┌──────────────┬──────────┬──────────┬──────────┐
-│ SW-A \ SW-B  │ on       │ active   │ desirable│
-├──────────────┼──────────┼──────────┼──────────┤
-│ on           │ FORME    │ PAS forme│ PAS forme│
-├──────────────┼──────────┼──────────┼──────────┤
-│ active       │ PAS forme│ FORME    │ FORME    │
-├──────────────┼──────────┼──────────┼──────────┤
-│ desirable    │ PAS forme│ (N/A)    │ FORME    │
-└──────────────┴──────────┴──────────┴──────────┘
++--------------+----------+----------+----------+
+| SW-A \ SW-B  | on       | active   | desirable|
++--------------+----------+----------+----------+
+| on           | FORME    | PAS forme| PAS forme|
++--------------+----------+----------+----------+
+| active       | PAS forme| FORME    | FORME    |
++--------------+----------+----------+----------+
+| desirable    | PAS forme| (N/A)    | FORME    |
++--------------+----------+----------+----------+
 
 "on" n'est compatible qu'avec "on" (pas de protocole = pas de nego)
 ```
@@ -152,18 +152,18 @@ Matrice avec le mode "on" :
 ### Comparaison Complete
 
 ```
-┌────────────────────┬────────────────┬────────────────┬───────────┐
-│ Critere            │ LACP           │ PAgP           │ Static    │
-├────────────────────┼────────────────┼────────────────┼───────────┤
-│ Standard           │ IEEE 802.3ad   │ Cisco proprio. │ Aucun     │
-│ Interoperabilite   │ Multi-vendeur  │ Cisco seul     │ Universal │
-│ Negociation        │ Oui            │ Oui            │ Non       │
-│ Detection erreurs  │ Oui            │ Oui            │ Non       │
-│ Max liens actifs   │ 8 (16 total)   │ 8              │ 8         │
-│ Hot-standby liens  │ Oui (8 standby)│ Non            │ Non       │
-│ Modes              │ active/passive │ desirable/auto │ on        │
-│ Recommandation     │ Prefere        │ Legacy Cisco   │ Eviter    │
-└────────────────────┴────────────────┴────────────────┴───────────┘
++--------------------+----------------+----------------+-----------+
+| Critere            | LACP           | PAgP           | Static    |
++--------------------+----------------+----------------+-----------+
+| Standard           | IEEE 802.3ad   | Cisco proprio. | Aucun     |
+| Interoperabilite   | Multi-vendeur  | Cisco seul     | Universal |
+| Negociation        | Oui            | Oui            | Non       |
+| Detection erreurs  | Oui            | Oui            | Non       |
+| Max liens actifs   | 8 (16 total)   | 8              | 8         |
+| Hot-standby liens  | Oui (8 standby)| Non            | Non       |
+| Modes              | active/passive | desirable/auto | on        |
+| Recommandation     | Prefere        | Legacy Cisco   | Eviter    |
++--------------------+----------------+----------------+-----------+
 ```
 
 ---
@@ -278,29 +278,29 @@ Le trafic est reparti sur les liens membres via un algorithme de hash.
 Le hash determine quel lien physique transportera chaque flux.
 
 Methodes disponibles :
-┌───────────────┬───────────────────────────────────────────────┐
-│ Methode       │ Hash base sur                                 │
-├───────────────┼───────────────────────────────────────────────┤
-│ src-mac       │ Adresse MAC source                            │
-│ dst-mac       │ Adresse MAC destination                       │
-│ src-dst-mac   │ Combinaison MAC source + destination          │
-│ src-ip        │ Adresse IP source                             │
-│ dst-ip        │ Adresse IP destination                        │
-│ src-dst-ip    │ Combinaison IP source + destination           │
-│ src-port      │ Port TCP/UDP source                           │
-│ dst-port      │ Port TCP/UDP destination                      │
-│ src-dst-port  │ Combinaison port source + destination         │
-└───────────────┴───────────────────────────────────────────────┘
++---------------+-----------------------------------------------+
+| Methode       | Hash base sur                                 |
++---------------+-----------------------------------------------+
+| src-mac       | Adresse MAC source                            |
+| dst-mac       | Adresse MAC destination                       |
+| src-dst-mac   | Combinaison MAC source + destination          |
+| src-ip        | Adresse IP source                             |
+| dst-ip        | Adresse IP destination                        |
+| src-dst-ip    | Combinaison IP source + destination           |
+| src-port      | Port TCP/UDP source                           |
+| dst-port      | Port TCP/UDP destination                      |
+| src-dst-port  | Combinaison port source + destination         |
++---------------+-----------------------------------------------+
 
 Recommandations :
-┌────────────────────────┬─────────────────────────────────────┐
-│ Scenario               │ Methode recommandee                 │
-├────────────────────────┼─────────────────────────────────────┤
-│ Switch L2 (access)     │ src-dst-mac                         │
-│ Switch L3 (routing)    │ src-dst-ip                          │
-│ Trafic vers serveur    │ src-ip (distribue par client)       │
-│ Trafic depuis serveur  │ dst-ip (distribue par client)       │
-└────────────────────────┴─────────────────────────────────────┘
++------------------------+-------------------------------------+
+| Scenario               | Methode recommandee                 |
++------------------------+-------------------------------------+
+| Switch L2 (access)     | src-dst-mac                         |
+| Switch L3 (routing)    | src-dst-ip                          |
+| Trafic vers serveur    | src-ip (distribue par client)       |
+| Trafic depuis serveur  | dst-ip (distribue par client)       |
++------------------------+-------------------------------------+
 
 Configuration :
 Switch(config)# port-channel load-balance src-dst-ip
@@ -314,10 +314,10 @@ Exemple avec src-dst-mac et 4 liens :
 Le switch applique un XOR (OU exclusif) sur les bits de basse
 position des adresses MAC pour determiner le lien.
 
-Flux 1 : MAC-A → MAC-X  → Hash = 0  → Lien Gi0/1
-Flux 2 : MAC-B → MAC-X  → Hash = 1  → Lien Gi0/2
-Flux 3 : MAC-C → MAC-Y  → Hash = 2  → Lien Gi0/3
-Flux 4 : MAC-D → MAC-Y  → Hash = 3  → Lien Gi0/4
+Flux 1 : MAC-A -> MAC-X  -> Hash = 0  -> Lien Gi0/1
+Flux 2 : MAC-B -> MAC-X  -> Hash = 1  -> Lien Gi0/2
+Flux 3 : MAC-C -> MAC-Y  -> Hash = 2  -> Lien Gi0/3
+Flux 4 : MAC-D -> MAC-Y  -> Hash = 3  -> Lien Gi0/4
 
 Un flux specifique utilisera TOUJOURS le meme lien
 (pas de repartition par paquet, mais par flux).
@@ -336,18 +336,18 @@ Un flux specifique utilisera TOUJOURS le meme lien
 ```
 Tous les ports membres DOIVENT avoir la meme configuration :
 
-┌──────────────────────┬────────────────────────────────────────┐
-│ Parametre            │ Exigence                               │
-├──────────────────────┼────────────────────────────────────────┤
-│ Vitesse              │ Identique sur tous les ports           │
-│ Duplex               │ Identique (full-duplex recommande)     │
-│ VLAN (mode access)   │ Meme VLAN sur tous les ports           │
-│ Trunk mode           │ Meme mode (trunk ou access)            │
-│ Allowed VLANs        │ Meme liste sur tous les ports trunk    │
-│ Native VLAN          │ Meme Native VLAN sur tous les ports    │
-│ STP port cost        │ Ne pas configurer individuellement     │
-│ STP port priority    │ Ne pas configurer individuellement     │
-└──────────────────────┴────────────────────────────────────────┘
++----------------------+----------------------------------------+
+| Parametre            | Exigence                               |
++----------------------+----------------------------------------+
+| Vitesse              | Identique sur tous les ports           |
+| Duplex               | Identique (full-duplex recommande)     |
+| VLAN (mode access)   | Meme VLAN sur tous les ports           |
+| Trunk mode           | Meme mode (trunk ou access)            |
+| Allowed VLANs        | Meme liste sur tous les ports trunk    |
+| Native VLAN          | Meme Native VLAN sur tous les ports    |
+| STP port cost        | Ne pas configurer individuellement     |
+| STP port priority    | Ne pas configurer individuellement     |
++----------------------+----------------------------------------+
 
 Si un parametre differe : le channel NE SE FORME PAS
 ou le port est suspendu (s) du bundle.
@@ -357,7 +357,7 @@ ou le port est suspendu (s) du bundle.
 
 ```
 Probleme 1 : EtherChannel ne se forme pas
-──────────────────────────────────────────
+------------------------------------------
 Symptome : show etherchannel summary montre (I) stand-alone
 Diagnostic :
   Switch# show etherchannel summary
@@ -372,7 +372,7 @@ Solution :
   Verifier et harmoniser la configuration de TOUS les ports membres
 
 Probleme 2 : Port suspendu (s) dans le bundle
-──────────────────────────────────────────
+------------------------------------------
 Symptome : show etherchannel summary montre Gi0/3(s)
 Diagnostic :
   Switch# show etherchannel detail
@@ -383,7 +383,7 @@ Solution :
   Harmoniser la config du port suspendu avec les autres
 
 Probleme 3 : Un lien physique tombe
-──────────────────────────────────────────
+------------------------------------------
 Symptome : Bande passante reduite
 Diagnostic :
   Switch# show etherchannel summary
@@ -394,7 +394,7 @@ Comportement normal :
   Verifier le lien physique (cable, SFP, port)
 
 Probleme 4 : Performances inegales
-──────────────────────────────────────────
+------------------------------------------
 Symptome : Un lien sature, les autres inactifs
 Diagnostic :
   Switch# show interfaces port-channel 1 counters
@@ -434,33 +434,33 @@ Etape 4 : Verifier
 ### Architecture EtherChannel Multi-Niveaux
 
 ```
-                    ┌──────────────────┐
-                    │    SW-CORE-1     │
-                    │                  │
-                    │  Po1     Po2     │
-                    └──╦═══════╦═══════┘
-                       ║       ║
-              2x10G    ║       ║  2x10G
-              LACP     ║       ║  LACP
-                       ║       ║
-         ┌─────────────╨──┐ ┌──╨─────────────┐
-         │   SW-DIST-1    │ │   SW-DIST-2    │
-         │                │ │                │
-         │   Po3          │ │   Po3          │
-         │   (4xGi LACP)  │ │   (4xGi LACP)  │
-         └──╦══════╦══════┘ └══════╦═════╦═══┘
-            ║      ║               ║     ║
-            ║      ║               ║     ║
-      ┌─────╨──┐ ┌─╨────────┐ ┌───╨──┐ ┌╨───────┐
-      │SW-ACC1 │ │ SW-ACC2  │ │SW-ACC3│ │SW-ACC4 │
-      │        │ │          │ │       │ │        │
-      │  Users │ │  Users   │ │ Users │ │ Users  │
-      └────────┘ └──────────┘ └───────┘ └────────┘
+                    +------------------+
+                    |    SW-CORE-1     |
+                    |                  |
+                    |  Po1     Po2     |
+                    +--+=======+=======+
+                       |       |
+              2x10G    |       |  2x10G
+              LACP     |       |  LACP
+                       |       |
+         +-------------+--+ +--+-------------+
+         |   SW-DIST-1    | |   SW-DIST-2    |
+         |                | |                |
+         |   Po3          | |   Po3          |
+         |   (4xGi LACP)  | |   (4xGi LACP)  |
+         +--+======+======+ +======+=====+===+
+            |      |               |     |
+            |      |               |     |
+      +-----+--+ +-+--------+ +---+--+ ++-------+
+      |SW-ACC1 | | SW-ACC2  | |SW-ACC3| |SW-ACC4 |
+      |        | |          | |       | |        |
+      |  Users | |  Users   | | Users | | Users  |
+      +--------+ +----------+ +-------+ +--------+
 
 Resume de la connectivite :
-- Core ↔ Distribution : Po1/Po2 (2x10G LACP) = 20 Gbps
-- Distribution ↔ Distribution : Po3 (4xGi LACP) = 4 Gbps
-- Distribution ↔ Access : Po4 (2xGi LACP) = 2 Gbps
+- Core <-> Distribution : Po1/Po2 (2x10G LACP) = 20 Gbps
+- Distribution <-> Distribution : Po3 (4xGi LACP) = 4 Gbps
+- Distribution <-> Access : Po4 (2xGi LACP) = 2 Gbps
 ```
 
 ---

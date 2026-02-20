@@ -11,33 +11,33 @@ Cette section contient 4 labs pratiques couvrant STP, EtherChannel, port-securit
 ### Topologie
 
 ```
-                ┌─────────────────────┐
-                │       SW-1          │
-                │ MAC: 0001.0001.0001 │
-                │ Priority: 32769     │
-                │                     │
-                │ Fa0/1         Fa0/2 │
-                └──┬──────────────┬───┘
-                   │              │
-          Cost: 19 │              │ Cost: 19
-                   │              │
-          ┌────────┴───┐    ┌─────┴────────┐
-          │   SW-2     │    │    SW-3       │
-          │ MAC: 0002  │    │ MAC: 0003     │
-          │ Pri: 32769 │    │ Pri: 32769    │
-          │            │    │               │
-          │ Fa0/1      │    │ Fa0/1         │
-          │ Fa0/2      │    │ Fa0/2         │
-          │ Fa0/3      │    │ Fa0/3         │
-          └──┬────┬────┘    └──┬────┬───────┘
-             │    │            │    │
-             │    └────────────┘    │
-             │      Cost: 19       │
-             │                     │
-          ┌──┴──┐              ┌───┴──┐
-          │PC-A │              │PC-B  │
-          │VL10 │              │VL10  │
-          └─────┘              └──────┘
+                +---------------------+
+                |       SW-1          |
+                | MAC: 0001.0001.0001 |
+                | Priority: 32769     |
+                |                     |
+                | Fa0/1         Fa0/2 |
+                +--+--------------+---+
+                   |              |
+          Cost: 19 |              | Cost: 19
+                   |              |
+          +--------+---+    +-----+--------+
+          |   SW-2     |    |    SW-3       |
+          | MAC: 0002  |    | MAC: 0003     |
+          | Pri: 32769 |    | Pri: 32769    |
+          |            |    |               |
+          | Fa0/1      |    | Fa0/1         |
+          | Fa0/2      |    | Fa0/2         |
+          | Fa0/3      |    | Fa0/3         |
+          +--+----+----+    +--+----+-------+
+             |    |            |    |
+             |    +------------+    |
+             |      Cost: 19       |
+             |                     |
+          +--+--+              +---+--+
+          |PC-A |              |PC-B  |
+          |VL10 |              |VL10  |
+          +-----+              +------+
 
 VLANs :
 - VLAN 10 : Users (192.168.10.0/24)
@@ -150,23 +150,23 @@ show spanning-tree interface fa0/3 portfast
 
 ```
 SW-1                                    SW-2
-┌──────────────────┐                   ┌──────────────────┐
-│                  │  Port-Channel 1   │                  │
-│  Gi0/1 ══════════╪═══════════════════╪══════════ Gi0/1  │
-│  Gi0/2 ══════════╪═══════════════════╪══════════ Gi0/2  │
-│                  │  LACP active      │  LACP active     │
-│                  │                   │                  │
-│  Fa0/1-8  VL10  │                   │  Fa0/1-8  VL10  │
-│  Fa0/9-16 VL20  │                   │  Fa0/9-16 VL20  │
-│                  │                   │                  │
-│  Fa0/1           │                   │  Fa0/1           │
-│  │               │                   │  │               │
-└──┼───────────────┘                   └──┼───────────────┘
-   │                                      │
-┌──┴──┐                               ┌──┴──┐
-│PC-A │ VLAN 10                        │PC-B │ VLAN 10
-│.10  │ 192.168.10.10                  │.20  │ 192.168.10.20
-└─────┘                                └─────┘
++------------------+                   +------------------+
+|                  |  Port-Channel 1   |                  |
+|  Gi0/1 ==========+===================+========== Gi0/1  |
+|  Gi0/2 ==========+===================+========== Gi0/2  |
+|                  |  LACP active      |  LACP active     |
+|                  |                   |                  |
+|  Fa0/1-8  VL10  |                   |  Fa0/1-8  VL10  |
+|  Fa0/9-16 VL20  |                   |  Fa0/9-16 VL20  |
+|                  |                   |                  |
+|  Fa0/1           |                   |  Fa0/1           |
+|  |               |                   |  |               |
++--+---------------+                   +--+---------------+
+   |                                      |
++--+--+                               +--+--+
+|PC-A | VLAN 10                        |PC-B | VLAN 10
+|.10  | 192.168.10.10                  |.20  | 192.168.10.20
++-----+                                +-----+
 
 Trunk sur Port-Channel 1 :
 - VLANs autorises : 10, 20, 99
@@ -283,25 +283,25 @@ SW-1(config-if)# no shutdown
 ### Topologie
 
 ```
-                    ┌──────────────────────┐
-                    │        SW-1          │
-                    │                      │
-                    │  Fa0/1    Fa0/2      │
-                    │  [secure] [secure]   │
-                    │  max: 1   max: 2     │
-                    │  shutdown  restrict  │
-                    │  sticky    static    │
-                    │                      │
-                    │  Fa0/3               │
-                    │  [secure]            │
-                    │  max: 1              │
-                    │  protect             │
-                    └──┬───────┬───────┬───┘
-                       │       │       │
-                    ┌──┴──┐ ┌──┴──┐ ┌──┴──┐
-                    │PC-A │ │PC-B │ │PC-C │
-                    │VL10 │ │VL10 │ │VL10 │
-                    └─────┘ └─────┘ └─────┘
+                    +----------------------+
+                    |        SW-1          |
+                    |                      |
+                    |  Fa0/1    Fa0/2      |
+                    |  [secure] [secure]   |
+                    |  max: 1   max: 2     |
+                    |  shutdown  restrict  |
+                    |  sticky    static    |
+                    |                      |
+                    |  Fa0/3               |
+                    |  [secure]            |
+                    |  max: 1              |
+                    |  protect             |
+                    +--+-------+-------+---+
+                       |       |       |
+                    +--+--+ +--+--+ +--+--+
+                    |PC-A | |PC-B | |PC-C |
+                    |VL10 | |VL10 | |VL10 |
+                    +-----+ +-----+ +-----+
 
 PC-A MAC : AAAA.AAAA.AAAA
 PC-B MAC : BBBB.BBBB.BBBB
@@ -402,19 +402,19 @@ SW-1# show port-security address
 
 ```
 Test 1 : Brancher un PC inconnu sur Fa0/1 (mode shutdown)
-  → Resultat : Port passe en err-disabled, LED orange
-  → Verification : show interfaces fa0/1 status
+  -> Resultat : Port passe en err-disabled, LED orange
+  -> Verification : show interfaces fa0/1 status
 
 Test 2 : Ajouter une 3eme MAC sur Fa0/2 (mode restrict)
-  → Resultat : Trafic de la 3eme MAC droppe, compteur incremente
-  → Log syslog genere
-  → Port reste UP
-  → Verification : show port-security interface fa0/2
+  -> Resultat : Trafic de la 3eme MAC droppe, compteur incremente
+  -> Log syslog genere
+  -> Port reste UP
+  -> Verification : show port-security interface fa0/2
 
 Test 3 : Ajouter une 2eme MAC sur Fa0/3 (mode protect)
-  → Resultat : Trafic de la 2eme MAC droppe silencieusement
-  → Pas de log, pas de compteur
-  → Port reste UP
+  -> Resultat : Trafic de la 2eme MAC droppe silencieusement
+  -> Pas de log, pas de compteur
+  -> Port reste UP
 ```
 
 ### Etape 7 : Recuperation d'un Port err-disabled
@@ -445,34 +445,34 @@ SW-1(config)# errdisable recovery interval 300
 ### Topologie avec Erreurs
 
 ```
-                    ┌──────────────────┐
-                    │      SW-CORE     │
-                    │  (Switch L3)     │
-                    │                  │
-                    │  SVI VLAN 10:    │
-                    │  192.168.10.1/24 │
-                    │  SVI VLAN 20:    │
-                    │  192.168.20.1/24 │
-                    │                  │
-                    │  Gi0/1     Gi0/2 │
-                    │  [Trunk]  [Trunk]│
-                    └──┬────────────┬──┘
-                       │            │
-              ┌────────┴───┐  ┌─────┴────────┐
-              │ SW-ACC-1   │  │  SW-ACC-2    │
-              │            │  │              │
-              │ Gi0/1      │  │ Gi0/1        │
-              │ [Trunk]    │  │ [Trunk]      │
-              │            │  │              │
-              │ Fa0/1 VL10 │  │ Fa0/1 VL10   │
-              │ Fa0/10 VL20│  │ Fa0/10 VL20  │
-              └─┬──────┬───┘  └─┬──────┬─────┘
-                │      │        │      │
-             ┌──┴──┐┌──┴──┐  ┌──┴──┐┌──┴──┐
-             │PC-A ││PC-C │  │PC-B ││PC-D │
-             │VL10 ││VL20 │  │VL10 ││VL20 │
-             │.10  ││.10  │  │.20  ││.20  │
-             └─────┘└─────┘  └─────┘└─────┘
+                    +------------------+
+                    |      SW-CORE     |
+                    |  (Switch L3)     |
+                    |                  |
+                    |  SVI VLAN 10:    |
+                    |  192.168.10.1/24 |
+                    |  SVI VLAN 20:    |
+                    |  192.168.20.1/24 |
+                    |                  |
+                    |  Gi0/1     Gi0/2 |
+                    |  [Trunk]  [Trunk]|
+                    +--+------------+--+
+                       |            |
+              +--------+---+  +-----+--------+
+              | SW-ACC-1   |  |  SW-ACC-2    |
+              |            |  |              |
+              | Gi0/1      |  | Gi0/1        |
+              | [Trunk]    |  | [Trunk]      |
+              |            |  |              |
+              | Fa0/1 VL10 |  | Fa0/1 VL10   |
+              | Fa0/10 VL20|  | Fa0/10 VL20  |
+              +-+------+---+  +-+------+-----+
+                |      |        |      |
+             +--+--++--+--+  +--+--++--+--+
+             |PC-A ||PC-C |  |PC-B ||PC-D |
+             |VL10 ||VL20 |  |VL10 ||VL20 |
+             |.10  ||.10  |  |.20  ||.20  |
+             +-----++-----+  +-----++-----+
 
 Adressage :
 PC-A : 192.168.10.10/24, GW: 192.168.10.1
